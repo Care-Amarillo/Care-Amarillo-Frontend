@@ -98,23 +98,8 @@ const FormTwo = (props) => {
     </form>;
 }
 
-const getStepContent = (step, registerComponent) => {
-    switch (step) {
-        case 0:
-            return <FormOne registerComponent={registerComponent}/>;
-        case 1:
-            return <FormTwo registerComponent={registerComponent}/>;
-        default:
-            return 'Unknown step';
-    }
-}
-
-
-const HorizontalLinearStepper = (props) => {
+const FormContainer = (props) => {
     const classes = useStyles();
-    const [activeStep, setActiveStep] = React.useState(0);
-    const [skipped, setSkipped] = React.useState(new Set());
-    const steps = getSteps();
     const registerComponent = props.registerComponent;
     const registerState = registerComponent.state;
     const [open, setOpen] = React.useState(false);
@@ -138,28 +123,7 @@ const HorizontalLinearStepper = (props) => {
     </div>;
 
 
-    const isStepOptional = (step) => {
-        return false;
-    };
-
-    const isStepSkipped = (step) => {
-        return skipped.has(step);
-    };
-
-    const handleNext = () => {
-        let newSkipped = skipped;
-        if (isStepSkipped(activeStep)) {
-            newSkipped = new Set(newSkipped.values());
-            newSkipped.delete(activeStep);
-        }
-
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        setSkipped(newSkipped);
-    };
-
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
+    
 
     const slideAlertCallback = (isTrue) => {
         if (isTrue) {
@@ -217,94 +181,24 @@ const HorizontalLinearStepper = (props) => {
         setOpen(true);
     }
 
-    const handleSkip = () => {
-        if (!isStepOptional(activeStep)) {
-            // You probably want to guard against something like this,
-            // it should never occur unless someone's actively trying to break something.
-            throw new Error("You can't skip a step that isn't optional.");
-        }
-
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        setSkipped((prevSkipped) => {
-            const newSkipped = new Set(prevSkipped.values());
-            newSkipped.add(activeStep);
-            return newSkipped;
-        });
-    };
-
-    const handleReset = () => {
-        setActiveStep(0);
-    };
+   
 
     return (
         <div className={classes.root}>
             <AlertDialogSlide open={open} setOpen={setOpen} alertSlideCallback={slideAlertCallback} title={alertTitle}
                               description={alertDescription} yesOptionTitle={yesOptionTitle}
                               noOptionTitle={noOptionTitle}/>
-            <Stepper activeStep={activeStep} nonLinear orientation={"horizontal"}>
-                {steps.map((label, index) => {
-                    const stepProps = {};
-                    const labelProps = {};
-                    if (isStepOptional(index)) {
-                        labelProps.optional = <Typography variant="caption">Optional</Typography>;
-                    }
-                    if (isStepSkipped(index)) {
-                        stepProps.completed = false;
-                    }
-                    return (
-                        <Step key={label} {...stepProps}>
-                            <StepLabel {...labelProps}>{label}</StepLabel>
-                        </Step>
-                    );
-                })}
-            </Stepper>
             <div>
-                {activeStep === steps.length ? (
-                    <div>
-                        <Typography className={classes.instructions}>
-                            Double Check Your Information
-                            <div id="doubleCheckInfo">
-                                <div>
-                                    First Name: {registerState.firstName}
-                                </div>
-                                <div>
-                                    Last Name: {registerState.lastName}
-                                </div>
-                                <div>
-                                    Phone: {registerState.phone}
-                                </div>
-                                <div>
-                                    Email: {registerState.email}
-                                </div>
-                            </div>
-                        </Typography>
-
-
-                        <Button color="primary" onClick={() => registerComponent.register()} className={classes.button}>
-                            Register
-                        </Button>
-                    </div>
-                ) : (
-                    <div>
-                        <Typography
-                            className={classes.instructions}>{getStepContent(activeStep, registerComponent)}</Typography>
-                        <div>
-                            <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                                Back
-                            </Button>
-
-
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={activeStep === steps.length - 1 ? askForConfirmation : handleNext}
-                                className={classes.button}
-                            >
-                                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                            </Button>
-                        </div>
-                    </div>
-                )}
+                <FormOne registerComponent={registerComponent}/>
+                <FormTwo registerComponent={registerComponent}/>
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={askForConfirmation }
+                className={classes.button}
+            >
+                Finish 
+            </Button>
             </div>
         </div>
     );
@@ -380,7 +274,7 @@ class Register extends Component {
                     ref={ref => this.container = ref}
                     className="toast-bottom-right"
                 />
-                <HorizontalLinearStepper registerComponent={this}/>
+                <FormContainer registerComponent={this}/>
             </div>
         ) : <Redirect to="/provider"/>;
     }
