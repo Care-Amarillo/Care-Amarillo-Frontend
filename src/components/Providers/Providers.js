@@ -61,7 +61,6 @@ const ProviderCard = (props) => {
     const title = data.title;
     const name = data.name;
     return (
-
         <Card className={classes.root}>
             <CardContent>
                 <Typography className={classes.title} >

@@ -37,6 +37,7 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import AlertDialogSlide from "../AlertDialogSlide";
+import CareAppNav from '../CareAppBar/CareAppNav';
 import {ToastContainer, ToastMessage, ToastMessageAnimated} from "react-toastr";
 
 const tableIcons = {

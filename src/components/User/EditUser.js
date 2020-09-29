@@ -11,12 +11,14 @@ import axios from "axios";
 import AlertDialogSlide from "../AlertDialogSlide";
 import {ToastContainer} from "react-toastr";
 import {createMuiTheme} from '@material-ui/core/styles';
+import Avatar from '@material-ui/core/Avatar';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
     },
     button: {
+        marginTop: "3%",
         marginRight: theme.spacing(1),
         backgroundColor: "#132C3C",
         color: "white",
@@ -34,12 +36,21 @@ const useStyles = makeStyles((theme) => ({
     },
     form: {
         '& > *': {
-            margin: theme.spacing(1),
-            width: '25ch',
+            margin: theme.spacing(2),
+            width: '35ch',
         },
         display: "flex",
         flexDirection: "column",
-        alignItems: "center"
+        alignItems: "left",
+        marginLeft: "10%",
+        marginTop: "-15%"
+    },
+    large: {
+        width: theme.spacing(20),
+        height: theme.spacing(20),
+        display: 'flex',
+        marginLeft: "60%",
+        marginTop: "5%"
     },
 }));
 
@@ -63,20 +74,6 @@ const FormOne = (props) => {
         });
     };
 
-
-    return <form className={classes.form} noValidate autoComplete="off">
-        <TextField id="firstName" label="First Name" value={registerComponent.state.fName} onChange={onChangeFirstName}
-                   variant="outlined"/>
-        <TextField id="lastName" label="Last Name" onChange={onChangeLastName} value={registerComponent.state.lName}
-                   variant="outlined"/>
-
-    </form>;
-}
-
-const FormTwo = (props) => {
-    const classes = useStyles();
-    const registerComponent = props.registerComponent;
-
     const onChangeEmail = (e) => {
         registerComponent.setState({
             email: e.target.value,
@@ -89,7 +86,12 @@ const FormTwo = (props) => {
         });
     };
 
+
     return <form className={classes.form} noValidate autoComplete="off">
+        <TextField id="firstName" label="First Name" value={registerComponent.state.fName} onChange={onChangeFirstName}
+                   variant="outlined"/>
+        <TextField id="lastName" label="Last Name" onChange={onChangeLastName} value={registerComponent.state.lName}
+                   variant="outlined"/>
         <TextField id="email" label="Email" onChange={onChangeEmail} value={registerComponent.state.email}
                    variant="outlined"/>
         <TextField id="phone" label="Phone Number" onChange={onChangePhone} value={registerComponent.state.phone}
@@ -98,12 +100,37 @@ const FormTwo = (props) => {
     </form>;
 }
 
+// const FormTwo = (props) => {
+//     const classes = useStyles();
+//     const registerComponent = props.registerComponent;
+
+//     const onChangeEmail = (e) => {
+//         registerComponent.setState({
+//             email: e.target.value,
+//         });
+//     };
+
+//     const onChangePhone = (e) => {
+//         registerComponent.setState({
+//             phone: e.target.value,
+//         });
+//     };
+
+//     return <form className={classes.form} noValidate autoComplete="off">
+//         <TextField id="email" label="Email" onChange={onChangeEmail} value={registerComponent.state.email}
+//                    variant="outlined"/>
+//         <TextField id="phone" label="Phone Number" onChange={onChangePhone} value={registerComponent.state.phone}
+//                    type="number" variant="outlined"/>
+
+//     </form>;
+// }
+
 const getStepContent = (step, registerComponent) => {
     switch (step) {
         case 0:
             return <FormOne registerComponent={registerComponent}/>;
-        case 1:
-            return <FormTwo registerComponent={registerComponent}/>;
+        // case 1:
+        //     return <FormTwo registerComponent={registerComponent}/>;
         default:
             return 'Unknown step';
     }
@@ -197,7 +224,7 @@ const HorizontalLinearStepper = (props) => {
             <AlertDialogSlide open={open} setOpen={setOpen} alertSlideCallback={slideAlertCallback} title={alertTitle}
                               description={alertDescription} yesOptionTitle={yesOptionTitle}
                               noOptionTitle={noOptionTitle}/>
-            <Stepper activeStep={activeStep} orientation={"horizontal"}>
+            {/* <Stepper activeStep={activeStep} orientation={"horizontal"}>
                 {steps.map((label, index) => {
                     const stepProps = {};
                     const labelProps = {};
@@ -213,7 +240,10 @@ const HorizontalLinearStepper = (props) => {
                         </Step>
                     );
                 })}
-            </Stepper>
+            </Stepper> */}
+            <div>
+                <Avatar  alt="userAvatar" src="" className={classes.large} />
+            </div>
             <div>
                 {activeStep === steps.length ? (
                     <div>
@@ -243,11 +273,13 @@ const HorizontalLinearStepper = (props) => {
                 ) : (
                     <div>
                         <Typography
-                            className={classes.instructions}>{getStepContent(activeStep, registerComponent)}</Typography>
+                            className={classes.instructions}>
+                                {getStepContent(activeStep, registerComponent)}
+                                </Typography>
                         <div>
-                            <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                            {/* <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                                 Back
-                            </Button>
+                            </Button> */}
 
 
                             <Button

@@ -69,7 +69,8 @@ const FormOne = (props) => {
             phone: e.target.value,
         });
     };
-    return <form className={classes.form} noValidate autoComplete="off">
+    return(
+     <form className={classes.form} noValidate autoComplete="off">
         <TextField id="name" label="Name" onChange={onChangeName} value={registerComponent.state.name}
                    variant="outlined"/>
         <TextField id="title" label="Title" value={registerComponent.state.title} onChange={onChangeTitle}
@@ -80,7 +81,8 @@ const FormOne = (props) => {
         }} variant="outlined" />
         <TextField id="email" label="Email" onChange={onChangeEmail} value={registerComponent.state.email}
                    variant="outlined"/>
-    </form>;
+    </form>
+    );
 }
 
 const FormTwo = (props) => {

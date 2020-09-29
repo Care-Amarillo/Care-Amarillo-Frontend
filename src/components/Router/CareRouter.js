@@ -21,6 +21,8 @@ import SuperAdminEditProvider from "../../containers/SuperAdminEditProvider";
 import SuperAdminProviderEntries from "../../containers/SuperAdminProviderEntries";
 import SuperAdminSendPush from "../../containers/SuperAdminSendPush";
 import SuperAdminUsers from "../../containers/SuperAdminUsers";
+import LandingPage from "../../containers/LandingPage";
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -44,7 +46,6 @@ function ResponsiveDrawer(props) {
                     <main className={classes.content}>
                         <div className={classes.toolbar} />
                         <Switch>
-                            <Route exact path="/" component={ProviderPanel} />
                             <SuperProtectedRoute exact path="/audit" component={AuditEntries} />
                             <SuperProtectedRoute exact path="/superAdminProviders" component={SuperAdminProviders} />
                             <SuperProtectedRoute exact path="/superAdminProviderEntry" component={SuperAdminProviderEntries} />
@@ -59,6 +60,7 @@ function ResponsiveDrawer(props) {
                             <Route exact path="/login" component={Login} />
                             <Route exact path="/register" component={Register} />
                             <Route exact path="/providerDtl/:id" component={ProviderDetail} />
+                            <Route exact path="/" component={LandingPage} />
                         </Switch>
                     </main>
                 </BrowserRouter>

@@ -11,28 +11,41 @@ import {Redirect} from "react-router-dom";
 import axios from "axios";
 import AlertDialogSlide from "../AlertDialogSlide";
 import {ToastContainer} from "react-toastr";
+import CareAppNav from '../CareAppBar/CareAppNav';
+import Grid from '@material-ui/core/Grid';
+import { Box } from '@material-ui/core';
 
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: '100%',
+        display: 'flex'
+        // flexGrow: 1,
+        // width: '100%',
     },
     button: {
         marginRight: theme.spacing(1),
     },
     instructions: {
-        marginTop: theme.spacing(1),
-        marginBottom: theme.spacing(1),
+        // marginTop: theme.spacing(1),
+        // marginBottom: theme.spacing(1),
     },
     form: {
-        '& > *': {
-            margin: theme.spacing(1),
-            width: '25ch',
-        },
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center"
+        // '& > *': {
+        //     margin: theme.spacing(1),
+        //     width: '50ch',
+        // },
+        // display: "flex",
+        // flexDirection: "column",
+        // alignItems: "center"
     },
+    paper: {
+        padding: theme.spacing(2),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    },
+    main: {
+        // marginTop: 50,
+    }
 }));
 
 const getSteps = () => {
@@ -60,18 +73,6 @@ const FormOne = (props) => {
             phone: e.target.value,
         });
     };
-    return <form className={classes.form} noValidate autoComplete="off">
-        <TextField id="firstName" label="First Name" onChange={onChangeFirstName} variant="outlined" value={registerComponent.state.firstName}/>
-        <TextField id="lastName" label="Last Name" value={registerComponent.state.lastName} onChange={onChangeLastName} variant="outlined"/>
-        <TextField id="phone" label="Phone Number"  inputProps={{ maxLength: 10 }} onInput={(e)=>{
-            e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,10)
-        }} onChange={onChangePhone} type="number" value={registerComponent.state.phone} variant="outlined"/>
-    </form>;
-}
-
-const FormTwo = (props) => {
-    const classes = useStyles();
-    const registerComponent = props.registerComponent;
 
     const onChangeEmail = (e) => {
         registerComponent.setState({
@@ -90,13 +91,60 @@ const FormTwo = (props) => {
             confirmPassword: e.target.value,
         });
     };
-    return <form className={classes.form} noValidate autoComplete="off">
-        <TextField id="email" label="Email" value={registerComponent.state.email} onChange={onChangeEmail} variant="outlined"/>
-        <TextField id="password" label="Password" value={registerComponent.state.password} onChange={onChangePass} type="password" variant="outlined"/>
-        <TextField id="confirmPassword" label="Confirm Password" value={registerComponent.state.confirmPassword} onChange={onChangeConfirmPass} type="password"
-                   variant="outlined"/>
-    </form>;
+    return( 
+    <Grid container spacing={3} className={classes.main}>
+        {/* <form className={classes.form} noValidate autoComplete="off"> */}
+        <Grid item xs={6} className={classes.paper}>
+        
+            <TextField id="firstName" label="First Name" onChange={onChangeFirstName} variant="outlined" value={registerComponent.state.firstName}/>
+            <TextField id="lastName" label="Last Name" value={registerComponent.state.lastName} onChange={onChangeLastName} variant="outlined"/>
+            <TextField id="phone" label="Phone Number"  inputProps={{ maxLength: 10 }} onInput={(e)=>{
+                e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,10)
+            }} onChange={onChangePhone} type="number" value={registerComponent.state.phone} variant="outlined"/>
+        </Grid>
+        <Grid item xs={6} className={classes.paper}>   
+            <TextField id="email" label="Email" value={registerComponent.state.email} onChange={onChangeEmail} variant="outlined"/>
+            <TextField id="password" label="Password" value={registerComponent.state.password} onChange={onChangePass} type="password" variant="outlined"/>
+            <TextField id="confirmPassword" label="Confirm Password" value={registerComponent.state.confirmPassword} onChange={onChangeConfirmPass} type="password"
+                    variant="outlined"/>
+        </Grid>
+        {/* </form> */}
+    </Grid>
+    );
 }
+
+// const FormTwo = (props) => {
+//     const classes = useStyles();
+//     const registerComponent = props.registerComponent;
+
+    // const onChangeEmail = (e) => {
+    //     registerComponent.setState({
+    //         email: e.target.value,
+    //     });
+    // };
+
+    // const onChangePass = (e) => {
+    //     registerComponent.setState({
+    //         password: e.target.value,
+    //     });
+    // };
+
+    // const onChangeConfirmPass = (e) => {
+    //     registerComponent.setState({
+    //         confirmPassword: e.target.value,
+    //     });
+    // };
+//     return( 
+//         <Grid item xs={12} md={6}>
+//     <form className={classes.form} noValidate autoComplete="off">
+//         <TextField id="email" label="Email" value={registerComponent.state.email} onChange={onChangeEmail} variant="outlined"/>
+//         <TextField id="password" label="Password" value={registerComponent.state.password} onChange={onChangePass} type="password" variant="outlined"/>
+//         <TextField id="confirmPassword" label="Confirm Password" value={registerComponent.state.confirmPassword} onChange={onChangeConfirmPass} type="password"
+//                    variant="outlined"/>
+//     </form>
+//     </Grid>
+//     );
+// }
 
 const FormContainer = (props) => {
     const classes = useStyles();
@@ -185,12 +233,15 @@ const FormContainer = (props) => {
 
     return (
         <div className={classes.root}>
+        {/* <CareAppNav /> */}
+        <Box display='flex'>
             <AlertDialogSlide open={open} setOpen={setOpen} alertSlideCallback={slideAlertCallback} title={alertTitle}
                               description={alertDescription} yesOptionTitle={yesOptionTitle}
                               noOptionTitle={noOptionTitle}/>
-            <div>
+            
                 <FormOne registerComponent={registerComponent}/>
-                <FormTwo registerComponent={registerComponent}/>
+                {/* <FormTwo registerComponent={registerComponent}/> */}
+            <div>
             <Button
                 variant="contained"
                 color="primary"
@@ -200,6 +251,7 @@ const FormContainer = (props) => {
                 Finish 
             </Button>
             </div>
+            </Box>
         </div>
     );
 }

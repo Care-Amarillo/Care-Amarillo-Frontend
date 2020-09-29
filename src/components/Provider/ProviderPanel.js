@@ -7,6 +7,7 @@ import './ProviderPanel.css';
 import {Link} from "react-router-dom";
 import {createMuiTheme} from '@material-ui/core/styles';
 import {ThemeProvider} from "@material-ui/styles";
+import CareAppNav from '../CareAppBar/CareAppNav';
 
 const theme = createMuiTheme({
     palette: {

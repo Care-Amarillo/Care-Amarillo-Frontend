@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from "axios";
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import './Login.css';
 import Typography from '@material-ui/core/Typography';
@@ -9,6 +9,11 @@ import {Link, Redirect} from "react-router-dom";
 import {createMuiTheme} from '@material-ui/core/styles';
 import {ThemeProvider} from "@material-ui/styles";
 import {ToastContainer} from "react-toastr";
+import Copyright from '../Copyright/Copyright';
+import { Avatar, Container } from '@material-ui/core';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import PopUp from './PopUp';
+import CareAppNav from '../../containers/CareAppNav';
 
 const theme = createMuiTheme({
     palette: {
@@ -23,9 +28,17 @@ const theme = createMuiTheme({
 
 
 const useStyles = makeStyles((theme) => ({
+    avatar: {
+        marginBottom: 6,
+        marginLeft: theme.spacing(18),
+        backgroundColor: "#132C3C",
+        alignContent: 'center'
+      },
     root: {
-        width: '100%',
-        height:'100vh'
+        marginTop: theme.spacing(-2),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
     },
     button: {
         marginRight: theme.spacing(1),
@@ -37,19 +50,39 @@ const useStyles = makeStyles((theme) => ({
     form: {
         '& > *': {
             margin: theme.spacing(1),
-            width: '35ch',
+            width: '40ch',
         },
         display: "flex",
         flexDirection: "column"
     },
+    btn: {
+        textAlign: 'center',
+        position: 'absolute',
+        top: 30,
+        left: 42,
+        zoom: 1.5,
+    },
 }));
+
+
 
 
 const LoginForm = (props) => {
     const classes = useStyles();
+    const theme = useTheme();
 
-
-    return <ThemeProvider theme={theme}><form className={classes.form} noValidate autoComplete="off">
+    return (
+        <div className={classes.root}>
+        {/* <CareAppNav /> */}
+        <div>
+        <Container component="main" maxWidth="xs">
+        <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">Sign In</Typography>
+        <br/>
+        <ThemeProvider theme={theme}><form className={classes.form} noValidat autoComplete="off">
+        
         <TextField id="email" label="Email" onChange={props.onChangeEmail} variant="outlined"/>
         <TextField id="password" label="Password" onChange={props.onChangePass} type="password" variant="outlined"/>
         <Button onClick={props.loginClicked} variant="contained" id="loginButton" >
@@ -58,7 +91,13 @@ const LoginForm = (props) => {
         <Button to="/register" component={Link} variant="contained" id="loginButton">
             Register
         </Button>
-    </form></ThemeProvider>;
+        
+    </form>
+    </ThemeProvider>
+    </Container>
+    </div>
+    </div>
+    ); 
 }
 
 
@@ -69,11 +108,19 @@ class Login extends Component {
             jwt: "",
             email: "",
             password: "",
+            seen: false,
         }
     }
+    
 
     componentDidMount() {
     }
+
+    togglePop = () => {
+        this.setState({
+          seen: !this.state.seen
+        });
+    };    
 
     // todo: put in its own class so not duplicated across register
     login = async () => {
@@ -114,7 +161,17 @@ class Login extends Component {
 
                 <LoginForm onChangeEmail={this.onChangeEmail} onChangePass={this.onChangePass}
                            loginClicked={this.loginClicked}/>
+            <div onClick={this.togglePop}>
+            <Link variant="body2">
+                Forgot Password?
+            </Link>
             </div>
+            {this.state.seen ? <PopUp toggle={this.togglePop} /> : null}
+            <div>
+            <Copyright />
+            </div>
+            </div>
+            
         ):  <Redirect to="/provider"/>;
 
     }
