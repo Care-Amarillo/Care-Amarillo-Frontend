@@ -60,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
 
 const LandingPage = (props) => {
     const classes = useStyles();
+    props.setIsHomePage(true);
     return (
         <div>
             <CareAppBar />

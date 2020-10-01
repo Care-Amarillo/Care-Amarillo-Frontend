@@ -34,6 +34,18 @@ const mobileOpen = (state = null, action) => {
     }
 }
 
+const isHomePage = (state = null, action) => {
+    switch(action.type) {
+        case "SET_HOMEPAGE":
+            return action.value;
+        case "UNSET_HOMEPAGE":
+            return null;
+        default:
+            return state;
+    }
+}
+
+
 
 const swRegistration = (state = null, action) => {
     switch (action.type) {
@@ -57,4 +69,4 @@ const token = (state = null, action) => {
     }
 }
 
-export default combineReducers({ user, token, provider, mobileOpen, swRegistration })
+export default combineReducers({ user, token, provider, mobileOpen, isHomePage, swRegistration })
