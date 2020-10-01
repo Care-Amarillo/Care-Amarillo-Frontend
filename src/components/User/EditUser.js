@@ -54,9 +54,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const getSteps = () => {
-    return ['Personal Info', 'Contact Info'];
-}
+
 
 const FormOne = (props) => {
     const classes = useStyles();
@@ -100,48 +98,9 @@ const FormOne = (props) => {
     </form>;
 }
 
-// const FormTwo = (props) => {
-//     const classes = useStyles();
-//     const registerComponent = props.registerComponent;
-
-//     const onChangeEmail = (e) => {
-//         registerComponent.setState({
-//             email: e.target.value,
-//         });
-//     };
-
-//     const onChangePhone = (e) => {
-//         registerComponent.setState({
-//             phone: e.target.value,
-//         });
-//     };
-
-//     return <form className={classes.form} noValidate autoComplete="off">
-//         <TextField id="email" label="Email" onChange={onChangeEmail} value={registerComponent.state.email}
-//                    variant="outlined"/>
-//         <TextField id="phone" label="Phone Number" onChange={onChangePhone} value={registerComponent.state.phone}
-//                    type="number" variant="outlined"/>
-
-//     </form>;
-// }
-
-const getStepContent = (step, registerComponent) => {
-    switch (step) {
-        case 0:
-            return <FormOne registerComponent={registerComponent}/>;
-        // case 1:
-        //     return <FormTwo registerComponent={registerComponent}/>;
-        default:
-            return 'Unknown step';
-    }
-}
-
 
 const HorizontalLinearStepper = (props) => {
     const classes = useStyles();
-    const [activeStep, setActiveStep] = React.useState(0);
-    const [skipped, setSkipped] = React.useState(new Set());
-    const steps = getSteps();
     const registerComponent = props.registerComponent;
     const registerState = registerComponent.state;
     const [open, setOpen] = React.useState(false);
@@ -165,49 +124,11 @@ const HorizontalLinearStepper = (props) => {
     </div>
 
 
-    const isStepOptional = (step) => {
-        return false;
-    };
+  
 
-    const isStepSkipped = (step) => {
-        return skipped.has(step);
-    };
+   ;
 
-    const handleNext = () => {
-        let newSkipped = skipped;
-        if (isStepSkipped(activeStep)) {
-            newSkipped = new Set(newSkipped.values());
-            newSkipped.delete(activeStep);
-        }
-
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        setSkipped(newSkipped);
-    };
-
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
-
-    const handleSkip = () => {
-        if (!isStepOptional(activeStep)) {
-            // You probably want to guard against something like this,
-            // it should never occur unless someone's actively trying to break something.
-            throw new Error("You can't skip a step that isn't optional.");
-        }
-
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        setSkipped((prevSkipped) => {
-            const newSkipped = new Set(prevSkipped.values());
-            newSkipped.add(activeStep);
-            return newSkipped;
-        });
-    };
-
-    const handleReset = () => {
-        setActiveStep(0);
-    };
-
-
+  
     const slideAlertCallback = (isTrue) => {
         if (isTrue) {
             registerComponent.updateUser();
@@ -224,75 +145,21 @@ const HorizontalLinearStepper = (props) => {
             <AlertDialogSlide open={open} setOpen={setOpen} alertSlideCallback={slideAlertCallback} title={alertTitle}
                               description={alertDescription} yesOptionTitle={yesOptionTitle}
                               noOptionTitle={noOptionTitle}/>
-            {/* <Stepper activeStep={activeStep} orientation={"horizontal"}>
-                {steps.map((label, index) => {
-                    const stepProps = {};
-                    const labelProps = {};
-                    if (isStepOptional(index)) {
-                        labelProps.optional = <Typography variant="caption">Optional</Typography>;
-                    }
-                    if (isStepSkipped(index)) {
-                        stepProps.completed = false;
-                    }
-                    return (
-                        <Step key={label} {...stepProps}>
-                            <StepLabel {...labelProps}>{label}</StepLabel>
-                        </Step>
-                    );
-                })}
-            </Stepper> */}
+          
             <div>
                 <Avatar  alt="userAvatar" src="" className={classes.large} />
             </div>
             <div>
-                {activeStep === steps.length ? (
-                    <div>
-                        <Typography className={classes.instructions}>
-                            Double Check Your Information
-                            <div id="doubleCheckInfo">
-                                <div>
-                                    First Name: {registerState.firstName}
-                                </div>
-                                <div>
-                                    Last Name: {registerState.lastName}
-                                </div>
-                                <div>
-                                    Phone: {registerState.phone}
-                                </div>
-                                <div>
-                                    Email: {registerState.email}
-                                </div>
-                            </div>
-                        </Typography>
+            <FormOne registerComponent={registerComponent}/>
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={askForConfirmation }
+                className={classes.button}
+            >
+                Update 
+            </Button>
 
-                        <Button color="primary" onClick={() => registerComponent.updateUser()}
-                                className={classes.button}>
-                            Register
-                        </Button>
-                    </div>
-                ) : (
-                    <div>
-                        <Typography
-                            className={classes.instructions}>
-                                {getStepContent(activeStep, registerComponent)}
-                                </Typography>
-                        <div>
-                            {/* <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                                Back
-                            </Button> */}
-
-
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={activeStep === steps.length - 1 ? askForConfirmation : handleNext}
-                                className={classes.button}
-                            >
-                                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                            </Button>
-                        </div>
-                    </div>
-                )}
             </div>
         </div>
     );
@@ -313,7 +180,6 @@ class EditProfile extends Component {
 
     updateUser = async () => {
         let URL = "http://localhost:3000/users/" + this.props.user._id;
-        // let URL = "http://localhost:3000/users/authenticate";
 
 
         const config = {
