@@ -144,59 +144,61 @@ const CareAppNav = (props) => {
         </AppBar>
     );
 
-    return (
+    return (!props.isHomePage ?
+      
         <div className={classes.root}>
           <CssBaseline />
             {appBar}
-        <nav className={classes.drawer} aria-label="mailbox folders">
-            {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-            {/* <Hidden smUp implementation="css"> */}
-                <Drawer
-                    // container={container}
-                    // variant="temporary"
-                    // anchor={theme.direction === "rtl" ? "right" : "left"}
-                    // open={props.mobileOpen}
-                    // onClose={handleDrawerToggle}
-                    // classes={{
-                    //     paper: classes.drawerPaper
-                    // }}
-                    // ModalProps={{
-                    //     keepMounted: true // Better open performance on mobile.
-                    // }}
-                    variant="permanent"
-                    className={clsx(classes.drawer, {
-                      [classes.drawerOpen]: open,
-                      [classes.drawerClose]: !open,
-                    })}
-                    classes={{
-                      paper: clsx({
+          <nav className={classes.drawer} aria-label="mailbox folders">
+              {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+              {/* <Hidden smUp implementation="css"> */}
+                  <Drawer
+                      // container={container}
+                      // variant="temporary"
+                      // anchor={theme.direction === "rtl" ? "right" : "left"}
+                      // open={props.mobileOpen}
+                      // onClose={handleDrawerToggle}
+                      // classes={{
+                      //     paper: classes.drawerPaper
+                      // }}
+                      // ModalProps={{
+                      //     keepMounted: true // Better open performance on mobile.
+                      // }}
+                      variant="permanent"
+                      className={clsx(classes.drawer, {
                         [classes.drawerOpen]: open,
                         [classes.drawerClose]: !open,
-                      }),
-                    }}
-                >
-                  <div className={classes.toolbar}>
-                    <IconButton onClick={handleDrawerClose}>
-                      {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                    </IconButton>
-                  </div>
-                  <Divider />
-                    <CareAppDrawer/>
-                </Drawer>
-            {/* </Hidden>
-            <Hidden xsDown implementation="css"> */}
-                {/* <Drawer
-                    classes={{
-                        paper: classes.drawerPaper
-                    }}
-                    variant="permanent"
-                    open
-                >
-                    <CareAppDrawer/>
-                </Drawer> */}
-            {/* </Hidden> */}
-        </nav>
-        </div>
+                      })}
+                      classes={{
+                        paper: clsx({
+                          [classes.drawerOpen]: open,
+                          [classes.drawerClose]: !open,
+                        }),
+                      }}
+                  >
+                    <div className={classes.toolbar}>
+                      <IconButton onClick={handleDrawerClose}>
+                        {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                      </IconButton>
+                    </div>
+                    <Divider />
+                      <CareAppDrawer/>
+                  </Drawer>
+              {/* </Hidden>
+              <Hidden xsDown implementation="css"> */}
+                  {/* <Drawer
+                      classes={{
+                          paper: classes.drawerPaper
+                      }}
+                      variant="permanent"
+                      open
+                  >
+                      <CareAppDrawer/>
+                  </Drawer> */}
+              {/* </Hidden> */}
+          </nav>
+        </div> : <div></div>
+                
     )
 }
 

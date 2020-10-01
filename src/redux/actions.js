@@ -104,3 +104,11 @@ export const setOpen = (open) => {
         value: open
     }
 }
+
+
+export const setIsHomePage = (isHomePage) => {
+    return {
+        type: "SET_HOMEPAGE",
+        value: isHomePage
+    }
+}
