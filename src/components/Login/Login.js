@@ -114,6 +114,7 @@ class Login extends Component {
     
 
     componentDidMount() {
+        this.props.setIsHomePage(false);
     }
 
     togglePop = () => {
