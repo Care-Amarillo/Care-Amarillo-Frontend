@@ -23,6 +23,8 @@ import ProviderEntries from '../../containers/ProviderEntries';
 import { Provider } from 'react-redux';
 import { TableChart } from '@material-ui/icons';
 import SuperAdminProviders from '../../containers/SuperAdminProviders';
+import AuditEntries from '../../containers/AuditEntries';
+import SuperAdminUsers from '../../containers/SuperAdminUsers';
 
 
 const drawerWidth = 250;
@@ -100,14 +102,18 @@ const RegisterListItem = (props) => {
 }
 
 const AuditListItem = (props) => {
-    return <ListItem key="audit" onClick={()=>props.handleClick()} component={Link} to={"/audit"}>
-        {/*<ListItemIcon>*/}
-        {/*    <AccountCircleIcon/>*/}
+    return <ListItem button key={AuditEntries} onClick={()=>props.handleClick()} component={Link} to={"/audit"}>
+        <ListItemIcon>{<TableChartIcon />}</ListItemIcon>
+        <ListItemText>AUDIT ENTRIES</ListItemText>
+    </ListItem>
+    // return <ListItem key="audit" onClick={()=>props.handleClick()} component={Link} to={"/audit"}>
+    //     {/*<ListItemIcon>*/}
+    //     {/*    <AccountCircleIcon/>*/}
 
-        {/*</ListItemIcon>*/}
-        {/*/!*<ListItemText primary="Audit"/>*!/*/}
-        <Button startIcon={<TableChartIcon/>}>Audit Entries</Button>
-    </ListItem>;
+    //     {/*</ListItemIcon>*/}
+    //     {/*/!*<ListItemText primary="Audit"/>*!/*/}
+    //     <Button startIcon={<TableChartIcon/>}>Audit Entries</Button>
+    // </ListItem>;
 }
 
 const ProviderListItem = (props) => {
@@ -188,14 +194,18 @@ const EditProviderListItem = (props) => {
 
 
 const SuperAdminEditUsersListItem = (props) => {
-    return <ListItem key="editAllUsers" onClick={()=>props.handleClick()} component={Link} to={"/superAdminUsers"}>
-        {/*<ListItemIcon>*/}
-        {/*    <AccountCircleIcon/>*/}
+    return <ListItem button key={SuperAdminUsers} onClick={()=>props.handleClick()} component={Link} to={"/superAdminUser"}>
+        <ListItemIcon>{<EditIcon />}</ListItemIcon>
+        <ListItemText>MANAGE ALL USERS</ListItemText>
+    </ListItem>
+    // return <ListItem key="editAllUsers" onClick={()=>props.handleClick()} component={Link} to={"/superAdminUsers"}>
+    //     {/*<ListItemIcon>*/}
+    //     {/*    <AccountCircleIcon/>*/}
 
-        {/*</ListItemIcon>*/}
-        {/*<ListItemText primary="Manage Provider"/>*/}
-        <Button startIcon={<EditIcon/>}>Manage All Users</Button>
-    </ListItem>;
+    //     {/*</ListItemIcon>*/}
+    //     {/*<ListItemText primary="Manage Provider"/>*/}
+    //     <Button startIcon={<EditIcon/>}>Manage All Users</Button>
+    // </ListItem>;
 }
 
 
@@ -206,14 +216,14 @@ const UserListItem = (props) => {
         <ListItemText>PROFILE</ListItemText>
     </ListItem>
 
-    return <ListItem key="Profile" onClick={()=>props.handleClick()} component={Link} to={"/editUser"}>
-        {/*<ListItemIcon>*/}
-        {/*    <AccountCircleIcon/>*/}
+    // return <ListItem key="Profile" onClick={()=>props.handleClick()} component={Link} to={"/editUser"}>
+    //     {/*<ListItemIcon>*/}
+    //     {/*    <AccountCircleIcon/>*/}
 
-        {/*</ListItemIcon>*/}
-        {/*<ListItemText primary="Profile"/>*/}
-        <Button startIcon={<AccountCircleIcon/>}>Profile</Button>
-    </ListItem>;
+    //     {/*</ListItemIcon>*/}
+    //     {/*<ListItemText primary="Profile"/>*/}
+    //     <Button startIcon={<AccountCircleIcon/>}>Profile</Button>
+    // </ListItem>;
 }
 
 const SuperAdminProvidersListItem = (props) => {
@@ -234,15 +244,19 @@ const SuperAdminProvidersListItem = (props) => {
 
 
 const SuperAdminSendPushListItem = (props) => {
+    return <ListItem button key={SuperAdminSendPushListItem} onClick={()=>props.handleClick()} component={Link} to={"/superAdminSendPush"}>
+        <ListItemIcon>{<SendIcon />}</ListItemIcon>
+        <ListItemText>SEND PUSH</ListItemText>
+    </ListItem>
 
-    return <ListItem key="superAdminSendPush" onClick={()=>props.handleClick()} component={Link} to={"/superAdminSendPush"}>
-        {/*<ListItemIcon>*/}
-        {/*    <AccountCircleIcon/>*/}
+    // return <ListItem key="superAdminSendPush" onClick={()=>props.handleClick()} component={Link} to={"/superAdminSendPush"}>
+    //     {/*<ListItemIcon>*/}
+    //     {/*    <AccountCircleIcon/>*/}
 
-        {/*</ListItemIcon>*/}
-        {/*<ListItemText primary="Manage Providers"/>*/}
-        <Button startIcon={<SendIcon/>}>Send Push</Button>
-    </ListItem>;
+    //     {/*</ListItemIcon>*/}
+    //     {/*<ListItemText primary="Manage Providers"/>*/}
+    //     <Button startIcon={<SendIcon/>}>Send Push</Button>
+    // </ListItem>;
 }
 
 const LogOutListItem = (props) => {
