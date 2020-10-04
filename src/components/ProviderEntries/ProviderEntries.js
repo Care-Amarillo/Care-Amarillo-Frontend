@@ -7,6 +7,9 @@ import {
     TableHead,
     TableRow
 } from '@material-ui/core';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import DefaultTooltipContent from 'recharts/lib/component/DefaultTooltipContent';
+
 import format from "date-fns/format";
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -91,6 +94,50 @@ const ProviderTable = (props) => {
         />
     </div>;
 }
+
+const formatXAxis = tickItem => {
+    console.log(tickItem);
+    if(tickItem != null && tickItem !== undefined){
+       return format(new Date(tickItem), "MM/d/yyyy h:mma").toString();
+    }
+    else{
+       return format( new Date(), "MM/d/yyyy h:mma").toString();
+    }
+ }
+
+ const CustomTooltip = props => {
+    // we don't need to check payload[0] as there's a better prop for this purpose
+    if (!props.active || !props.payload) {
+      // I think returning null works based on this: http://recharts.org/en-US/examples/CustomContentOfTooltip
+      return null
+    }
+    // mutating props directly is against react's conventions
+    // so we create a new payload with the name and value fields set to what we want
+    // console.log(`payload is ${JSON.stringify(props.payload[0].payload)}`)
+    const newPayload = [
+      {
+        name: 'Amount Changed',
+        // all your data which created the tooltip is located in the .payload property
+        value: props.payload[0].payload.amountChanged,
+        // you can also add "unit" here if you need it
+      },
+    //   ...props.payload,
+    ];
+  
+    // we render the default, but with our overridden payload
+    return <DefaultTooltipContent {...props} payload={newPayload} />;
+  }
+
+
+const ProviderGraph = (props) => {
+
+   return props.data.length > 0 ?  <div> <LineChart width={800} height={400}  data={props.data}>
+     <Line type="monotone" dataKey="amountChanged" stroke="#8884d8" />
+     <XAxis interval={0} dataKey="createdAt" tickFormatter={formatXAxis} />
+     <YAxis dataKey="amountChanged"/>
+     <Tooltip labelFormatter={formatXAxis} content={<CustomTooltip/>} />
+   </LineChart></div> : <div></div>;
+ }
 
 class ProviderEntries extends Component {
     constructor(props) {
@@ -516,6 +563,7 @@ class ProviderEntries extends Component {
                         </div>
                     </MuiPickersUtilsProvider>
                 </div>
+                <ProviderGraph data={this.state.entries}/>
                 <ProviderTable data={this.state.entries} setOpen={this.setOpen}/>
             </Container>
         );

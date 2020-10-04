@@ -7,6 +7,7 @@ import {
     TableHead,
     TableRow
 } from '@material-ui/core';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 import format from "date-fns/format";
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -19,6 +20,7 @@ import 'date-fns';
 import axios from "axios";
 import MaterialTable from "material-table";
 import {forwardRef} from 'react';
+import DefaultTooltipContent from 'recharts/lib/component/DefaultTooltipContent';
 
 
 import AddBox from '@material-ui/icons/AddBox';
@@ -101,6 +103,52 @@ const ProviderTable = (props) => {
     </div>;
 }
 
+const formatXAxis = tickItem => {
+    console.log(tickItem);
+    if(tickItem != null && tickItem !== undefined){
+       return format(new Date(tickItem), "MM/d/yyyy h:mma").toString();
+    }
+    else{
+       return format( new Date(), "MM/d/yyyy h:mma").toString();
+    }
+ }
+
+ const CustomTooltip = props => {
+    // we don't need to check payload[0] as there's a better prop for this purpose
+    if (!props.active || !props.payload) {
+      // I think returning null works based on this: http://recharts.org/en-US/examples/CustomContentOfTooltip
+      return null
+    }
+    // mutating props directly is against react's conventions
+    // so we create a new payload with the name and value fields set to what we want
+    // console.log(`payload is ${JSON.stringify(props.payload[0].payload)}`)
+    const newPayload = [
+      {
+        name: 'Amount Changed',
+        // all your data which created the tooltip is located in the .payload property
+        value: props.payload[0].payload.amountChanged,
+        // you can also add "unit" here if you need it
+      },
+    //   ...props.payload,
+    ];
+  
+    // we render the default, but with our overridden payload
+    return <DefaultTooltipContent {...props} payload={newPayload} />;
+  }
+
+
+const ProviderGraph = (props) => {
+
+   return props.data.length > 0 ?  <div> <LineChart width={800} height={400}  data={props.data}>
+     <Line type="monotone" dataKey="amountChanged" stroke="#8884d8" />
+     <XAxis interval={0} dataKey="createdAt" tickFormatter={formatXAxis} />
+     <YAxis dataKey="amountChanged"/>
+     <Tooltip labelFormatter={formatXAxis} content={<CustomTooltip/>} />
+   </LineChart></div> : <div></div>;
+ }
+
+
+
 class SuperAdminProviderEntries extends Component {
     constructor(props) {
         super(props);
@@ -132,40 +180,8 @@ class SuperAdminProviderEntries extends Component {
 
 
     componentDidMount() {
-        this.loadProviderData();
+        this.loadData();
     }
-
-    loadProviderData = async () => {
-
-        let URL = "http://localhost:3000/managingUsers/user/" + this.props.user._id;
-
-        const config = {
-            "Authorization": `Bearer ${this.props.token}`
-        };
-
-        const response = await axios({
-            method: 'get',
-            url: URL,
-            headers: config
-        });
-
-        const data = await response.data;
-        if (data.length > 0) {
-            let provider = data[0].provider;
-            this.setState({
-                    name: provider.name,
-                    providerId: provider._id,
-                }, () => {
-
-                    this.loadData();
-
-                }
-            );
-        }
-
-
-    }
-
 
 
 
@@ -525,6 +541,7 @@ class SuperAdminProviderEntries extends Component {
                         </div>
                     </MuiPickersUtilsProvider>
                 </div>
+                <ProviderGraph data={this.state.entries}/>
                 <ProviderTable data={this.state.entries} setOpen={this.setOpen}/>
             </Container>
         );
