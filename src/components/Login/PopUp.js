@@ -8,10 +8,10 @@ import { Close } from "@material-ui/icons";
 const useStyles = makeStyles(() => ({
     modal: {
         position: 'fixed',
+        width: '100%',
+        height: '100%',
         zIndex: 1,
-        width: 600,
-        height: 500,
-        color: (0, 0, 0, 0.25),
+        backgroundColor: 'rgba(0, 0, 0, 0.25)',
     },
     modalContent: {
         color:'black',
@@ -19,41 +19,56 @@ const useStyles = makeStyles(() => ({
         position: 'absolute',
         borderRadius: 5,
         border: 2,
+        left: '30%',
+        top: '18%',
     },
     close: {
-      fontSize: 'large',
+      fontSize: '10%',
       paddingRight: 20,
-      paddingTop: 10,
+      paddingTop: 20,
       display: 'flex',
       justifyContent: 'flex-end'
     },
     text: {
-      paddingLeft: 20,
+      paddingLeft: 40,
       textAlign: 'left',
     },
     button: {
-      paddingTop: 10,
-      // display: 'flex',
+      display: 'flex',
+      marginLeft: 390,
+      marginBottom: 20,
+      marginTop: 23,
+      display: 'absolute',
+      color: 'white',
+      backgroundColor: "#132C3C",
     },
     content: {
-      height: 300,
+      height: 270,
       width: 500
-    }
+    },
+    email: {
+      display: 'flex',
+      marginLeft: 40,
+      marginRight: 60,
+
+    },
 }));
 
-
 const PopUpForm = (props) => {
+  
+  
+
   const classes = useStyles();
   return (
     <div className={classes.modal}>   
       <div className={classes.modalContent}>
-        <span onClick={props.handleClick} className={classes.close}>
-          <Close />
-        </span>
         <Paper className={classes.content}>
-          <h3 className={classes.text}>Forgot Password</h3>
+        <div onClick={props.handleClick} className={classes.close}>
+          <Close fontSize='large'/>
+        </div>
+          <h2 className={classes.text}>Forgot Password</h2>
           <p className={classes.text}>Please enter the email address associated with your account.</p>
-          <TextField placeholder="Email">
+          <TextField placeholder="Email" className={classes.email}>
             Email:
             <input type="text" name="name" />
           </TextField>
@@ -69,10 +84,11 @@ const PopUpForm = (props) => {
 
 
 export default class PopUp extends Component {
-  
-handleClick = (props) => {
-  this.props.toggle();
-}
+
+  handleClick = () => {
+    this.toggle();
+  }
+
 
 render() {
     return (

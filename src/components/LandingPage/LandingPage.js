@@ -12,14 +12,14 @@ import Copyright from '../Copyright/Copyright';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        marginLeft: 30,
-        marginRight: 30
+        marginLeft: 100,
+        marginRight: 100
     },
     mainFeaturedPost: {
       position: 'relative',
       backgroundColor: theme.palette.grey[800],
       color: theme.palette.common.white,
-      marginBottom: theme.spacing(4),
+      marginBottom: theme.spacing(2),
       backgroundImage: 'url(https://source.unsplash.com/random)',
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
@@ -85,7 +85,7 @@ const LandingPage = (props) => {
             <div className={classes.root}>
             <Grid container spacing={3}>
             <Grid item xs={12} md={7}  className={classes.paper}>
-                <h2>About</h2>
+                <h2>About Care Amarillo</h2>
                 <hr />
                 <p>
                 Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.
