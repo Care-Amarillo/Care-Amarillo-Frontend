@@ -108,7 +108,7 @@ const CareAppNav = (props) => {
     const theme = useTheme();
 
     // Allows the drawer to open and close
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
       setOpen(true);
     };
@@ -141,6 +141,22 @@ const CareAppNav = (props) => {
                     Care Amarillo
                 </Typography>
             </Toolbar>
+            {/* <div className={classes.searchBox}>
+              <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                      <SearchIcon />
+                  </div>
+                  <InputBase
+                      placeholder="Search Shelter..."
+                      classes={{
+                          root: classes.inputRoot,
+                          input: classes.inputInput,
+                      }}
+                      // onChange={this.searchChanged}
+                      inputProps={{'area-label': 'search'}}
+                      />
+              </div>
+              </div> */}
         </AppBar>
     );
 
@@ -198,7 +214,7 @@ const CareAppNav = (props) => {
               {/* </Hidden> */}
           </nav>
         </div> : <div></div>
-                
+        
     )
 }
 

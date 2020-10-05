@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     form: {
         '& > *': {
             margin: theme.spacing(1),
-            width: '25ch',
+            width: '40ch',
         },
         display: "flex",
         flexDirection: "column",

@@ -12,3 +12,8 @@
     background-color: #132C3C;
     color: white;
 }
+
+#background{
+    display: flex;
+    justify-items: center;
+}

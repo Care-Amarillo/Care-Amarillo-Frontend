@@ -11,41 +11,28 @@ import {Redirect} from "react-router-dom";
 import axios from "axios";
 import AlertDialogSlide from "../AlertDialogSlide";
 import {ToastContainer} from "react-toastr";
-import CareAppNav from '../CareAppBar/CareAppNav';
-import Grid from '@material-ui/core/Grid';
-import { Box } from '@material-ui/core';
 
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        display: 'flex'
-        // flexGrow: 1,
-        // width: '100%',
+        width: '100%',
     },
     button: {
         marginRight: theme.spacing(1),
     },
     instructions: {
-        // marginTop: theme.spacing(1),
-        // marginBottom: theme.spacing(1),
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
     },
     form: {
-        // '& > *': {
-        //     margin: theme.spacing(1),
-        //     width: '50ch',
-        // },
-        // display: "flex",
-        // flexDirection: "column",
-        // alignItems: "center"
+        '& > *': {
+            margin: theme.spacing(1),
+            width: '25ch',
+        },
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
     },
-    paper: {
-        padding: theme.spacing(2),
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-    },
-    main: {
-        // marginTop: 50,
-    }
 }));
 
 const getSteps = () => {
@@ -73,6 +60,18 @@ const FormOne = (props) => {
             phone: e.target.value,
         });
     };
+    return <form className={classes.form} noValidate autoComplete="off">
+        <TextField id="firstName" label="First Name" onChange={onChangeFirstName} variant="outlined" value={registerComponent.state.firstName}/>
+        <TextField id="lastName" label="Last Name" value={registerComponent.state.lastName} onChange={onChangeLastName} variant="outlined"/>
+        <TextField id="phone" label="Phone Number"  inputProps={{ maxLength: 10 }} onInput={(e)=>{
+            e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,10)
+        }} onChange={onChangePhone} type="number" value={registerComponent.state.phone} variant="outlined"/>
+    </form>;
+}
+
+const FormTwo = (props) => {
+    const classes = useStyles();
+    const registerComponent = props.registerComponent;
 
     const onChangeEmail = (e) => {
         registerComponent.setState({
@@ -91,63 +90,31 @@ const FormOne = (props) => {
             confirmPassword: e.target.value,
         });
     };
-    return( 
-    <Grid container spacing={3} className={classes.main}>
-        {/* <form className={classes.form} noValidate autoComplete="off"> */}
-        <Grid item xs={6} className={classes.paper}>
-        
-            <TextField id="firstName" label="First Name" onChange={onChangeFirstName} variant="outlined" value={registerComponent.state.firstName}/>
-            <TextField id="lastName" label="Last Name" value={registerComponent.state.lastName} onChange={onChangeLastName} variant="outlined"/>
-            <TextField id="phone" label="Phone Number"  inputProps={{ maxLength: 10 }} onInput={(e)=>{
-                e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,10)
-            }} onChange={onChangePhone} type="number" value={registerComponent.state.phone} variant="outlined"/>
-        </Grid>
-        <Grid item xs={6} className={classes.paper}>   
-            <TextField id="email" label="Email" value={registerComponent.state.email} onChange={onChangeEmail} variant="outlined"/>
-            <TextField id="password" label="Password" value={registerComponent.state.password} onChange={onChangePass} type="password" variant="outlined"/>
-            <TextField id="confirmPassword" label="Confirm Password" value={registerComponent.state.confirmPassword} onChange={onChangeConfirmPass} type="password"
-                    variant="outlined"/>
-        </Grid>
-        {/* </form> */}
-    </Grid>
-    );
+    return <form className={classes.form} noValidate autoComplete="off">
+        <TextField id="email" label="Email" value={registerComponent.state.email} onChange={onChangeEmail} variant="outlined"/>
+        <TextField id="password" label="Password" value={registerComponent.state.password} onChange={onChangePass} type="password" variant="outlined"/>
+        <TextField id="confirmPassword" label="Confirm Password" value={registerComponent.state.confirmPassword} onChange={onChangeConfirmPass} type="password"
+                   variant="outlined"/>
+    </form>;
 }
 
-// const FormTwo = (props) => {
-//     const classes = useStyles();
-//     const registerComponent = props.registerComponent;
+const getStepContent = (step, registerComponent) => {
+    switch (step) {
+        case 0:
+            return <FormOne registerComponent={registerComponent}/>;
+        case 1:
+            return <FormTwo registerComponent={registerComponent}/>;
+        default:
+            return 'Unknown step';
+    }
+}
 
-    // const onChangeEmail = (e) => {
-    //     registerComponent.setState({
-    //         email: e.target.value,
-    //     });
-    // };
 
-    // const onChangePass = (e) => {
-    //     registerComponent.setState({
-    //         password: e.target.value,
-    //     });
-    // };
-
-    // const onChangeConfirmPass = (e) => {
-    //     registerComponent.setState({
-    //         confirmPassword: e.target.value,
-    //     });
-    // };
-//     return( 
-//         <Grid item xs={12} md={6}>
-//     <form className={classes.form} noValidate autoComplete="off">
-//         <TextField id="email" label="Email" value={registerComponent.state.email} onChange={onChangeEmail} variant="outlined"/>
-//         <TextField id="password" label="Password" value={registerComponent.state.password} onChange={onChangePass} type="password" variant="outlined"/>
-//         <TextField id="confirmPassword" label="Confirm Password" value={registerComponent.state.confirmPassword} onChange={onChangeConfirmPass} type="password"
-//                    variant="outlined"/>
-//     </form>
-//     </Grid>
-//     );
-// }
-
-const FormContainer = (props) => {
+const HorizontalLinearStepper = (props) => {
     const classes = useStyles();
+    const [activeStep, setActiveStep] = React.useState(0);
+    const [skipped, setSkipped] = React.useState(new Set());
+    const steps = getSteps();
     const registerComponent = props.registerComponent;
     const registerState = registerComponent.state;
     const [open, setOpen] = React.useState(false);
@@ -171,7 +138,28 @@ const FormContainer = (props) => {
     </div>;
 
 
-    
+    const isStepOptional = (step) => {
+        return false;
+    };
+
+    const isStepSkipped = (step) => {
+        return skipped.has(step);
+    };
+
+    const handleNext = () => {
+        let newSkipped = skipped;
+        if (isStepSkipped(activeStep)) {
+            newSkipped = new Set(newSkipped.values());
+            newSkipped.delete(activeStep);
+        }
+
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        setSkipped(newSkipped);
+    };
+
+    const handleBack = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    };
 
     const slideAlertCallback = (isTrue) => {
         if (isTrue) {
@@ -229,29 +217,95 @@ const FormContainer = (props) => {
         setOpen(true);
     }
 
-   
+    const handleSkip = () => {
+        if (!isStepOptional(activeStep)) {
+            // You probably want to guard against something like this,
+            // it should never occur unless someone's actively trying to break something.
+            throw new Error("You can't skip a step that isn't optional.");
+        }
+
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        setSkipped((prevSkipped) => {
+            const newSkipped = new Set(prevSkipped.values());
+            newSkipped.add(activeStep);
+            return newSkipped;
+        });
+    };
+
+    const handleReset = () => {
+        setActiveStep(0);
+    };
 
     return (
         <div className={classes.root}>
-        {/* <CareAppNav /> */}
-        <Box display='flex'>
             <AlertDialogSlide open={open} setOpen={setOpen} alertSlideCallback={slideAlertCallback} title={alertTitle}
                               description={alertDescription} yesOptionTitle={yesOptionTitle}
                               noOptionTitle={noOptionTitle}/>
-            
-                <FormOne registerComponent={registerComponent}/>
-                {/* <FormTwo registerComponent={registerComponent}/> */}
+            <Stepper activeStep={activeStep} nonLinear orientation={"horizontal"}>
+                {steps.map((label, index) => {
+                    const stepProps = {};
+                    const labelProps = {};
+                    if (isStepOptional(index)) {
+                        labelProps.optional = <Typography variant="caption">Optional</Typography>;
+                    }
+                    if (isStepSkipped(index)) {
+                        stepProps.completed = false;
+                    }
+                    return (
+                        <Step key={label} {...stepProps}>
+                            <StepLabel {...labelProps}>{label}</StepLabel>
+                        </Step>
+                    );
+                })}
+            </Stepper>
             <div>
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={askForConfirmation }
-                className={classes.button}
-            >
-                Finish 
-            </Button>
+                {activeStep === steps.length ? (
+                    <div>
+                        <Typography className={classes.instructions}>
+                            Double Check Your Information
+                            <div id="doubleCheckInfo">
+                                <div>
+                                    First Name: {registerState.firstName}
+                                </div>
+                                <div>
+                                    Last Name: {registerState.lastName}
+                                </div>
+                                <div>
+                                    Phone: {registerState.phone}
+                                </div>
+                                <div>
+                                    Email: {registerState.email}
+                                </div>
+                            </div>
+                        </Typography>
+
+
+                        <Button color="primary" onClick={() => registerComponent.register()} className={classes.button}>
+                            Register
+                        </Button>
+                    </div>
+                ) : (
+                    <div>
+                        <Typography
+                            className={classes.instructions}>{getStepContent(activeStep, registerComponent)}</Typography>
+                        <div>
+                            <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                                Back
+                            </Button>
+
+
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={activeStep === steps.length - 1 ? askForConfirmation : handleNext}
+                                className={classes.button}
+                            >
+                                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                            </Button>
+                        </div>
+                    </div>
+                )}
             </div>
-            </Box>
         </div>
     );
 }
@@ -317,7 +371,6 @@ class Register extends Component {
 
 
     componentDidMount() {
-        this.props.setIsHomePage(false);
     }
 
     render() {
@@ -327,7 +380,7 @@ class Register extends Component {
                     ref={ref => this.container = ref}
                     className="toast-bottom-right"
                 />
-                <FormContainer registerComponent={this}/>
+                <HorizontalLinearStepper registerComponent={this}/>
             </div>
         ) : <Redirect to="/provider"/>;
     }
