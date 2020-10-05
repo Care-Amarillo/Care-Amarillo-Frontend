@@ -194,7 +194,7 @@ const EditProviderListItem = (props) => {
 
 
 const SuperAdminEditUsersListItem = (props) => {
-    return <ListItem button key={SuperAdminUsers} onClick={()=>props.handleClick()} component={Link} to={"/superAdminUser"}>
+    return <ListItem button key={SuperAdminUsers} onClick={()=>props.handleClick()} component={Link} to={"/superAdminUsers"}>
         <ListItemIcon>{<EditIcon />}</ListItemIcon>
         <ListItemText>MANAGE ALL USERS</ListItemText>
     </ListItem>
