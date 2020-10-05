@@ -1,17 +1,16 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import { makeStyles, fade } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
-import Grid from '@material-ui/core/Grid';
 import Copyright from '../Copyright/Copyright';
 import logo from './logo.png';
 import axios from "axios";
-import { CardMedia } from '@material-ui/core';
+import Select from 'react-select';
 // import './CareAppBar.css';
+import {Redirect} from "react-router-dom";
 
 
 
@@ -55,6 +54,19 @@ const useStyles = makeStyles((theme) => ({
     searchBox: {
       marginLeft: 870
     },
+    reactSearch:{
+        width:"30%",
+      // display:'flex',
+      // justifyContent: 'end'
+    },
+    appChildrenContainer:{
+        width:"100%",
+        // backgroundColor:"black",
+      display:'flex',
+        flexDirection:"row",
+        justifyContent:"space-between",
+        alignItems: 'center',
+    },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 0),
       // vertical padding + font size from searchIcon
@@ -75,59 +87,90 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const CareAppBar = () => {
-// class CareAppBar extends Component() {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       providers: [],
-//       searchQuery: ""
-//     }
-  // }
-//   componentDidMount() {
-//     this.loadData();
 
-// }
 
-// searchChanged = (e) => {
-//     this.setState({
-//         searchQuery: e.target.value
-//     }, ()=>{
-//        this.loadData();
-//     })
+const CareAppBar = (props) => {
+  const [searchQuery, setSearchQuery] = useState("");
+    const [selectedProvider, setSelectedProvider] = useState("");
+  const [providers, setProviders] = useState([]);
 
-// }
-// loadData = async () => {
-//   let URL = "http://localhost:3000/providersActive";
+// useEffect(() => {
+//   loadData().then(r => console.log(""));
+// }, []);
+
+const searchChanged = (e) => {
+  console.log(`value is ${e}`);
+  setSearchQuery(e);
+}
+
+const onChange = (e,a) => {
+    console.log(`selected provider id is ${JSON.stringify(e)} and ${JSON.stringify(a)}`);
+    setSelectedProvider(e.value);
+}
+
+
+const customStyles = {
+  option: provided => ({
+    ...provided,
+    color: 'black'
+  }),
+  control: provided => ({
+    ...provided,
+    color: 'black'
+  }),
+  singleValue: provided => ({
+    ...provided,
+    color: 'black'
+  })
+}
+
+useEffect(() => {
+  
+  loadData().then(r => console.log(""));
+}, [searchQuery]);
+
+;
+
+
+const loadData = async () => {
+  console.log(`loaddata val is ${searchQuery}`);
+  let URL = "http://localhost:3000/providersActive";
+
+        const response = await axios({
+            method: 'get',
+            url: URL,
+            params:{
+               searchQuery: searchQuery
+            }
+        });
+
+        const data = await response.data;
+        console.log(`data is ${data}`);
         
-
-
-//         const response = await axios({
-//             method: 'get',
-//             url: URL,
-//             params:{
-//                searchQuery: this.state.searchQuery
-//             }
-
-//         });
-
-
-//         const data = await response.data;
-
-//         this.setState({
-//             providers: data
-//         });
-// }
-    // render() {
+        let tempData = [];
+        for(let obj in data){
+          console.log(`obj data is ${JSON.stringify(data[obj])}`);
+          let actualObj = data[obj];
+          let val = actualObj._id;
+          let label = actualObj.name;
+          tempData.push({value: val, label: label});
+        }
+        setProviders(tempData);
+        // setProviders(data);
+        return data;
+}
       const classes = useStyles();
     return (
-        <div className={classes.root}>
+       selectedProvider === "" ? <div className={classes.root}>
             <AppBar  style={{ backgroundColor: "#132C3C" }} position="fixed">
                 <Toolbar>
-                  <CardMedia>
-                    <img src={logo} className={classes.logo} />
-                  </CardMedia>
-                    <div className={classes.searchBox}>
+                  <div className={classes.appChildrenContainer}>
+                      <img src={logo} className={classes.logo} />
+                      <div className={classes.reactSearch}>
+                            <Select onInputChange={searchChanged} onChange={onChange} value={selectedProvider}  placeholder='Search' autosize={false} options={providers} styles={customStyles} components={{ DropdownIndicator:() => null, IndicatorSeparator:() => null }} />
+                      </div>
+                  </div>
+                    {/* <div className={classes.searchBox}>
                       <div className={classes.search}>
                           <div className={classes.searchIcon}>
                               <SearchIcon />
@@ -142,17 +185,12 @@ const CareAppBar = () => {
                               inputProps={{'area-label': 'search'}}
                               />
                       </div>
-                      </div>
+                      </div> */}
                 </Toolbar>
-                {/* <Button onClick={props.loginClicked} variant="contained" id="loginButton" >
-                    Login
-                </Button> */}
-                
             </AppBar>
             <div/>
-        </div>
+        </div>: <Redirect to={`/providerDtl/${selectedProvider}`}/>
     );
-    // }
 }
 
 export default CareAppBar;

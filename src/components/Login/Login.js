@@ -35,6 +35,8 @@ const useStyles = makeStyles((theme) => ({
         alignContent: 'center'
       },
     root: {
+        width: '100%',
+        // height: '100vh',
         marginTop: theme.spacing(-2),
         display: 'flex',
         flexDirection: 'column',
