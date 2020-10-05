@@ -1,7 +1,12 @@
 #providerContainer{
     display: flex;
+    height: 100vh;
     flex-direction: column;
     background-color: lightgray;
+}
+
+#search{
+    width: 40ch;
 }
 
 #actionContainer{
@@ -25,6 +30,7 @@
 }
 
 #providerButton{
+    margin-left: -148px;
     background-color: #132C3C;
     color: white;
 }

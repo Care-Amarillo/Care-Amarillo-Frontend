@@ -36,8 +36,7 @@ const useStyles = makeStyles(() => ({
     button: {
       display: 'flex',
       marginLeft: 390,
-      marginBottom: 20,
-      marginTop: 23,
+      marginTop: 35,
       display: 'absolute',
       color: 'white',
       backgroundColor: "#132C3C",
@@ -72,7 +71,6 @@ const PopUpForm = (props) => {
             Email:
             <input type="text" name="name" />
           </TextField>
-          <br />
           <Button className={classes.button} type="submit" variant="contained" >
             Reset
           </Button>

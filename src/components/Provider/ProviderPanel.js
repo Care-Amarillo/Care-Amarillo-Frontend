@@ -8,6 +8,7 @@ import {Link} from "react-router-dom";
 import {createMuiTheme} from '@material-ui/core/styles';
 import {ThemeProvider} from "@material-ui/styles";
 import CareAppNav from '../CareAppBar/CareAppNav';
+import Chart from './Chart';
 
 const theme = createMuiTheme({
     palette: {
@@ -82,16 +83,14 @@ class ProviderPanel extends Component {
             <div id="providerContainer">
                 <div id="actionContainer">
                     <ThemeProvider theme={theme}>
-                    <TextField id="search" label="Search" onChange={this.searchChanged} type="search" variant="outlined"/>
+                    <TextField id="search" label="Search for Shelter..." onChange={this.searchChanged} type="search" variant="outlined"/>
                     </ThemeProvider>
                     {providerButton}
-
-
                 </div>
-
                 {this.state.providers.map((data, index) => (
                     <Providers key={index} index={index} data={data}/>
                 ))}
+                <Chart />
             </div>
         );
     }

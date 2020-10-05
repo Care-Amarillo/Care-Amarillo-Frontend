@@ -11,9 +11,12 @@ import CareAppBar from '../CareAppBar/CareAppBar';
 import Copyright from '../Copyright/Copyright';
 
 const useStyles = makeStyles((theme) => ({
+    background: {
+        // paddingBottom: '100%',
+    },
     root: {
-        marginLeft: 100,
-        marginRight: 100
+        marginLeft: 150,
+        marginRight: 150,
     },
     mainFeaturedPost: {
       position: 'relative',
@@ -42,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
       },
     },
     sidebarAboutBox: {
+        marginTop: 20,
         padding: theme.spacing(2),
         backgroundColor: theme.palette.grey[200],
     },
@@ -49,12 +53,18 @@ const useStyles = makeStyles((theme) => ({
         position: 'static',
         padding: theme.spacing(2),
         textAlign: 'left',
-        color: theme.palette.text.secondary,
+        // color: theme.palette.text.secondary,
     },
     button: {
         backgroundColor: "#132C3C",
         marginTop: 30,
-        marginLeft: 200
+        display: 'flex',
+        justifyContent: 'center'
+        // marginLeft: 200
+    },
+    text: {
+        fontSize: "1rem",
+        color: 'black'
     }
   }));
 
@@ -62,7 +72,7 @@ const LandingPage = (props) => {
     const classes = useStyles();
     props.setIsHomePage(true);
     return (
-        <div>
+        <div className={classes.background}>
             <CareAppBar />
             <div>
             <Paper className={classes.mainFeaturedPost} style={{ backgroundImage: `url(${logo})` }}>
@@ -75,36 +85,40 @@ const LandingPage = (props) => {
                         <Typography component="h1" variant="h3" color="inherit" gutterBottom>
                         Care Amarillo
                         </Typography>
+                        <br/>
                         <Typography variant="h5" color="inherit" paragraph>
-                        "Values | Saying | Quote"
+                        The Community that Supports You
                         </Typography>
                     </div>
                     </Grid>
                 </Grid>
             </Paper>
             <div className={classes.root}>
-            <Grid container spacing={3}>
+            <Grid container spacing={5}>
             <Grid item xs={12} md={7}  className={classes.paper}>
                 <h2>About Care Amarillo</h2>
                 <hr />
-                <p>
-                Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.
-
+                <p className={classes.text}>
+                Care Amarillo system is a high-level system that allows the search and registration of human services and emergency shelter information. This system is designed for those who utilize such resources as well as those that provide those resources.
+                <br />
+                <br />
+                To better our community as a whole, Care Amarillo makes it easy for everyone to use. 
                 Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-
+                <br />
+                <br />
                 Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.
                 </p>
             </Grid>
                 <Grid item xs={12} md={5} className={classes.paper}>
                     <Paper elevation={0} className={classes.sidebarAboutBox}>
                         <Typography variant="h6" gutterBottom>
-                        Mission Statement
+                        Providers Login Below
                         </Typography>
                         <Typography>Etiam porta sem malesuada magna mollis euismod. Etiam porta sem malesuada magna mollis euismod.</Typography>
-                    </Paper>
-                    <Button className={classes.button} to="/login" component={Link} variant="contained" id="loginButton">
+                        <Button className={classes.button} to="/login" component={Link} variant="contained" id="loginButton">
                         LOGIN
                     </Button>
+                    </Paper>
                 </Grid>
             </Grid>
             </div>

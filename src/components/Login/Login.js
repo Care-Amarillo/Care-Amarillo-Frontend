@@ -72,7 +72,7 @@ const LoginForm = (props) => {
     const theme = useTheme();
 
     return (
-        <div className={classes.root}>
+        <div id="background">
         {/* <CareAppNav /> */}
         <div>
         <Container component="main" maxWidth="xs">
