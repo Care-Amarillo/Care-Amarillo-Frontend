@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {
     Container,
+    Paper,
     Table,
     TableBody,
     TableCell,
@@ -40,6 +41,7 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import AlertDialogSlide from "../AlertDialogSlide";
 import {ToastContainer, ToastMessage, ToastMessageAnimated} from "react-toastr";
+import "./SuperAdminProviderEntries.css";
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref}/>),
@@ -139,12 +141,12 @@ const formatXAxis = tickItem => {
 
 const ProviderGraph = (props) => {
 
-   return props.data.length > 0 ?  <div> <LineChart width={800} height={400}  data={props.data}>
+   return props.data.length > 0 ?  <Paper id="chartContainer"> <LineChart width={900} height={300}  data={props.data}>
      <Line type="monotone" dataKey="amountChanged" stroke="#8884d8" />
      <XAxis interval={0} dataKey="createdAt" tickFormatter={formatXAxis} />
      <YAxis dataKey="amountChanged"/>
      <Tooltip labelFormatter={formatXAxis} content={<CustomTooltip/>} />
-   </LineChart></div> : <div></div>;
+   </LineChart></Paper> : <div></div>;
  }
 
 
@@ -542,7 +544,9 @@ class SuperAdminProviderEntries extends Component {
                     </MuiPickersUtilsProvider>
                 </div>
                 <ProviderGraph data={this.state.entries}/>
+                <br />
                 <ProviderTable data={this.state.entries} setOpen={this.setOpen}/>
+                <br />
             </Container>
         );
     }

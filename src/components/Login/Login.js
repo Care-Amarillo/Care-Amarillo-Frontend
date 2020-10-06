@@ -170,9 +170,9 @@ class Login extends Component {
             </Link>
             </div>
             {this.state.seen ? <PopUp toggle={this.togglePop} /> : null}
-            <div>
+            {/* <div>
             <Copyright />
-            </div>
+            </div> */}
             </div>
             
         ):  <Redirect to="/provider"/>;

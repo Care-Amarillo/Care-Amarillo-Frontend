@@ -9,6 +9,7 @@ import {createMuiTheme} from '@material-ui/core/styles';
 import {ThemeProvider} from "@material-ui/styles";
 import CareAppNav from '../CareAppBar/CareAppNav';
 import Chart from './Chart';
+import { Card, CardContent } from '@material-ui/core';
 
 const theme = createMuiTheme({
     palette: {
@@ -80,17 +81,30 @@ class ProviderPanel extends Component {
             providerButton = <div id="noneElement"></div>;
         }
         return (
-            <div id="providerContainer">
-                <div id="actionContainer">
-                    <ThemeProvider theme={theme}>
-                    <TextField id="search" label="Search for Shelter..." onChange={this.searchChanged} type="search" variant="outlined"/>
-                    </ThemeProvider>
-                    {providerButton}
+            <div >
+                <div id="providerContainer">
+                <Chart />
                 </div>
+                    <br />
+                <div id="title">
+                <h2>Providers</h2>
+                </div>
+                
+                <div>
+                {providerButton}
+                </div>
+                <div id="cardContent">
+            
                 {this.state.providers.map((data, index) => (
                     <Providers key={index} index={index} data={data}/>
                 ))}
-                <Chart />
+                </div>
+                <div id="actionContainer">
+                    {/* <ThemeProvider theme={theme}> */}
+                    {/* <TextField id="search" label="Search for Shelter..." onChange={this.searchChanged} type="search" variant="outlined"/>
+                    </ThemeProvider> */}
+                   
+                </div>
             </div>
         );
     }

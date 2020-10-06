@@ -84,6 +84,7 @@ const useStyles = makeStyles((theme) => ({
       maxWidth: 160,
       paddingTop: 5,
       paddingLeft: 20,
+      paddingBottom: 5
     },
 }));
 
@@ -167,7 +168,7 @@ const loadData = async () => {
                   <div className={classes.appChildrenContainer}>
                       <img src={logo} className={classes.logo} />
                       <div className={classes.reactSearch}>
-                            <Select onInputChange={searchChanged} onChange={onChange} value={selectedProvider}  placeholder='Search' autosize={false} options={providers} styles={customStyles} components={{ DropdownIndicator:() => null, IndicatorSeparator:() => null }} />
+                            <Select onInputChange={searchChanged} onChange={onChange} value={selectedProvider}  placeholder='Search for Shelter...' autosize={false} options={providers} styles={customStyles} components={{ DropdownIndicator:() => null, IndicatorSeparator:() => null }} />
                       </div>
                   </div>
                     {/* <div className={classes.searchBox}>

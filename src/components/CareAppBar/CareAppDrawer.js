@@ -243,11 +243,11 @@ const SuperAdminProvidersListItem = (props) => {
 }
 
 
-const SuperAdminSendPushListItem = (props) => {
-    return <ListItem button key={SuperAdminSendPushListItem} onClick={()=>props.handleClick()} component={Link} to={"/superAdminSendPush"}>
-        <ListItemIcon>{<SendIcon />}</ListItemIcon>
-        <ListItemText>SEND PUSH</ListItemText>
-    </ListItem>
+// const SuperAdminSendPushListItem = (props) => {
+//     return <ListItem button key={SuperAdminSendPushListItem} onClick={()=>props.handleClick()} component={Link} to={"/superAdminSendPush"}>
+//         <ListItemIcon>{<SendIcon />}</ListItemIcon>
+//         <ListItemText>SEND PUSH</ListItemText>
+//     </ListItem>
 
     // return <ListItem key="superAdminSendPush" onClick={()=>props.handleClick()} component={Link} to={"/superAdminSendPush"}>
     //     {/*<ListItemIcon>*/}
@@ -257,7 +257,7 @@ const SuperAdminSendPushListItem = (props) => {
     //     {/*<ListItemText primary="Manage Providers"/>*/}
     //     <Button startIcon={<SendIcon/>}>Send Push</Button>
     // </ListItem>;
-}
+// }
 
 const LogOutListItem = (props) => {
     const handleClick = () =>{
@@ -309,7 +309,7 @@ const CareAppDrawer = (props) => {
         listOfListItems.push(<AuditListItem handleClick={handleClick}/>);
         listOfListItems.push(<SuperAdminProvidersListItem handleClick={handleClick}/>);
         listOfListItems.push(<SuperAdminProviderEntryListItem handleClick={handleClick}/>);
-        listOfListItems.push(<SuperAdminSendPushListItem handleClick={handleClick}/>);
+        // listOfListItems.push(<SuperAdminSendPushListItem handleClick={handleClick}/>);
         listOfListItems.push(<SuperAdminEditUsersListItem handleClick={handleClick}/>);
     }
 

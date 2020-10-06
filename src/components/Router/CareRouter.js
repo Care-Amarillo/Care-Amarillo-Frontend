@@ -49,7 +49,7 @@ function ResponsiveDrawer(props) {
                             <SuperProtectedRoute exact path="/audit" component={AuditEntries} />
                             <SuperProtectedRoute exact path="/superAdminProviders" component={SuperAdminProviders} />
                             <SuperProtectedRoute exact path="/superAdminProviderEntry" component={SuperAdminProviderEntries} />
-                            <SuperProtectedRoute exact path="/superAdminSendPush" component={SuperAdminSendPush} />
+                            {/* <SuperProtectedRoute exact path="/superAdminSendPush" component={SuperAdminSendPush} /> */}
                             <SuperProtectedRoute exact path="/superAdminUsers" component={SuperAdminUsers} />
                             <SuperProtectedRoute exact path="/superAdminEditProvider/:id" component={SuperAdminEditProvider} />
                             <ProtectedRoute exact path="/providerSignUp" component={ProviderRegister} />

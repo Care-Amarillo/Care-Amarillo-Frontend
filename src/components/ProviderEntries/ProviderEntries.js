@@ -42,6 +42,7 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 import AlertDialogSlide from "../AlertDialogSlide";
 import CareAppNav from '../CareAppBar/CareAppNav';
 import {ToastContainer, ToastMessage, ToastMessageAnimated} from "react-toastr";
+import "./ProviderEntries.css";
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref}/>),
@@ -512,7 +513,7 @@ class ProviderEntries extends Component {
 
     render() {
         return (
-            <Container maxWidth="lg" className="providerEntryContainer">
+            <Container maxWidth="lg" className="providerEntryContainer" id="chartContainer">
                 <ToastContainer
                     ref={ref => this.container = ref}
                     className="toast-bottom-right"

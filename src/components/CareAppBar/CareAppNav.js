@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Hidden from "@material-ui/core/Hidden";
 import Drawer from "@material-ui/core/Drawer";
 import {makeStyles, useTheme} from "@material-ui/core/styles";
@@ -9,16 +9,23 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Typography from "@material-ui/core/Typography";
 import clsx from 'clsx';
-import { CssBaseline } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronLeft';
 import ChevronLeftIcon from '@material-ui/icons/ChevronRight';
 import Divider from '@material-ui/core/Divider';
+import Select from 'react-select';
+import axios from "axios";
+import {Redirect} from "react-router-dom";
 
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
     root: {
         display: "flex",
+    },
+    reactSearch:{
+      // display: 'flex',
+      marginLeft: 605,
+      width:"25%",
     },
     drawer: {
       width: drawerWidth,
@@ -101,6 +108,11 @@ const useStyles = makeStyles(theme => ({
 
 // simply write a function in ES6+ then pass in the keyword props to access this special object
 const CareAppNav = (props) => {
+    const [searchQuery, setSearchQuery] = useState("");
+    const [selectedProvider, setSelectedProvider] = useState("");
+    const [providers, setProviders] = useState([]);
+
+
     const classes = useStyles();
     // every component in React MUST return something...
     // notice the ( ) after the return. This is called an implicit return
@@ -122,9 +134,70 @@ const CareAppNav = (props) => {
         props.setOpen(!props.mobileOpen);
     };
 
+    const searchChanged = (e) => {
+      console.log(`value is ${e}`);
+      setSearchQuery(e);
+    }
+    
+    const onChange = (e,a) => {
+        console.log(`selected provider id is ${JSON.stringify(e)} and ${JSON.stringify(a)}`);
+        setSelectedProvider(e.value);
+    }
+
+    const customStyles = {
+      option: provided => ({
+        ...provided,
+        color: 'black'
+      }),
+      control: provided => ({
+        ...provided,
+        color: 'black'
+      }),
+      singleValue: provided => ({
+        ...provided,
+        color: 'black'
+      })
+    }
+
+    useEffect(() => {
+  
+      loadData().then(r => console.log(""));
+    }, [searchQuery]);
+    
+    ;
+
+    const loadData = async () => {
+      console.log(`loaddata val is ${searchQuery}`);
+      let URL = "http://localhost:3000/providersActive";
+    
+      const response = await axios({
+          method: 'get',
+          url: URL,
+          params:{
+              searchQuery: searchQuery
+          }
+      });
+    
+      const data = await response.data;
+      console.log(`data is ${data}`);
+      
+      let tempData = [];
+      for(let obj in data){
+        console.log(`obj data is ${JSON.stringify(data[obj])}`);
+        let actualObj = data[obj];
+        let val = actualObj._id;
+        let label = actualObj.name;
+        tempData.push({value: val, label: label});
+      }
+      setProviders(tempData);
+      // setProviders(data);
+      return data;
+    }
+
 
     // todo: maybe change to functional component
-    const appBar = (
+    const appBar = ( 
+      selectedProvider === "" ? <div>
         <AppBar position="fixed" className={clsx(classes.appBar, {[classes.appBarShift]: open, })}>
             <Toolbar>
                 <IconButton
@@ -140,6 +213,9 @@ const CareAppNav = (props) => {
                 <Typography variant="h6" noWrap>
                     Care Amarillo
                 </Typography>
+                <div className={classes.reactSearch}>
+                      <Select onInputChange={searchChanged} onChange={onChange} value={selectedProvider}  placeholder='Search for Shelter...' autosize={false} options={providers} styles={customStyles} components={{ DropdownIndicator:() => null, IndicatorSeparator:() => null }} />
+                </div>
             </Toolbar>
             {/* <div className={classes.searchBox}>
               <div className={classes.search}>
@@ -158,13 +234,13 @@ const CareAppNav = (props) => {
               </div>
               </div> */}
         </AppBar>
+        </div> : <Redirect to={`/providerDtl/${selectedProvider}`}/>
     );
 
     return (!props.isHomePage ?
       
         <div className={classes.root}>
-          <CssBaseline />
-            {appBar}
+          {appBar}
           <nav className={classes.drawer} aria-label="mailbox folders">
               {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
               {/* <Hidden smUp implementation="css"> */}

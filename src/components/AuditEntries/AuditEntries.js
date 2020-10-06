@@ -36,6 +36,7 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import AlertDialogSlide from "../AlertDialogSlide";
 import { ToastContainer, ToastMessage, ToastMessageAnimated } from "react-toastr";
+import "./AuditEntries.css";
 
 
 
@@ -476,7 +477,7 @@ class AuditEntries extends Component {
 
     render() {
         return (
-            <Container maxWidth="lg" className="car-container">
+            <Container maxWidth="lg" className="car-container" id="chartContainer">
                 <div className="flex-container">
                     <ToastContainer
                         ref={ref => this.container = ref}

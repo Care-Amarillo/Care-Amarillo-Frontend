@@ -39,6 +39,7 @@ import { ToastContainer, ToastMessage, ToastMessageAnimated } from "react-toastr
 import IconButton from "@material-ui/core/IconButton";
 import Icon from "@material-ui/core/Icon";
 import {Link} from "react-router-dom";
+import "./SuperAdminProviders.css";
 
 
 
@@ -482,7 +483,7 @@ class SuperAdminProviders extends Component {
 
     render() {
         return (
-            <Container maxWidth="lg" className="car-container">
+            <Container maxWidth="lg" className="car-container" id="chartContainer">
                 <div className="flex-container">
                     <ToastContainer
                         ref={ref => this.container = ref}

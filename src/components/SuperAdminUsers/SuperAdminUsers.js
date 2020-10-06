@@ -39,7 +39,7 @@ import { ToastContainer, ToastMessage, ToastMessageAnimated } from "react-toastr
 import IconButton from "@material-ui/core/IconButton";
 import Icon from "@material-ui/core/Icon";
 import {Link} from "react-router-dom";
-
+import "./SuperAdminUser.css";
 
 
 const tableIcons = {
@@ -488,10 +488,13 @@ class SuperAdminUsers extends Component {
             let result = response.result;
         });
     }
+    
 
     render() {
+
         return (
-            <Container maxWidth="lg" className="car-container">
+            <div>
+            <Container maxWidth="lg" className="car-container" id="chartContainer">
                 <div className="flex-container">
                     <ToastContainer
                         ref={ref => this.container = ref}
@@ -536,6 +539,7 @@ class SuperAdminUsers extends Component {
 
                 <AuditTable data={this.state.providers} setOpen={this.setOpen}/>
             </Container>
+            </div>
         );
 
     }

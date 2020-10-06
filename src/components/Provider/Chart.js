@@ -22,7 +22,8 @@ const data = [
 
 const useStyles = makeStyles((theme) => ({
    container: {
-       height: 350,
+     marginTop: 20,
+       height: 300,
        width: 950,
        paddingBottom: 100
    },
