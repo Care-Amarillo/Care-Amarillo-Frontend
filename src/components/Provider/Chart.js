@@ -9,15 +9,15 @@ function createData(time, amount) {
 }
 
 const data = [
-  createData('00:00', 0),
-  createData('03:00', 3),
-  createData('06:00', 6),
-  createData('09:00', 8),
-  createData('12:00', 1),
-  createData('15:00', 2),
-  createData('18:00', 2),
-  createData('21:00', 2),
-  createData('24:00', 5),
+  createData('10/01/2020', 0),
+  createData('', 3),
+  createData('', 6),
+  createData('', 8),
+  createData('', 1),
+  createData('', 2),
+  createData('', 2),
+  createData('', 2),
+  createData('10/30/20', 5),
 ];
 
 const useStyles = makeStyles((theme) => ({
@@ -25,8 +25,12 @@ const useStyles = makeStyles((theme) => ({
      marginTop: 20,
        height: 300,
        width: 950,
-       paddingBottom: 100
+       paddingBottom: 100,
+       paddingRight: 20,
    },
+   lable: {
+     marginTop: '10%'
+   }
 }))
 
 export default function Chart() {
@@ -35,7 +39,7 @@ export default function Chart() {
   return (
       <Paper className={classes.container}>
     <React.Fragment>
-      <h2>October 4, 2020</h2>
+      <h2>October 5, 2020</h2>
       <ResponsiveContainer>
         <LineChart
           data={data}
@@ -49,10 +53,10 @@ export default function Chart() {
           <XAxis dataKey="time" stroke={theme.palette.text.secondary}>
           <Label
               angle={0}
-              position="center"
+              position="middle"
               style={{ textAnchor: 'middle', fill: theme.palette.text.primary }}
             >
-              Time
+              Date
             </Label>
           </XAxis>
           <YAxis stroke={theme.palette.text.secondary}>

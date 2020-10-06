@@ -87,7 +87,7 @@ class ProviderPanel extends Component {
                 </div>
                     <br />
                 <div id="title">
-                <h2>Providers</h2>
+                <h2>Provider</h2>
                 </div>
                 
                 <div>

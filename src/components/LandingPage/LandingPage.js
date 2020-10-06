@@ -131,7 +131,7 @@ const LandingPage = (props) => {
             </Grid>
             </div>
             </div>
-            {/* <Copyright /> */}
+            <Copyright />
         </div>
         
     )   

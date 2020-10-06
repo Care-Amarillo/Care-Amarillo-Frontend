@@ -132,7 +132,6 @@ useEffect(() => {
 
 ;
 
-
 const loadData = async () => {
   console.log(`loaddata val is ${searchQuery}`);
   let URL = "http://localhost:3000/providersActive";
