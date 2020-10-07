@@ -15,8 +15,12 @@
 
 #cardContent{
     margin-top: -20px;
-    width: 1000px;
+    width: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
 }
+
 
 h2{
     text-align: left;
@@ -50,7 +54,6 @@ h2{
     background-color: #132C3C;
     color: white;
 }
-
 
 @media only screen and (max-width: 600px) {
     #actionContainer{
