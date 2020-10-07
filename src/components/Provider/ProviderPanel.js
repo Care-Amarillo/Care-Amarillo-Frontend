@@ -9,7 +9,7 @@ import {createMuiTheme} from '@material-ui/core/styles';
 import {ThemeProvider} from "@material-ui/styles";
 import CareAppNav from '../CareAppBar/CareAppNav';
 import Chart from './Chart';
-import { Card, CardContent } from '@material-ui/core';
+import {Card, CardContent} from '@material-ui/core';
 
 const theme = createMuiTheme({
     palette: {
@@ -24,7 +24,7 @@ const theme = createMuiTheme({
 
 class ProviderPanel extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             providers: [],
@@ -33,8 +33,7 @@ class ProviderPanel extends Component {
     }
 
 
-
-    componentDidMount(){
+    componentDidMount() {
         this.loadData();
 
     }
@@ -42,8 +41,8 @@ class ProviderPanel extends Component {
     searchChanged = (e) => {
         this.setState({
             searchQuery: e.target.value
-        }, ()=>{
-           this.loadData();
+        }, () => {
+            this.loadData();
         })
 
     }
@@ -52,14 +51,13 @@ class ProviderPanel extends Component {
 
 
         let URL = "http://localhost:3000/providersActive";
-        
 
 
         const response = await axios({
             method: 'get',
             url: URL,
-            params:{
-               searchQuery: this.state.searchQuery
+            params: {
+                searchQuery: this.state.searchQuery
             }
 
         });
@@ -76,34 +74,34 @@ class ProviderPanel extends Component {
     render() {
         let providerButton = <Button variant="contained" id="providerButton" to="/providerSignup" component={Link}>
             Add New Provider
-        </Button> ;
-        if(this.props.user && (this.props.user.admin  || this.props.user.superAdmin)){
+        </Button>;
+        if (this.props.user && (this.props.user.admin || this.props.user.superAdmin)) {
             providerButton = <div id="noneElement"></div>;
         }
         return (
-            <div >
+            <div>
                 <div id="providerContainer">
-                <Chart />
+                    <Chart/>
                 </div>
-                    <br />
+                <br/>
                 <div id="title">
-                <h2>Provider</h2>
+                    <h2>Provider</h2>
                 </div>
-                
+
                 <div>
-                {providerButton}
+                    {providerButton}
                 </div>
                 <div id="cardContent">
-            
-                {this.state.providers.map((data, index) => (
-                    <Providers key={index} index={index} data={data}/>
-                ))}
+
+                    {this.state.providers.map((data, index) => (
+                        <Providers key={index} index={index} data={data}/>
+                    ))}
                 </div>
                 <div id="actionContainer">
                     {/* <ThemeProvider theme={theme}> */}
                     {/* <TextField id="search" label="Search for Shelter..." onChange={this.searchChanged} type="search" variant="outlined"/>
                     </ThemeProvider> */}
-                   
+
                 </div>
             </div>
         );
