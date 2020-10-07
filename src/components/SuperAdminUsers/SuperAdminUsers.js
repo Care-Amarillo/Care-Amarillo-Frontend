@@ -109,7 +109,7 @@ const AuditTable = (props) => {
                     <IconButton aria-label="edit" size="small"
                                 onClick={(event) => props.action.onClick(event, props.data)}
                                 component={Link}
-                                to={`/editUser`}
+                                to={`/superAdminEditUser/${props.data._id}`}
                     >
                         <Edit/>
                     </IconButton>
