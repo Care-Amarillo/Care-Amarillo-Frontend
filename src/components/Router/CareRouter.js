@@ -60,7 +60,7 @@ function ResponsiveDrawer(props) {
                             <ProtectedRoute exact path="/editUser" component={EditUser} />
                             <Route exact path="/provider" component={ProviderPanel} />
                             <Route exact path="/login" component={Login} />
-                            <Route exact path="/register" component={Register} />
+                            <ProtectedRoute exact path="/register" component={Register} />
                             <Route exact path="/providerDtl/:id" component={ProviderDetail} />
                             <Route exact path="/" component={LandingPage} />
                         </Switch>

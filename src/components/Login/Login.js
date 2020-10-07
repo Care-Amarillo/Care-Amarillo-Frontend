@@ -90,9 +90,7 @@ const LoginForm = (props) => {
         <Button onClick={props.loginClicked} variant="contained" id="loginButton" >
             Login
         </Button>
-        <Button to="/register" component={Link} variant="contained" id="loginButton">
-            Register
-        </Button>
+
         
     </form>
     </ThemeProvider>

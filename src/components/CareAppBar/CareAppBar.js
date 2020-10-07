@@ -130,7 +130,6 @@ useEffect(() => {
   loadData().then(r => console.log(""));
 }, [searchQuery]);
 
-;
 
 const loadData = async () => {
   console.log(`loaddata val is ${searchQuery}`);
