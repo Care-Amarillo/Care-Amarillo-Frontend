@@ -18,7 +18,7 @@ const useStyles = makeStyles({
         flexDirection:"column",
         // justifyContent:"center",
         margin:"10px",
-        width: "60%",
+        width: "90%",
         // backgroundColor: "#132C3C",
     },
     bullet: {
@@ -58,7 +58,7 @@ const ProviderCard = (props) => {
     const classes = useStyles();
 
     const data = props.data;
-    const title = data.title;
+    const bedCount = data.totalBeds - data.bedsUsed;
     const name = data.name;
     return (
         <Card className={classes.root}>
@@ -67,7 +67,7 @@ const ProviderCard = (props) => {
                     {name}
                 </Typography>
                 <Typography className={classes.secondText} >
-                    {title}
+                    Avaliable Beds: {bedCount}
                 </Typography>
             </CardContent>
             <CardActions>
