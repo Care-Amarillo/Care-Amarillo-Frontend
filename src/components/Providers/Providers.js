@@ -14,11 +14,11 @@ import {
 
 const useStyles = makeStyles({
     root: {
-        display:"flex",
-        flexDirection:"column",
+        // display:"flex",
+        // flexDirection:"column",
         // justifyContent:"center",
-        margin:"10px",
-        width: "90%",
+        // margin:"10px",
+        // width: "90%",
         // backgroundColor: "#132C3C",
     },
     bullet: {

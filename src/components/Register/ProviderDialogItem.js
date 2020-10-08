@@ -87,7 +87,6 @@ class ProviderDialogItem extends Component {
 
    providerSelected = (provider)=>{
        this.props.providerCallback(provider);
-
    }
 
     render() {
