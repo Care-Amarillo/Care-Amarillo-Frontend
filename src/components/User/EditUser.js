@@ -179,7 +179,7 @@ class EditProfile extends Component {
     }
 
     updateUser = async () => {
-        let URL = "http://localhost:3000/users/" + this.props.user._id;
+        let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/users/` + this.props.user._id;
 
 
         const config = {
