@@ -9,7 +9,9 @@ import {createMuiTheme} from '@material-ui/core/styles';
 import {ThemeProvider} from "@material-ui/styles";
 import CareAppNav from '../CareAppBar/CareAppNav';
 import Chart from './Chart';
-import { Card, CardContent } from '@material-ui/core';
+import {Box, Card, CardContent, isWidthDown, isWidthUp} from '@material-ui/core';
+import GridList from "@material-ui/core/GridList";
+import GridListTile from "@material-ui/core/GridListTile";
 
 const theme = createMuiTheme({
     palette: {
@@ -22,9 +24,25 @@ const theme = createMuiTheme({
     },
 });
 
+
+const styles = (theme) => ({
+    root: {
+        margin: 0,
+        padding: theme.spacing(2),
+    },
+    closeButton: {
+        position: 'absolute',
+        right: theme.spacing(1),
+        top: theme.spacing(1),
+        color: theme.palette.grey[500],
+    },
+
+});
+
+
 class ProviderPanel extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             providers: [],
@@ -33,8 +51,7 @@ class ProviderPanel extends Component {
     }
 
 
-
-    componentDidMount(){
+    componentDidMount() {
         this.loadData();
 
     }
@@ -42,8 +59,8 @@ class ProviderPanel extends Component {
     searchChanged = (e) => {
         this.setState({
             searchQuery: e.target.value
-        }, ()=>{
-           this.loadData();
+        }, () => {
+            this.loadData();
         })
 
     }
@@ -52,14 +69,13 @@ class ProviderPanel extends Component {
 
 
         let URL = "http://localhost:3000/providersActive";
-        
 
 
         const response = await axios({
             method: 'get',
             url: URL,
-            params:{
-               searchQuery: this.state.searchQuery
+            params: {
+                searchQuery: this.state.searchQuery
             }
 
         });
@@ -73,38 +89,60 @@ class ProviderPanel extends Component {
 
     }
 
+    getGridListCols = () => {
+        if (isWidthUp('xl', this.props.width)) {
+            return 4;
+        }
+
+        if (isWidthDown('lg', this.props.width)) {
+            return 3;
+        }
+
+        if (isWidthDown('md', this.props.width)) {
+            return 2;
+        }
+
+
+        return 1;
+    }
+
+
     render() {
         let providerButton = <Button variant="contained" id="providerButton" to="/providerSignup" component={Link}>
             Add New Provider
-        </Button> ;
-        if(this.props.user && (this.props.user.admin  || this.props.user.superAdmin)){
+        </Button>;
+        if (this.props.user && (this.props.user.admin || this.props.user.superAdmin)) {
             providerButton = <div id="noneElement"></div>;
         }
+
+
         return (
-            <div >
-                <div id="providerContainer">
-                <Chart />
+            <div class="providerPanelContainer">
+                <div id="chartContainer">
+                    {/*<Chart/>*/}
                 </div>
-                    <br />
+                <br/>
                 <div id="title">
-                <h2>Provider</h2>
+                    <h2>Provider</h2>
                 </div>
-                
-                <div>
-                {providerButton}
-                </div>
+
+
+                {/*<div id="cardContainer">*/}
                 <div id="cardContent">
-            
-                {this.state.providers.map((data, index) => (
-                    <Providers key={index} index={index} data={data}/>
-                ))}
+
+                    {this.state.providers.map((data, index) => (
+                        <Providers key={index} index={index} data={data}/>
+                    ))}
+
+                    {/*<GridList style={{width: '100%'}} cols={this.getGridListCols}>*/}
+                    {/*        {this.state.providers.map((data, index) => (*/}
+                    {/*            <GridListTile   key={index}>*/}
+                    {/*                <Providers key={index} index={index} data={data}/>*/}
+                    {/*            </GridListTile>*/}
+                    {/*        ))}*/}
+                    {/*    </GridList>*/}
                 </div>
-                <div id="actionContainer">
-                    {/* <ThemeProvider theme={theme}> */}
-                    {/* <TextField id="search" label="Search for Shelter..." onChange={this.searchChanged} type="search" variant="outlined"/>
-                    </ThemeProvider> */}
-                   
-                </div>
+                {/*</div>*/}
             </div>
         );
     }

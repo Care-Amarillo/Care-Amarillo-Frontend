@@ -8,7 +8,7 @@ import {
     TableHead,
     TableRow
 } from '@material-ui/core';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import {LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer} from 'recharts';
 import format from "date-fns/format";
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -42,6 +42,7 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 import AlertDialogSlide from "../AlertDialogSlide";
 import {ToastContainer, ToastMessage, ToastMessageAnimated} from "react-toastr";
 import "./SuperAdminProviderEntries.css";
+import ProviderEntriesChart from "./ProviderEntriesChart";
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref}/>),
@@ -83,11 +84,37 @@ const ProviderTable = (props) => {
                 {
                     title: 'Provider',
                     field: 'name',
-                    render: rowData  => rowData.provider['name'],
+                    render: rowData => rowData.provider['name'],
+                    headerStyle: {
+                        width: 20,
+                        maxWidth: 20,
+                    }, cellStyle: {
+                        width: 20,
+                        maxWidth: 20,
+                        fontSize: 14
+                    },
                     customFilterAndSearch: (term, rowData) => (rowData.provider['name']).indexOf(term) != -1
                 },
-                {title: "Amount Changed", field: "amountChanged"},
-                {title: "Date", field: "createdAt", type: "datetime", searchable: false},
+                {
+                    title: "Amount Changed", field: "amountChanged", headerStyle: {
+                        width: 20,
+                        maxWidth: 20,
+                    }, cellStyle: {
+                        width: 20,
+                        maxWidth: 20,
+                        fontSize: 14
+                    },
+                },
+                {
+                    title: "Date", field: "createdAt", type: "datetime", searchable: false, headerStyle: {
+                        width: 20,
+                        maxWidth: 20,
+                    }, cellStyle: {
+                        width: 20,
+                        maxWidth: 20,
+                        fontSize: 14
+                    },
+                },
 
             ]}
             data={props.data}
@@ -105,49 +132,6 @@ const ProviderTable = (props) => {
     </div>;
 }
 
-const formatXAxis = tickItem => {
-    console.log(tickItem);
-    if(tickItem != null && tickItem !== undefined){
-       return format(new Date(tickItem), "MM/d/yyyy h:mma").toString();
-    }
-    else{
-       return format( new Date(), "MM/d/yyyy h:mma").toString();
-    }
- }
-
- const CustomTooltip = props => {
-    // we don't need to check payload[0] as there's a better prop for this purpose
-    if (!props.active || !props.payload) {
-      // I think returning null works based on this: http://recharts.org/en-US/examples/CustomContentOfTooltip
-      return null
-    }
-    // mutating props directly is against react's conventions
-    // so we create a new payload with the name and value fields set to what we want
-    // console.log(`payload is ${JSON.stringify(props.payload[0].payload)}`)
-    const newPayload = [
-      {
-        name: 'Amount Changed',
-        // all your data which created the tooltip is located in the .payload property
-        value: props.payload[0].payload.amountChanged,
-        // you can also add "unit" here if you need it
-      },
-    //   ...props.payload,
-    ];
-  
-    // we render the default, but with our overridden payload
-    return <DefaultTooltipContent {...props} payload={newPayload} />;
-  }
-
-
-const ProviderGraph = (props) => {
-
-   return props.data.length > 0 ?  <Paper id="chartContainer"> <LineChart width={900} height={300}  data={props.data}>
-     <Line type="monotone" dataKey="amountChanged" stroke="#8884d8" />
-     <XAxis interval={0} dataKey="createdAt" tickFormatter={formatXAxis} />
-     <YAxis dataKey="amountChanged"/>
-     <Tooltip labelFormatter={formatXAxis} content={<CustomTooltip/>} />
-   </LineChart></Paper> : <div></div>;
- }
 
 
 
@@ -164,6 +148,7 @@ class SuperAdminProviderEntries extends Component {
             providerId: "",
             name: "",
             entries: [],
+            graphEntries: [],
             selectedStartDate: todayMidNight,
             selectedEndDate: midNight,
             open: false,
@@ -184,7 +169,6 @@ class SuperAdminProviderEntries extends Component {
     componentDidMount() {
         this.loadData();
     }
-
 
 
     loadData = async () => {
@@ -214,7 +198,76 @@ class SuperAdminProviderEntries extends Component {
             entries: data
         });
 
+
+        this.getGraphData(data);
+
     }
+
+    getGraphData = (data) =>{
+        let tempDays = [];
+        let currentCount = 0;
+        let currentIndex = 0;
+        let prevDate = null;
+        data.forEach((element) => {
+            console.log(element)
+            let amountChanged = element["amountChanged"];
+            if(amountChanged > 0){
+                let createdAt = new Date(element["createdAt"]);
+                let createdAtData = element["createdAt"];
+                let day = createdAt.getDay();
+                let month = createdAt.getMonth();
+                let year = createdAt.getFullYear();
+                if(tempDays.length === 0){
+                    currentCount += amountChanged;
+                    let dateData = {
+                        createdAt: createdAtData,
+                        amountChanged: currentCount
+                    }
+                    tempDays[currentIndex] = dateData;
+                    prevDate = createdAt;
+                }
+                else{
+                    let prevDateDay = prevDate.getDay();
+                    let prevDateMonth = prevDate.getMonth();
+                    if(prevDateDay === day && prevDateMonth === month){
+                        console.log("found same day");
+                        currentCount += amountChanged;
+                        let dateData = {
+                            createdAt: createdAtData,
+                            amountChanged: currentCount
+                        }
+                        tempDays[currentIndex] = dateData;
+                    }
+                    else{
+                        console.log("different day");
+                        currentCount = 0 + amountChanged;
+                        currentIndex++;
+                        let dateData = {
+                            createdAt: createdAtData,
+                            amountChanged: currentCount
+                        }
+                        tempDays[currentIndex] = dateData;
+                    }
+                    prevDate = createdAt;
+                }
+            }
+
+
+
+        });
+
+        console.log(`tempDays length is ${tempDays.length}`);
+        tempDays.forEach((element)=>{
+            console.log(`tempDays element is ${JSON.stringify(element)}`);
+        });
+
+
+        this.setState({
+            graphEntries: tempDays
+        });
+
+    }
+
 
     handleStartDateChange = (e) => {
         // setSelectedStartDate(e);
@@ -492,12 +545,12 @@ class SuperAdminProviderEntries extends Component {
 
     render() {
         return (
-            <Container maxWidth="lg" className="providerEntryContainer">
-                <ToastContainer
-                    ref={ref => this.container = ref}
-                    className="toast-bottom-right"
-                />
-                <div className="flex-container">
+            <div className="providerEntryContainer">
+                <Container maxWidth="lg" className="providerEntryContainer">
+                    <ToastContainer
+                        ref={ref => this.container = ref}
+                        className="toast-bottom-right"
+                    />
                     {/*dialog used to open csv option*/}
                     <AlertDialogSlide open={this.state.open} setOpen={this.setOpen}
                                       alertSlideCallback={this.slideAlertCallback} title={this.state.alertTitle}
@@ -542,12 +595,12 @@ class SuperAdminProviderEntries extends Component {
                             />
                         </div>
                     </MuiPickersUtilsProvider>
-                </div>
-                <ProviderGraph data={this.state.entries}/>
-                <br />
-                <ProviderTable data={this.state.entries} setOpen={this.setOpen}/>
-                <br />
-            </Container>
+                    <ProviderEntriesChart entries={this.state.entries}/>
+                    <br/>
+                    <ProviderTable data={this.state.entries} setOpen={this.setOpen}/>
+                    <br/>
+                </Container>
+            </div>
         );
     }
 }

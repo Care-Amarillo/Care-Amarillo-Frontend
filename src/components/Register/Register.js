@@ -11,6 +11,8 @@ import {Redirect} from "react-router-dom";
 import axios from "axios";
 import AlertDialogSlide from "../AlertDialogSlide";
 import {ToastContainer} from "react-toastr";
+import Providers from "../Providers/Providers";
+import RegisterDialog from "./RegisterDialog";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const getSteps = () => {
-    return ['Personal Info', 'Login Info'];
+    return ['Choose Provider','Personal Info', 'Login Info'];
 }
 
 const FormOne = (props) => {
@@ -69,6 +71,42 @@ const FormOne = (props) => {
     </form>;
 }
 
+
+const ProviderForm = (props) => {
+    const classes = useStyles();
+    const registerComponent = props.registerComponent;
+    const setOpen = props.setOpen;
+
+    const onChangeEmail = (e) => {
+        registerComponent.setState({
+            email: e.target.value,
+        });
+    };
+
+    const onChangePass = (e) => {
+        registerComponent.setState({
+            password: e.target.value,
+        });
+    };
+
+    const openProvider = (e) => {
+        console.log("open provider")
+      setOpen(true);
+    };
+
+    // console.log(`registerComponent states ${JSON.stringify(registerComponent.state.providers)}`)
+    console.log(`registerComponent states ${registerComponent.state.providers.length}`)
+
+    return <form className={classes.form} noValidate autoComplete="off">
+        <Button color="primary" onClick={() => openProvider()} className={classes.button}>
+            {registerComponent.state.chosenProvider == null ? "Choose Provider" : registerComponent.state.chosenProvider.name}
+        </Button>
+        {/*{registerComponent.state.providers.map((data, index) => (*/}
+        {/*    <Providers key={index} index={index} data={data}/>*/}
+        {/*))}*/}
+    </form>;
+}
+
 const FormTwo = (props) => {
     const classes = useStyles();
     const registerComponent = props.registerComponent;
@@ -98,11 +136,13 @@ const FormTwo = (props) => {
     </form>;
 }
 
-const getStepContent = (step, registerComponent) => {
+const getStepContent = (step, registerComponent, setOpenProvider, openProvider) => {
     switch (step) {
         case 0:
-            return <FormOne registerComponent={registerComponent}/>;
+            return <ProviderForm registerComponent={registerComponent} setOpen={setOpenProvider} open={openProvider}/>;
         case 1:
+            return <FormOne registerComponent={registerComponent}/>;
+        case 2:
             return <FormTwo registerComponent={registerComponent}/>;
         default:
             return 'Unknown step';
@@ -118,6 +158,7 @@ const HorizontalLinearStepper = (props) => {
     const registerComponent = props.registerComponent;
     const registerState = registerComponent.state;
     const [open, setOpen] = React.useState(false);
+    const [openProviders, setOpenProviders] = React.useState(false);
     const alertTitle = "Are You Sure?";
     const yesOptionTitle = "Yes";
     const noOptionTitle = "Cancel";
@@ -169,6 +210,15 @@ const HorizontalLinearStepper = (props) => {
         }
     }
 
+
+    const providerRegisterCallback = (provider) => {
+        if (provider) {
+            registerComponent.setState({
+                chosenProvider: provider,
+            });
+        }
+    }
+
     const askForConfirmation = () => {
 
         if(registerState.email === "" || registerState.password === "" ||registerState.confirmPassword === ""  || registerState.firstName === ""  || registerState.lastName === "" || registerState.phone === ""){
@@ -211,7 +261,12 @@ const HorizontalLinearStepper = (props) => {
         }
 
 
-
+        if(registerState.chosenProvider == null){
+            registerComponent.container.error(`Please choose a provider`, `Error`, {
+                closeButton: true,
+            });
+            return ;
+        }
 
 
         setOpen(true);
@@ -241,6 +296,7 @@ const HorizontalLinearStepper = (props) => {
             <AlertDialogSlide open={open} setOpen={setOpen} alertSlideCallback={slideAlertCallback} title={alertTitle}
                               description={alertDescription} yesOptionTitle={yesOptionTitle}
                               noOptionTitle={noOptionTitle}/>
+            <RegisterDialog open={openProviders} setOpen={setOpenProviders} providerDialogCallback={providerRegisterCallback}/>
             <Stepper activeStep={activeStep} nonLinear orientation={"horizontal"}>
                 {steps.map((label, index) => {
                     const stepProps = {};
@@ -287,7 +343,7 @@ const HorizontalLinearStepper = (props) => {
                 ) : (
                     <div>
                         <Typography
-                            className={classes.instructions}>{getStepContent(activeStep, registerComponent)}</Typography>
+                            className={classes.instructions}>{getStepContent(activeStep, registerComponent, setOpenProviders, open)}</Typography>
                         <div>
                             <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                                 Back
@@ -318,24 +374,59 @@ class Register extends Component {
             jwt: "",
             firstName: "",
             lastName: "",
+            searchQuery: "",
             phone: "",
             email: "",
             password: "",
             createProvider: false,
+            chosenProvider: null,
+            providers: [],
             isLoggedIn: false,
         }
     }
+
+
+    loadData = async () => {
+
+
+        let URL = "http://localhost:3000/providersActive";
+
+
+
+        const response = await axios({
+            method: 'get',
+            url: URL,
+            params:{
+                searchQuery: this.state.searchQuery
+            }
+
+        });
+
+
+        const data = await response.data;
+        console.log("providers data: " + JSON.stringify((data)));
+
+        this.setState({
+            providers: data
+        });
+
+    }
+
 
     register = async () => {
 
 
 
-        let URL = "http://localhost:3000/users";
+        let URL = `http://localhost:3000/users/provider/${this.state.chosenProvider._id}`;
         // let URL = "http://localhost:3000/users/authenticate";
 
         this.setState({
             jwt: []
         });
+
+        const config = {
+            "Authorization": `Bearer ${this.props.token}`
+        };
 
 
         const response = await axios({
@@ -353,7 +444,9 @@ class Register extends Component {
                 email: this.state.email,
                 password: this.state.password,
                 confirmPassword: this.state.password
-            }
+            },
+            headers: config
+
         });
 
 
@@ -362,7 +455,9 @@ class Register extends Component {
         const msg = data.Message;
 
         if (msg === "Person created successfully") {
-            this.props.setToken(this.state);
+            this.container.success(`Successfully linked user with provider`, `Success`, {
+                closeButton: true,
+            });
         } else {
             console.log("unsuccessfully created user");
         }
@@ -371,10 +466,11 @@ class Register extends Component {
 
 
     componentDidMount() {
+        this.loadData();
     }
 
     render() {
-        return !this.props.token ? (
+        return  (
             <div id="registerContainer">
                 <ToastContainer
                     ref={ref => this.container = ref}
@@ -382,7 +478,7 @@ class Register extends Component {
                 />
                 <HorizontalLinearStepper registerComponent={this}/>
             </div>
-        ) : <Redirect to="/provider"/>;
+        ) ;
     }
 }
 

@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
    container: {
      marginTop: 20,
        height: 300,
-       width: 950,
+       width: "100%",
        paddingBottom: 100,
        paddingRight: 20,
    },
@@ -43,12 +43,12 @@ export default function Chart() {
       <ResponsiveContainer>
         <LineChart
           data={data}
-          margin={{
-            top: 16,
-            right: 16,
-            bottom: 0,
-            left: 24,
-          }}
+          // margin={{
+          //   top: 16,
+          //   right: 16,
+          //   bottom: 0,
+          //   left: 24,
+          // }}
         >
           <XAxis dataKey="time" stroke={theme.palette.text.secondary}>
           <Label

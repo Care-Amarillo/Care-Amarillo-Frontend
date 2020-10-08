@@ -18,7 +18,7 @@ import Button from '@material-ui/core/Button';
 import 'date-fns';
 import axios from "axios";
 import MaterialTable from "material-table";
-import { forwardRef } from 'react';
+import {forwardRef} from 'react';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowUpward from '@material-ui/icons/ArrowUpward';
 import Check from '@material-ui/icons/Check';
@@ -35,32 +35,29 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import AlertDialogSlide from "../AlertDialogSlide";
-import { ToastContainer, ToastMessage, ToastMessageAnimated } from "react-toastr";
+import {ToastContainer, ToastMessage, ToastMessageAnimated} from "react-toastr";
 import "./AuditEntries.css";
 
 
-
 const tableIcons = {
-    Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
-    Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
-    Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-    Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
-    DetailPanel: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
-    Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
-    Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
-    Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
-    FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
-    LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
-    NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
-    PreviousPage: forwardRef((props, ref) => <ChevronLeft {...props} ref={ref} />),
-    ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-    Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
-    SortArrow: forwardRef((props, ref) => <ArrowUpward {...props} ref={ref} />),
-    ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
-    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
+    Add: forwardRef((props, ref) => <AddBox {...props} ref={ref}/>),
+    Check: forwardRef((props, ref) => <Check {...props} ref={ref}/>),
+    Clear: forwardRef((props, ref) => <Clear {...props} ref={ref}/>),
+    Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref}/>),
+    DetailPanel: forwardRef((props, ref) => <ChevronRight {...props} ref={ref}/>),
+    Edit: forwardRef((props, ref) => <Edit {...props} ref={ref}/>),
+    Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref}/>),
+    Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref}/>),
+    FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref}/>),
+    LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref}/>),
+    NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref}/>),
+    PreviousPage: forwardRef((props, ref) => <ChevronLeft {...props} ref={ref}/>),
+    ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref}/>),
+    Search: forwardRef((props, ref) => <Search {...props} ref={ref}/>),
+    SortArrow: forwardRef((props, ref) => <ArrowUpward {...props} ref={ref}/>),
+    ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref}/>),
+    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref}/>)
 };
-
-
 
 
 // Array of API discovery doc URLs for APIs used by the quickstart
@@ -73,24 +70,60 @@ const SCOPES = "https://www.googleapis.com/auth/spreadsheets";
 
 const AuditTable = (props) => {
     //todo: even with maxWidth of 100% it still stretches screen because of so many columns
-    return  <div style={{ maxWidth: "100%", width:"100%" }}>
+    return <div style={{width: "100%"}}>
         <MaterialTable
             icons={tableIcons}
+            data={props.data}
             columns={[
-                { title: "Date", field: "createdAt", type: "datetime", searchable:false },
+                {
+                    title: "Date", field: "createdAt", type: "datetime", searchable: false, headerStyle: {
+                        width: 20,
+                        maxWidth: 20,
+                    }, cellStyle: {
+                        width: 20,
+                        maxWidth: 20,
+                        fontSize: 14
+                    },
+                },
                 {
                     title: 'Created By',
                     field: 'createdBy',
-                    render: rowData  => rowData.createdBy['fName'] + " " +  rowData.createdBy['lName'],
+                    headerStyle: {
+                        width: 20,
+                        maxWidth: 20,
+                    }, cellStyle: {
+                        width: 20,
+                        maxWidth: 20,
+                        fontSize: 14
+                    },
+                    render: rowData => rowData.createdBy['fName'] + " " + rowData.createdBy['lName'],
                     customFilterAndSearch: (term, rowData) => (rowData.createdBy['fName']).indexOf(term) != -1
                 },
-                { title: "Table Reference", field: "ref" },
-                { title: "Action", field: "action" },
+                {
+                    title: "Table Reference", field: "ref", headerStyle: {
+                        width: 20,
+                        maxWidth: 20,
+                    }, cellStyle: {
+                        width: 20,
+                        maxWidth: 20,
+                        fontSize: 14
+                    }
+                },
+                {
+                    title: "Action", field: "action", headerStyle: {
+                        width: 20,
+                        maxWidth: 20,
+                    }, cellStyle: {
+                        width: 20,
+                        maxWidth: 20,
+                        fontSize: 14
+                    }
+                },
                 // { title: "Endpoint", field: "endpoint" },
                 // { title: "Request Method", field: "requestMethod" },
 
             ]}
-            data={props.data}
+
             title="Audit Entries"
             options={{
                 sorting: true,
@@ -109,34 +142,33 @@ class AuditEntries extends Component {
         super(props);
 
         let midNight = new Date();
-        midNight.setHours(24,0,0,0);
+        midNight.setHours(24, 0, 0, 0);
 
         let todayMidNight = new Date();
-        todayMidNight.setHours(0,0,0,0);
+        todayMidNight.setHours(0, 0, 0, 0);
         this.state = {
             entries: [],
             selectedStartDate: todayMidNight,
             selectedEndDate: midNight,
             open: false,
             sheetsDialogOpen: false,
-            alertTitle : "CSV Export Options",
-            alertDescription : "How would you like your CSV to be exported?",
-            alertYesOptionTitle : "CSV",
-            alertNoOptionTitle : "Google Sheets",
-            alertSheetsTitle : "Google Sheets Export Options",
-            alertSheetsDescription : "Copy the new link to your clipboard or open the Google Sheet in a new tab?",
-            alertSheetsYesOptionTitle : "Copy",
-            alertSheetsNoOptionTitle : "Open In New Tab",
-            sheetUrl : ""
+            alertTitle: "CSV Export Options",
+            alertDescription: "How would you like your CSV to be exported?",
+            alertYesOptionTitle: "CSV",
+            alertNoOptionTitle: "Google Sheets",
+            alertSheetsTitle: "Google Sheets Export Options",
+            alertSheetsDescription: "Copy the new link to your clipboard or open the Google Sheet in a new tab?",
+            alertSheetsYesOptionTitle: "Copy",
+            alertSheetsNoOptionTitle: "Open In New Tab",
+            sheetUrl: ""
         }
     }
 
-    setOpen = () =>{
+    setOpen = () => {
         let openStatus = this.state.open;
-        if(openStatus){
+        if (openStatus) {
             openStatus = false;
-        }
-        else{
+        } else {
             openStatus = true;
         }
 
@@ -145,12 +177,11 @@ class AuditEntries extends Component {
         });
     }
 
-    setSheetsDialogOpen = () =>{
+    setSheetsDialogOpen = () => {
         let openStatus = this.state.sheetsDialogOpen;
-        if(openStatus){
+        if (openStatus) {
             openStatus = false;
-        }
-        else{
+        } else {
             openStatus = true;
         }
 
@@ -161,7 +192,7 @@ class AuditEntries extends Component {
 
     slideAlertCallback = (isCSV) => {
         if (isCSV) {
-            console.log("is csv" );
+            console.log("is csv");
             this.exportReport();
         } else {
             console.log("is sheets");
@@ -172,7 +203,7 @@ class AuditEntries extends Component {
 
     sheetsSlideAlertCallback = (isCopy) => {
         if (isCopy) {
-            console.log("is copy" );
+            console.log("is copy");
             navigator.clipboard.writeText(this.state.sheetUrl);
 
             this.container.success(`Link Copied To Clipboard`, `Success`, {
@@ -190,11 +221,14 @@ class AuditEntries extends Component {
 
     loadData = async () => {
 
-        let URL = "http://localhost:3000/auditEntries/"  + "?startDate=" +  this.state.selectedStartDate.toISOString()   + "&endDate=" + this.state.selectedEndDate.toISOString();
+        let URL = "http://localhost:3000/auditEntries/" + "?startDate=" + this.state.selectedStartDate.toISOString() + "&endDate=" + this.state.selectedEndDate.toISOString();
 
         this.setState({
             entries: []
         });
+
+
+        console.log(`url is ${URL}`);
 
 
         const config = {
@@ -337,17 +371,15 @@ class AuditEntries extends Component {
         return result;
     }
 
-    exportReportToGoogleSheets = () =>{
+    exportReportToGoogleSheets = () => {
         this.handleClientLoad();
 
     }
 
 
-
     handleClientLoad = () => {
         window.gapi.load('client:auth2', this.initClient);
     }
-
 
 
     updateSignInStatus = (isSignedIn) => {
@@ -358,7 +390,7 @@ class AuditEntries extends Component {
         }
     }
 
-    initClient = async() => {
+    initClient = async () => {
         await window.gapi.client.init({
             apiKey: process.env.REACT_APP_SHEETS_GOOGLE_API_KEY,
             discoveryDocs: DISCOVERY_DOCS,
@@ -378,7 +410,7 @@ class AuditEntries extends Component {
     }
 
 
-    makeGoogleSheetsApiCall = async() => {
+    makeGoogleSheetsApiCall = async () => {
 
         let response = await window.gapi.client.sheets.spreadsheets.create({
             properties: {
@@ -398,7 +430,7 @@ class AuditEntries extends Component {
 
         this.setState({
             sheetUrl: sheetUrl
-        },()=>{
+        }, () => {
             this.setSheetsDialogOpen();
         });
 
@@ -425,25 +457,19 @@ class AuditEntries extends Component {
 
 
                 if (j == 0) {
-                    let formattedDate = format(new Date(this.state.entries[i-1]["createdAt"]), "MMMM d, yyyy H:mma").toString();
+                    let formattedDate = format(new Date(this.state.entries[i - 1]["createdAt"]), "MMMM d, yyyy H:mma").toString();
                     arr[i][j] = formattedDate;
-                }
-                else if (j == 1) {
+                } else if (j == 1) {
                     arr[i][j] = this.state.entries[i - 1]["createdBy"]["email"];
-                }
-                else if (j == 2) {
+                } else if (j == 2) {
                     arr[i][j] = this.state.entries[i - 1]["ref"];
-                }
-                else if (j == 3) {
+                } else if (j == 3) {
                     arr[i][j] = this.state.entries[i - 1]["action"];
-                }
-                else if (j == 4) {
+                } else if (j == 4) {
                     arr[i][j] = this.state.entries[i - 1]["endpoint"];
-                }
-                else if (j == 5) {
+                } else if (j == 5) {
                     arr[i][j] = this.state.entries[i - 1]["requestMethod"];
                 }
-
 
 
             }
@@ -477,19 +503,26 @@ class AuditEntries extends Component {
 
     render() {
         return (
-            <Container maxWidth="lg" className="car-container" id="chartContainer">
-                <div className="flex-container">
+            <div class="auditContainer">
+                <Container className="car-container" id="chartContainer">
                     <ToastContainer
                         ref={ref => this.container = ref}
                         className="toast-bottom-right"
                     />
-                    <AlertDialogSlide open={this.state.open} setOpen={this.setOpen} alertSlideCallback={this.slideAlertCallback} title={this.state.alertTitle}
-                                      description={this.state.alertDescription} yesOptionTitle={this.state.alertYesOptionTitle} noOptionTitle={this.state.alertNoOptionTitle} />
+                    <AlertDialogSlide open={this.state.open} setOpen={this.setOpen}
+                                      alertSlideCallback={this.slideAlertCallback} title={this.state.alertTitle}
+                                      description={this.state.alertDescription}
+                                      yesOptionTitle={this.state.alertYesOptionTitle}
+                                      noOptionTitle={this.state.alertNoOptionTitle}/>
 
 
                     {/*dialog for copy or open in new tab of google sheets link */}
-                    <AlertDialogSlide open={this.state.sheetsDialogOpen} setOpen={this.setSheetsDialogOpen} alertSlideCallback={this.sheetsSlideAlertCallback} title={this.state.alertSheetsTitle}
-                                      description={this.state.alertSheetsDescriptionDescription} yesOptionTitle={this.state.alertSheetsYesOptionTitle} noOptionTitle={this.state.alertSheetsNoOptionTitle} />
+                    <AlertDialogSlide open={this.state.sheetsDialogOpen} setOpen={this.setSheetsDialogOpen}
+                                      alertSlideCallback={this.sheetsSlideAlertCallback}
+                                      title={this.state.alertSheetsTitle}
+                                      description={this.state.alertSheetsDescriptionDescription}
+                                      yesOptionTitle={this.state.alertSheetsYesOptionTitle}
+                                      noOptionTitle={this.state.alertSheetsNoOptionTitle}/>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <div id="dateContainer">
                             <KeyboardDatePicker
@@ -515,13 +548,13 @@ class AuditEntries extends Component {
                                 KeyboardButtonProps={{
                                     'aria-label': 'change date',
                                 }}
-                                />
+                            />
                         </div>
                     </MuiPickersUtilsProvider>
-                </div>
 
-                <AuditTable data={this.state.entries} setOpen={this.setOpen}/>
-            </Container>
+                    <AuditTable data={this.state.entries} setOpen={this.setOpen}/>
+                </Container>
+            </div>
         );
 
     }

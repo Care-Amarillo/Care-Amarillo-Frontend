@@ -22,6 +22,7 @@ import SuperAdminProviderEntries from "../../containers/SuperAdminProviderEntrie
 import SuperAdminSendPush from "../../containers/SuperAdminSendPush";
 import SuperAdminUsers from "../../containers/SuperAdminUsers";
 import LandingPage from "../../containers/LandingPage";
+import SuperAdminEditUser from "../../containers/SuperAdminEditUser";
 
 
 const useStyles = makeStyles(theme => ({
@@ -52,13 +53,14 @@ function ResponsiveDrawer(props) {
                             {/* <SuperProtectedRoute exact path="/superAdminSendPush" component={SuperAdminSendPush} /> */}
                             <SuperProtectedRoute exact path="/superAdminUsers" component={SuperAdminUsers} />
                             <SuperProtectedRoute exact path="/superAdminEditProvider/:id" component={SuperAdminEditProvider} />
+                            <SuperProtectedRoute exact path="/superAdminEditUser/:id" component={SuperAdminEditUser} />
                             <ProtectedRoute exact path="/providerSignUp" component={ProviderRegister} />
                             <ProtectedRoute exact path="/providerEntry" component={ProviderEntries} />
                             <ProtectedRoute exact path="/editProvider" component={EditProvider} />
                             <ProtectedRoute exact path="/editUser" component={EditUser} />
                             <Route exact path="/provider" component={ProviderPanel} />
                             <Route exact path="/login" component={Login} />
-                            <Route exact path="/register" component={Register} />
+                            <ProtectedRoute exact path="/register" component={Register} />
                             <Route exact path="/providerDtl/:id" component={ProviderDetail} />
                             <Route exact path="/" component={LandingPage} />
                         </Switch>

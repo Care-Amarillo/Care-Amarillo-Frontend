@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './Providers.css';
+import './ProviderDialogItem.css';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -14,11 +14,11 @@ import {
 
 const useStyles = makeStyles({
     root: {
-        // display:"flex",
-        // flexDirection:"column",
+        display:"flex",
+        flexDirection:"column",
         // justifyContent:"center",
-        // margin:"10px",
-        // width: "90%",
+        margin:"10px",
+        width: "90%",
         // backgroundColor: "#132C3C",
     },
     bullet: {
@@ -60,34 +60,43 @@ const ProviderCard = (props) => {
     const data = props.data;
     const bedCount = data.totalBeds - data.bedsUsed;
     const name = data.name;
+
+    const providerChosen=()=>{
+       props.callback(data);
+    }
     return (
         <Card className={classes.root}>
             <CardContent>
                 <Typography className={classes.title} >
                     {name}
                 </Typography>
-                <Typography className={classes.secondText} >
-                    Avaliable Beds: {bedCount}
-                </Typography>
+                {/*<Typography className={classes.secondText} >*/}
+                {/*    Avaliable Beds: {bedCount}*/}
+                {/*</Typography>*/}
             </CardContent>
             <CardActions>
-                <Button  className={classes.button} component={Link} to={`/providerDtl/${data._id}`}>
-                    Learn More
+                <Button  className={classes.button}  onClick={providerChosen} >
+                   Select
                 </Button>
             </CardActions>
         </Card>
     )
 }
 
-class Providers extends Component {
+class ProviderDialogItem extends Component {
+
+   providerSelected = (provider)=>{
+       this.props.providerCallback(provider);
+   }
+
     render() {
         return (
             <div id="providerContainer">
-                <ProviderCard data={this.props.data}/>
+                <ProviderCard data={this.props.data} callback={this.providerSelected}/>
             </div>
         );
     }
 }
 
 
-export default Providers;
+export default ProviderDialogItem;
