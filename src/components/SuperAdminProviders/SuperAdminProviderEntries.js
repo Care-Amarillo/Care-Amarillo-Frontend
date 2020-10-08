@@ -174,7 +174,7 @@ class SuperAdminProviderEntries extends Component {
     loadData = async () => {
 
 
-        let URL = "http://localhost:3000/providerEntries?startDate=" + this.state.selectedStartDate.toISOString() + "&endDate=" + this.state.selectedEndDate.toISOString();
+        let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/providerEntries?startDate=` + this.state.selectedStartDate.toISOString() + "&endDate=" + this.state.selectedEndDate.toISOString();
 
         this.setState({
             entries: []

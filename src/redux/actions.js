@@ -5,7 +5,7 @@ export const setToken = (stateObj) => {
     // perform the actual authentication, and then return as the "value" the actual retrieved token.
     return async (dispatch) => {
 
-        let AUTHENTICATE_URL = "http://localhost:3000/users/authenticate";
+        let AUTHENTICATE_URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/users/authenticate`;
 
 
         let theUsername = stateObj.email;

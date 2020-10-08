@@ -68,7 +68,7 @@ class ProviderPanel extends Component {
     loadData = async () => {
 
 
-        let URL = "http://localhost:3000/providersActive";
+        let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/providersActive`;
 
 
         const response = await axios({

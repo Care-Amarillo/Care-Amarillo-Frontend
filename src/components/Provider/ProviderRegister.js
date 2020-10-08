@@ -458,8 +458,7 @@ class ProviderRegister extends Component {
     }
 
     register = async () => {
-        let URL = "http://localhost:3000/providers";
-        // let URL = "http://localhost:3000/users/authenticate";
+        let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/providers`;
 
 
         const config = {

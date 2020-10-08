@@ -64,7 +64,7 @@ class SuperAdminSendPush extends Component {
     sendPush = async () => {
 
 
-        let PUSH_URL = "http://localhost:3000/push/globalPush";
+        let PUSH_URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/push/globalPush`;
 
 
         let title = this.state.title;

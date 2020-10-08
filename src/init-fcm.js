@@ -3,14 +3,14 @@ import "firebase/messaging";
 
 
 let firebaseConfig = {
-    apiKey: "AIzaSyCOvmLGpbzVEgMywSh3g4g6mbaynTbdIiU",
-    authDomain: "careamarillo.firebaseapp.com",
-    databaseURL: "https://careamarillo.firebaseio.com",
-    projectId: "careamarillo",
-    storageBucket: "careamarillo.appspot.com",
-    messagingSenderId: "461686716459",
-    appId: "1:461686716459:web:cd49f75ab5acd74f65526e",
-    measurementId: "G-2VEJDKXSHD"
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID,
+    measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
 
@@ -22,7 +22,7 @@ if (firebase.messaging.isSupported()) {
 
     messaging.usePublicVapidKey(
         // Project Settings => Cloud Messaging => Web Push certificates
-        "BAbQqzrfIWAgTvVnNJVrJvyEoUrh2uBtDYx2iT3cbW5JfKEHJFRn3Ruyjs4H9OsD1rjYDCQRR2UAO_46anL8Sgk"
+       process.env.REACT_APP_FIREBASE_PUBLIC_VAPID_KEY
     );
 }
 
