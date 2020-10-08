@@ -1,8 +1,16 @@
-#providerContainer{
+.providerPanelContainer{
     display: flex;
-    /* height: 100vh; */
+     height: 100vh;
+    width: 100%;
     flex-direction: column;
-    background-color: lightgray;
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    /*align-content: center;*/
+    /*background-color: lightgray;*/
+}
+
+#chartContainer{
+    width: 100%;
 }
 
 #search{
@@ -13,12 +21,35 @@
     text-align: left;
 }
 
-#cardContent{
-    margin-top: -20px;
-    width: auto;
+#gridContainer{
     display: flex;
-    justify-content: space-between;
-    flex-direction: row;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    /*background-color: black;*/
+}
+
+#cardContainer{
+    /*display: flex;*/
+    /*flex-direction: row;*/
+    /*justify-content: center;*/
+    /*align-content: center;*/
+    /*align-items: center;*/
+    /*width: 100%;*/
+    /*height: 100vh;*/
+    /*background-color: black;*/
+
+}
+
+#cardContent{
+    /*background-color: black;*/
+    display: grid;
+    justify-content: space-evenly;
+    /*justify-items: center;*/
+    /*align-items: center;*/
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fit, 186px);
 }
 
 

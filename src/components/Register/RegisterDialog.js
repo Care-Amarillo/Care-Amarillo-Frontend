@@ -6,6 +6,7 @@ import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
+import './Register.css';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import axios from "axios";
@@ -23,6 +24,7 @@ const styles = (theme) => ({
         top: theme.spacing(1),
         color: theme.palette.grey[500],
     },
+
 });
 
 const DialogTitle = withStyles(styles)((props) => {
@@ -51,6 +53,8 @@ const DialogActions = withStyles((theme) => ({
         padding: theme.spacing(1),
     },
 }))(MuiDialogActions);
+
+
 
 const RegisterDialog = (props) => {
     const [providers, setProviders] = useState([]);
@@ -99,22 +103,22 @@ const RegisterDialog = (props) => {
 
 
     return (
-        <div>
-            <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={props.open}>
+        <div >
+            <Dialog id="dialogContainer" onClose={handleClose} aria-labelledby="customized-dialog-title" open={props.open}>
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
                     Choose Provider
                 </DialogTitle>
                 <DialogContent dividers>
-                     <TextField id="search" label="Search for Shelter..." onChange={searchChanged} type="search" variant="outlined"/>
+                     <TextField style ={{width: '100%'}}  label="Search for Shelter..." onChange={searchChanged} type="search" variant="outlined"/>
                     {providers.map((data, index) => (
                         <ProviderDialogItem key={index} index={index} data={data} providerCallback={providerSelected}/>
                     ))}
                 </DialogContent>
-                <DialogActions>
-                    <Button autoFocus onClick={handleClose} color="primary">
-                        Save changes
-                    </Button>
-                </DialogActions>
+                {/*<DialogActions>*/}
+                {/*    <Button autoFocus onClick={handleClose} color="primary">*/}
+                {/*        Save changes*/}
+                {/*    </Button>*/}
+                {/*</DialogActions>*/}
             </Dialog>
         </div>
     );

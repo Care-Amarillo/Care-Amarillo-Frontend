@@ -18,7 +18,7 @@ import Button from '@material-ui/core/Button';
 import 'date-fns';
 import axios from "axios";
 import MaterialTable from "material-table";
-import { forwardRef } from 'react';
+import {forwardRef} from 'react';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowUpward from '@material-ui/icons/ArrowUpward';
 import Check from '@material-ui/icons/Check';
@@ -35,35 +35,32 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import AlertDialogSlide from "../AlertDialogSlide";
-import { ToastContainer, ToastMessage, ToastMessageAnimated } from "react-toastr";
+import {ToastContainer, ToastMessage, ToastMessageAnimated} from "react-toastr";
 import IconButton from "@material-ui/core/IconButton";
 import Icon from "@material-ui/core/Icon";
 import {Link} from "react-router-dom";
 import "./SuperAdminProviders.css";
 
 
-
 const tableIcons = {
-    Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
-    Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
-    Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-    Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
-    DetailPanel: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
-    Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
-    Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
-    Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
-    FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
-    LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
-    NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
-    PreviousPage: forwardRef((props, ref) => <ChevronLeft {...props} ref={ref} />),
-    ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-    Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
-    SortArrow: forwardRef((props, ref) => <ArrowUpward {...props} ref={ref} />),
-    ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
-    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
+    Add: forwardRef((props, ref) => <AddBox {...props} ref={ref}/>),
+    Check: forwardRef((props, ref) => <Check {...props} ref={ref}/>),
+    Clear: forwardRef((props, ref) => <Clear {...props} ref={ref}/>),
+    Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref}/>),
+    DetailPanel: forwardRef((props, ref) => <ChevronRight {...props} ref={ref}/>),
+    Edit: forwardRef((props, ref) => <Edit {...props} ref={ref}/>),
+    Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref}/>),
+    Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref}/>),
+    FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref}/>),
+    LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref}/>),
+    NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref}/>),
+    PreviousPage: forwardRef((props, ref) => <ChevronLeft {...props} ref={ref}/>),
+    ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref}/>),
+    Search: forwardRef((props, ref) => <Search {...props} ref={ref}/>),
+    SortArrow: forwardRef((props, ref) => <ArrowUpward {...props} ref={ref}/>),
+    ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref}/>),
+    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref}/>)
 };
-
-
 
 
 // Array of API discovery doc URLs for APIs used by the quickstart
@@ -75,15 +72,47 @@ const SCOPES = "https://www.googleapis.com/auth/spreadsheets";
 
 
 const AuditTable = (props) => {
-    return  <div style={{ maxWidth: "100%" }}>
+    return <div style={{maxWidth: "100%"}}>
         <MaterialTable
             icons={tableIcons}
             columns={[
-                { title: "Creation Date", field: "createdAt", type: "datetime", searchable:false },
-                { title: "Name", field: "name" },
-                { title: "Active", field: "active" },
+                {
+                    title: "Creation Date", field: "createdAt", type: "datetime", searchable: false, headerStyle: {
+                        width: 20,
+                        maxWidth: 20,
+                    }, cellStyle: {
+                        width: 20,
+                        maxWidth: 20,
+                        fontSize: 14
+                    },
+                },
+                {
+                    title: "Name", field: "name", headerStyle: {
+                        width: 20,
+                        maxWidth: 20,
+                    }, cellStyle: {
+                        width: 20,
+                        maxWidth: 20,
+                        fontSize: 14
+                    },
+                },
+                {
+                    title: "Active", field: "active", headerStyle: {
+                        width: 20,
+                        maxWidth: 20,
+                    }, cellStyle: {
+                        width: 20,
+                        maxWidth: 20,
+                        fontSize: 14
+                    },
+                },
 
             ]}
+            localization={{
+                header: {
+                    actions: 'Edit'
+                },
+            }}
             data={props.data}
             title="Providers"
             options={{
@@ -110,7 +139,7 @@ const AuditTable = (props) => {
                                 component={Link}
                                 to={`/superAdminEditProvider/${props.data._id}`}
                     >
-                       <Edit/>
+                        <Edit/>
                     </IconButton>
                 ),
             }}
@@ -123,10 +152,10 @@ class SuperAdminProviders extends Component {
         super(props);
 
         let midNight = new Date();
-        midNight.setHours(24,0,0,0);
+        midNight.setHours(24, 0, 0, 0);
 
         let todayMidNight = new Date();
-        todayMidNight.setHours(0,0,0,0);
+        todayMidNight.setHours(0, 0, 0, 0);
         this.state = {
             entries: [],
             providers: [],
@@ -135,24 +164,23 @@ class SuperAdminProviders extends Component {
             open: false,
             searchQuery: "",
             sheetsDialogOpen: false,
-            alertTitle : "CSV Export Options",
-            alertDescription : "How would you like your CSV to be exported?",
-            alertYesOptionTitle : "CSV",
-            alertNoOptionTitle : "Google Sheets",
-            alertSheetsTitle : "Google Sheets Export Options",
-            alertSheetsDescription : "Copy the new link to your clipboard or open the Google Sheet in a new tab?",
-            alertSheetsYesOptionTitle : "Copy",
-            alertSheetsNoOptionTitle : "Open In New Tab",
-            sheetUrl : ""
+            alertTitle: "CSV Export Options",
+            alertDescription: "How would you like your CSV to be exported?",
+            alertYesOptionTitle: "CSV",
+            alertNoOptionTitle: "Google Sheets",
+            alertSheetsTitle: "Google Sheets Export Options",
+            alertSheetsDescription: "Copy the new link to your clipboard or open the Google Sheet in a new tab?",
+            alertSheetsYesOptionTitle: "Copy",
+            alertSheetsNoOptionTitle: "Open In New Tab",
+            sheetUrl: ""
         }
     }
 
-    setOpen = () =>{
+    setOpen = () => {
         let openStatus = this.state.open;
-        if(openStatus){
+        if (openStatus) {
             openStatus = false;
-        }
-        else{
+        } else {
             openStatus = true;
         }
 
@@ -161,12 +189,11 @@ class SuperAdminProviders extends Component {
         });
     }
 
-    setSheetsDialogOpen = () =>{
+    setSheetsDialogOpen = () => {
         let openStatus = this.state.sheetsDialogOpen;
-        if(openStatus){
+        if (openStatus) {
             openStatus = false;
-        }
-        else{
+        } else {
             openStatus = true;
         }
 
@@ -212,7 +239,7 @@ class SuperAdminProviders extends Component {
         const response = await axios({
             method: 'get',
             url: URL,
-            params:{
+            params: {
                 searchQuery: this.state.searchQuery
             }
 
@@ -227,7 +254,6 @@ class SuperAdminProviders extends Component {
 
 
     }
-
 
 
     handleStartDateChange = (e) => {
@@ -350,17 +376,15 @@ class SuperAdminProviders extends Component {
         return result;
     }
 
-    exportReportToGoogleSheets = () =>{
+    exportReportToGoogleSheets = () => {
         this.handleClientLoad();
 
     }
 
 
-
     handleClientLoad = () => {
         window.gapi.load('client:auth2', this.initClient);
     }
-
 
 
     updateSignInStatus = (isSignedIn) => {
@@ -370,7 +394,7 @@ class SuperAdminProviders extends Component {
         }
     }
 
-    initClient = async() => {
+    initClient = async () => {
         await window.gapi.client.init({
             apiKey: process.env.REACT_APP_SHEETS_GOOGLE_API_KEY,
             discoveryDocs: DISCOVERY_DOCS,
@@ -390,7 +414,7 @@ class SuperAdminProviders extends Component {
     }
 
 
-    makeGoogleSheetsApiCall = async() => {
+    makeGoogleSheetsApiCall = async () => {
 
         let response = await window.gapi.client.sheets.spreadsheets.create({
             properties: {
@@ -406,7 +430,7 @@ class SuperAdminProviders extends Component {
 
         this.setState({
             sheetUrl: sheetUrl
-        },()=>{
+        }, () => {
             this.setSheetsDialogOpen();
         });
 
@@ -433,25 +457,19 @@ class SuperAdminProviders extends Component {
 
 
                 if (j == 0) {
-                    let formattedDate = format(new Date(this.state.entries[i-1]["createdAt"]), "MMMM d, yyyy H:mma").toString();
+                    let formattedDate = format(new Date(this.state.entries[i - 1]["createdAt"]), "MMMM d, yyyy H:mma").toString();
                     arr[i][j] = formattedDate;
-                }
-                else if (j == 1) {
+                } else if (j == 1) {
                     arr[i][j] = this.state.entries[i - 1]["createdBy"]["email"];
-                }
-                else if (j == 2) {
+                } else if (j == 2) {
                     arr[i][j] = this.state.entries[i - 1]["ref"];
-                }
-                else if (j == 3) {
+                } else if (j == 3) {
                     arr[i][j] = this.state.entries[i - 1]["action"];
-                }
-                else if (j == 4) {
+                } else if (j == 4) {
                     arr[i][j] = this.state.entries[i - 1]["endpoint"];
-                }
-                else if (j == 5) {
+                } else if (j == 5) {
                     arr[i][j] = this.state.entries[i - 1]["requestMethod"];
                 }
-
 
 
             }
@@ -483,19 +501,26 @@ class SuperAdminProviders extends Component {
 
     render() {
         return (
-            <Container maxWidth="lg" className="car-container" id="chartContainer">
-                <div className="flex-container">
+            <div class="superAdminProviderContainer">
+                <Container maxWidth="lg" className="car-container" id="chartContainer">
                     <ToastContainer
                         ref={ref => this.container = ref}
                         className="toast-bottom-right"
                     />
-                    <AlertDialogSlide open={this.state.open} setOpen={this.setOpen} alertSlideCallback={this.slideAlertCallback} title={this.state.alertTitle}
-                                      description={this.state.alertDescription} yesOptionTitle={this.state.alertYesOptionTitle} noOptionTitle={this.state.alertNoOptionTitle} />
+                    <AlertDialogSlide open={this.state.open} setOpen={this.setOpen}
+                                      alertSlideCallback={this.slideAlertCallback} title={this.state.alertTitle}
+                                      description={this.state.alertDescription}
+                                      yesOptionTitle={this.state.alertYesOptionTitle}
+                                      noOptionTitle={this.state.alertNoOptionTitle}/>
 
 
                     {/*dialog for copy or open in new tab of google sheets link */}
-                    <AlertDialogSlide open={this.state.sheetsDialogOpen} setOpen={this.setSheetsDialogOpen} alertSlideCallback={this.sheetsSlideAlertCallback} title={this.state.alertSheetsTitle}
-                                      description={this.state.alertSheetsDescriptionDescription} yesOptionTitle={this.state.alertSheetsYesOptionTitle} noOptionTitle={this.state.alertSheetsNoOptionTitle} />
+                    <AlertDialogSlide open={this.state.sheetsDialogOpen} setOpen={this.setSheetsDialogOpen}
+                                      alertSlideCallback={this.sheetsSlideAlertCallback}
+                                      title={this.state.alertSheetsTitle}
+                                      description={this.state.alertSheetsDescriptionDescription}
+                                      yesOptionTitle={this.state.alertSheetsYesOptionTitle}
+                                      noOptionTitle={this.state.alertSheetsNoOptionTitle}/>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <div id="dateContainer">
                             <KeyboardDatePicker
@@ -524,10 +549,10 @@ class SuperAdminProviders extends Component {
                             />
                         </div>
                     </MuiPickersUtilsProvider>
-                </div>
 
-                <AuditTable data={this.state.providers} setOpen={this.setOpen}/>
-            </Container>
+                    <AuditTable data={this.state.providers} setOpen={this.setOpen}/>
+                </Container>
+            </div>
         );
 
     }

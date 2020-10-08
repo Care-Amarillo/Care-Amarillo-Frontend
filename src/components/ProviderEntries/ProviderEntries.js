@@ -7,7 +7,7 @@ import {
     TableHead,
     TableRow
 } from '@material-ui/core';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import {LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip} from 'recharts';
 import DefaultTooltipContent from 'recharts/lib/component/DefaultTooltipContent';
 
 import format from "date-fns/format";
@@ -43,6 +43,7 @@ import AlertDialogSlide from "../AlertDialogSlide";
 import CareAppNav from '../CareAppBar/CareAppNav';
 import {ToastContainer, ToastMessage, ToastMessageAnimated} from "react-toastr";
 import "./ProviderEntries.css";
+import ProviderEntriesChart from "../SuperAdminProviders/ProviderEntriesChart";
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref}/>),
@@ -78,8 +79,22 @@ const ProviderTable = (props) => {
         <MaterialTable
             icons={tableIcons}
             columns={[
-                {title: "Amount Changed", field: "amountChanged"},
-                {title: "Date", field: "createdAt", type: "datetime", searchable: false},
+                {title: "Amount Changed", field: "amountChanged", headerStyle: {
+                        width: 20,
+                        maxWidth: 20,
+                    }, cellStyle: {
+                        width: 20,
+                        maxWidth: 20,
+                        fontSize: 14
+                    },},
+                {title: "Date", field: "createdAt", type: "datetime", searchable: false, headerStyle: {
+                        width: 20,
+                        maxWidth: 20,
+                    }, cellStyle: {
+                        width: 20,
+                        maxWidth: 20,
+                        fontSize: 14
+                    },},
             ]}
             data={props.data}
             title="Provider Entry"
@@ -98,47 +113,46 @@ const ProviderTable = (props) => {
 
 const formatXAxis = tickItem => {
     console.log(tickItem);
-    if(tickItem != null && tickItem !== undefined){
-       return format(new Date(tickItem), "MM/d/yyyy h:mma").toString();
+    if (tickItem != null && tickItem !== undefined) {
+        return format(new Date(tickItem), "MM/d/yyyy h:mma").toString();
+    } else {
+        return format(new Date(), "MM/d/yyyy h:mma").toString();
     }
-    else{
-       return format( new Date(), "MM/d/yyyy h:mma").toString();
-    }
- }
+}
 
- const CustomTooltip = props => {
+const CustomTooltip = props => {
     // we don't need to check payload[0] as there's a better prop for this purpose
     if (!props.active || !props.payload) {
-      // I think returning null works based on this: http://recharts.org/en-US/examples/CustomContentOfTooltip
-      return null
+        // I think returning null works based on this: http://recharts.org/en-US/examples/CustomContentOfTooltip
+        return null
     }
     // mutating props directly is against react's conventions
     // so we create a new payload with the name and value fields set to what we want
     // console.log(`payload is ${JSON.stringify(props.payload[0].payload)}`)
     const newPayload = [
-      {
-        name: 'Amount Changed',
-        // all your data which created the tooltip is located in the .payload property
-        value: props.payload[0].payload.amountChanged,
-        // you can also add "unit" here if you need it
-      },
-    //   ...props.payload,
+        {
+            name: 'Amount Changed',
+            // all your data which created the tooltip is located in the .payload property
+            value: props.payload[0].payload.amountChanged,
+            // you can also add "unit" here if you need it
+        },
+        //   ...props.payload,
     ];
-  
+
     // we render the default, but with our overridden payload
-    return <DefaultTooltipContent {...props} payload={newPayload} />;
-  }
+    return <DefaultTooltipContent {...props} payload={newPayload}/>;
+}
 
 
 const ProviderGraph = (props) => {
 
-   return props.data.length > 0 ?  <div> <LineChart width={800} height={400}  data={props.data}>
-     <Line type="monotone" dataKey="amountChanged" stroke="#8884d8" />
-     <XAxis interval={0} dataKey="createdAt" tickFormatter={formatXAxis} />
-     <YAxis dataKey="amountChanged"/>
-     <Tooltip labelFormatter={formatXAxis} content={<CustomTooltip/>} />
-   </LineChart></div> : <div></div>;
- }
+    return props.data.length > 0 ? <div><LineChart width={800} height={400} data={props.data}>
+        <Line type="monotone" dataKey="amountChanged" stroke="#8884d8"/>
+        <XAxis interval={0} dataKey="createdAt" tickFormatter={formatXAxis}/>
+        <YAxis dataKey="amountChanged"/>
+        <Tooltip labelFormatter={formatXAxis} content={<CustomTooltip/>}/>
+    </LineChart></div> : <div></div>;
+}
 
 class ProviderEntries extends Component {
     constructor(props) {
@@ -206,8 +220,6 @@ class ProviderEntries extends Component {
     }
 
 
-
-
     loadData = async () => {
 
 
@@ -266,7 +278,7 @@ class ProviderEntries extends Component {
                 // date is not valid
                 return;
             }
-                // date is valid
+            // date is valid
         } else {
             // not a date
             return;
@@ -513,12 +525,12 @@ class ProviderEntries extends Component {
 
     render() {
         return (
-            <Container maxWidth="lg" className="providerEntryContainer" id="chartContainer">
-                <ToastContainer
-                    ref={ref => this.container = ref}
-                    className="toast-bottom-right"
-                />
-                <div className="flex-container">
+            <div class="providerEntryContainer">
+                <Container maxWidth="lg" className="providerEntryContainer" id="chartContainer">
+                    <ToastContainer
+                        ref={ref => this.container = ref}
+                        className="toast-bottom-right"
+                    />
                     {/*dialog used to open csv option*/}
                     <AlertDialogSlide open={this.state.open} setOpen={this.setOpen}
                                       alertSlideCallback={this.slideAlertCallback} title={this.state.alertTitle}
@@ -563,10 +575,11 @@ class ProviderEntries extends Component {
                             />
                         </div>
                     </MuiPickersUtilsProvider>
-                </div>
-                <ProviderGraph data={this.state.entries}/>
-                <ProviderTable data={this.state.entries} setOpen={this.setOpen}/>
-            </Container>
+                    {/*<ProviderGraph data={this.state.entries}/>*/}
+                    <ProviderEntriesChart entries={this.state.entries}/>
+                    <ProviderTable data={this.state.entries} setOpen={this.setOpen}/>
+                </Container>
+            </div>
         );
     }
 }

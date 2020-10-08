@@ -23,44 +23,44 @@ const useStyles = makeStyles(theme => ({
         display: "flex",
     },
     reactSearch:{
-      // display: 'flex',
-      marginLeft: 605,
-      width:"25%",
+        // display: 'flex',
+        marginLeft: 605,
+        width:"25%",
     },
     drawer: {
-      width: drawerWidth,
-      flexShrink: 0,
-      whiteSpace: 'nowrap',
+        width: drawerWidth,
+        flexShrink: 0,
+        whiteSpace: 'nowrap',
         // [theme.breakpoints.up("sm")]: {
         //     width: drawerWidth,
         //     flexShrink: 0
         // }
     },
     drawerOpen: {
-      width: drawerWidth,
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
+        width: drawerWidth,
+        transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
     },
     drawerClose: {
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      overflowX: 'hidden',
-      width: theme.spacing(7) + 1,
-      [theme.breakpoints.up('sm')]: {
-        width: theme.spacing(9) + 1,
-      },
+        transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+        overflowX: 'hidden',
+        width: theme.spacing(7) + 1,
+        [theme.breakpoints.up('sm')]: {
+            width: theme.spacing(9) + 1,
+        },
     },
     // Strickly the app bar on top makes it touch end to end. When Drawer is closed.
     appBar: {
-      zIndex: theme.zIndex.drawer + 1,
-      transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
+        zIndex: theme.zIndex.drawer + 1,
+        transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
         // marginLeft: drawerWidth,
         // [theme.breakpoints.up("sm")]: {
         //     width: `calc(100% - ${drawerWidth}px)`
@@ -69,30 +69,30 @@ const useStyles = makeStyles(theme => ({
     },
 
     appBarShift: {
-      marginLeft: drawerWidth,
-      width: `calc(100% - ${drawerWidth}px)`,
-      transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
+        marginLeft: drawerWidth,
+        width: `calc(100% - ${drawerWidth}px)`,
+        transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
     },
     menuButton: {
-      marginRight: 36
+        marginRight: 36
         // marginRight: theme.spacing(2),
         // [theme.breakpoints.up("sm")]: {
         //     display: "none"
         // }
     },
     hide: {
-      display: 'none',
+        display: 'none',
     },
     toolbar: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'flex-end',
-      padding: theme.spacing(0, 2),
-      // necessary for content to be below app bar
-      ...theme.mixins.toolbar,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        padding: theme.spacing(0, 2),
+        // necessary for content to be below app bar
+        ...theme.mixins.toolbar,
     },
     // toolbar: theme.mixins.toolbar,
     // drawerPaper: {
@@ -122,10 +122,10 @@ const CareAppNav = (props) => {
     // Allows the drawer to open and close
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
-      setOpen(true);
+        setOpen(true);
     };
     const handleDrawerClose = () => {
-      setOpen(false);
+        setOpen(false);
     }
 
     const handleDrawerToggle = () => {
@@ -135,89 +135,89 @@ const CareAppNav = (props) => {
     };
 
     const searchChanged = (e) => {
-      console.log(`value is ${e}`);
-      setSearchQuery(e);
+        console.log(`value is ${e}`);
+        setSearchQuery(e);
     }
-    
+
     const onChange = (e,a) => {
         console.log(`selected provider id is ${JSON.stringify(e)} and ${JSON.stringify(a)}`);
         setSelectedProvider(e.value);
     }
 
     const customStyles = {
-      option: provided => ({
-        ...provided,
-        color: 'black'
-      }),
-      control: provided => ({
-        ...provided,
-        color: 'black'
-      }),
-      singleValue: provided => ({
-        ...provided,
-        color: 'black'
-      })
+        option: provided => ({
+            ...provided,
+            color: 'black'
+        }),
+        control: provided => ({
+            ...provided,
+            color: 'black'
+        }),
+        singleValue: provided => ({
+            ...provided,
+            color: 'black'
+        })
     }
 
     useEffect(() => {
-  
-      loadData().then(r => console.log(""));
+
+        loadData().then(r => console.log(""));
     }, [searchQuery]);
-    
+
     ;
 
     const loadData = async () => {
-      console.log(`loaddata val is ${searchQuery}`);
-      let URL = "http://localhost:3000/providersActive";
-    
-      const response = await axios({
-          method: 'get',
-          url: URL,
-          params:{
-              searchQuery: searchQuery
-          }
-      });
-    
-      const data = await response.data;
-      console.log(`data is ${data}`);
-      
-      let tempData = [];
-      for(let obj in data){
-        console.log(`obj data is ${JSON.stringify(data[obj])}`);
-        let actualObj = data[obj];
-        let val = actualObj._id;
-        let label = actualObj.name;
-        tempData.push({value: val, label: label});
-      }
-      setProviders(tempData);
-      // setProviders(data);
-      return data;
+        console.log(`loaddata val is ${searchQuery}`);
+        let URL = "http://localhost:3000/providersActive";
+
+        const response = await axios({
+            method: 'get',
+            url: URL,
+            params:{
+                searchQuery: searchQuery
+            }
+        });
+
+        const data = await response.data;
+        console.log(`data is ${data}`);
+
+        let tempData = [];
+        for(let obj in data){
+            console.log(`obj data is ${JSON.stringify(data[obj])}`);
+            let actualObj = data[obj];
+            let val = actualObj._id;
+            let label = actualObj.name;
+            tempData.push({value: val, label: label});
+        }
+        setProviders(tempData);
+        // setProviders(data);
+        return data;
     }
 
 
     // todo: maybe change to functional component
-    const appBar = ( 
-      selectedProvider === "" ? <div>
-        <AppBar position="fixed" className={clsx(classes.appBar, {[classes.appBarShift]: open, })}>
-            <Toolbar>
-                <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    edge="start"
-                    onClick={handleDrawerOpen}
-                    // onClick={handleDrawerToggle}
-                    className={clsx(classes.menuButton, {[classes.hide]: open, })}
-                >
-                    <MenuIcon />
-                </IconButton>
-                <Typography variant="h6" noWrap>
-                    Care Amarillo
-                </Typography>
-                <div className={classes.reactSearch}>
-                      <Select onInputChange={searchChanged} onChange={onChange} value={selectedProvider}  placeholder='Search for Shelter...' autosize={false} options={providers} styles={customStyles} components={{ DropdownIndicator:() => null, IndicatorSeparator:() => null }} />
-                </div>
-            </Toolbar>
-            {/* <div className={classes.searchBox}>
+    const appBar = (
+        selectedProvider === "" ? <div>
+            <AppBar position="fixed" className={clsx(classes.appBar, {[classes.appBarShift]: open, })}>
+                <Toolbar>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        edge="start"
+                        onClick={handleDrawerOpen}
+                        // onClick={handleDrawerToggle}
+                        className={clsx(classes.menuButton, {[classes.hide]: open, })}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" noWrap>
+                        Care Amarillo
+                    </Typography>
+                    <div className={classes.reactSearch}>
+                        <Select onInputChange={searchChanged} onChange={onChange} value={selectedProvider}  placeholder='Search for Shelter...' autosize={false} options={providers} styles={customStyles} components={{ DropdownIndicator:() => null, IndicatorSeparator:() => null }} />
+                    </div>
+                </Toolbar>
+                {/* <div className={classes.searchBox}>
               <div className={classes.search}>
                   <div className={classes.searchIcon}>
                       <SearchIcon />
@@ -233,52 +233,52 @@ const CareAppNav = (props) => {
                       />
               </div>
               </div> */}
-        </AppBar>
+            </AppBar>
         </div> : <Redirect to={`/providerDtl/${selectedProvider}`}/>
     );
 
     return (!props.isHomePage ?
-      
-        <div className={classes.root}>
-          {appBar}
-          <nav className={classes.drawer} aria-label="mailbox folders">
-              {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-              {/* <Hidden smUp implementation="css"> */}
-                  <Drawer
-                      // container={container}
-                      // variant="temporary"
-                      // anchor={theme.direction === "rtl" ? "right" : "left"}
-                      // open={props.mobileOpen}
-                      // onClose={handleDrawerToggle}
-                      // classes={{
-                      //     paper: classes.drawerPaper
-                      // }}
-                      // ModalProps={{
-                      //     keepMounted: true // Better open performance on mobile.
-                      // }}
-                      variant="permanent"
-                      className={clsx(classes.drawer, {
-                        [classes.drawerOpen]: open,
-                        [classes.drawerClose]: !open,
-                      })}
-                      classes={{
-                        paper: clsx({
-                          [classes.drawerOpen]: open,
-                          [classes.drawerClose]: !open,
-                        }),
-                      }}
-                  >
-                    <div className={classes.toolbar}>
-                      <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                      </IconButton>
-                    </div>
-                    <Divider />
-                      <CareAppDrawer/>
-                  </Drawer>
-              {/* </Hidden>
+
+            <div className={classes.root}>
+                {appBar}
+                <nav className={classes.drawer} aria-label="mailbox folders">
+                    {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+                    {/* <Hidden smUp implementation="css"> */}
+                    <Drawer
+                        // container={container}
+                        // variant="temporary"
+                        // anchor={theme.direction === "rtl" ? "right" : "left"}
+                        // open={props.mobileOpen}
+                        // onClose={handleDrawerToggle}
+                        // classes={{
+                        //     paper: classes.drawerPaper
+                        // }}
+                        // ModalProps={{
+                        //     keepMounted: true // Better open performance on mobile.
+                        // }}
+                        variant="permanent"
+                        className={clsx(classes.drawer, {
+                            [classes.drawerOpen]: open,
+                            [classes.drawerClose]: !open,
+                        })}
+                        classes={{
+                            paper: clsx({
+                                [classes.drawerOpen]: open,
+                                [classes.drawerClose]: !open,
+                            }),
+                        }}
+                    >
+                        <div className={classes.toolbar}>
+                            <IconButton onClick={handleDrawerClose}>
+                                {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                            </IconButton>
+                        </div>
+                        <Divider />
+                        <CareAppDrawer/>
+                    </Drawer>
+                    {/* </Hidden>
               <Hidden xsDown implementation="css"> */}
-                  {/* <Drawer
+                    {/* <Drawer
                       classes={{
                           paper: classes.drawerPaper
                       }}
@@ -287,10 +287,10 @@ const CareAppNav = (props) => {
                   >
                       <CareAppDrawer/>
                   </Drawer> */}
-              {/* </Hidden> */}
-          </nav>
-        </div> : <div></div>
-        
+                    {/* </Hidden> */}
+                </nav>
+            </div> : <div></div>
+
     )
 }
 
