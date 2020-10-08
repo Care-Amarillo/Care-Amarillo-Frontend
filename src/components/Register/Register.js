@@ -389,7 +389,7 @@ class Register extends Component {
     loadData = async () => {
 
 
-        let URL = "http://localhost:3000/providersActive";
+        let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/providersActive`;
 
 
 
@@ -417,8 +417,7 @@ class Register extends Component {
 
 
 
-        let URL = `http://localhost:3000/users/provider/${this.state.chosenProvider._id}`;
-        // let URL = "http://localhost:3000/users/authenticate";
+        let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/${this.state.chosenProvider._id}`;
 
         this.setState({
             jwt: []

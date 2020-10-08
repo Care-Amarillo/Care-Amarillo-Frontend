@@ -190,7 +190,7 @@ class ProviderEntries extends Component {
 
     loadProviderData = async () => {
 
-        let URL = "http://localhost:3000/managingUsers/user/" + this.props.user._id;
+        let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/managingUsers/user/` + this.props.user._id;
 
         const config = {
             "Authorization": `Bearer ${this.props.token}`
@@ -223,7 +223,7 @@ class ProviderEntries extends Component {
     loadData = async () => {
 
 
-        let URL = "http://localhost:3000/providerEntriesByDate/" + this.state.providerId + "?startDate=" + this.state.selectedStartDate.toISOString() + "&endDate=" + this.state.selectedEndDate.toISOString();
+        let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/providerEntriesByDate/` + this.state.providerId + "?startDate=" + this.state.selectedStartDate.toISOString() + "&endDate=" + this.state.selectedEndDate.toISOString();
 
         this.setState({
             entries: []

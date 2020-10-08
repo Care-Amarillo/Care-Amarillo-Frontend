@@ -229,7 +229,7 @@ class SuperAdminProviders extends Component {
 
     loadProviderData = async () => {
 
-        let URL = "http://localhost:3000/providers";
+        let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/providers`;
 
         this.setState({
             providers: []

@@ -426,8 +426,7 @@ class SuperAdminEditProvider extends Component {
     }
 
     updateProvider = async () => {
-        let URL = "http://localhost:3000/providers/" + this.state.providerId;
-        // let URL = "http://localhost:3000/users/authenticate";
+        let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/providers/` + this.state.providerId;
 
 
         const config = {
@@ -483,7 +482,7 @@ class SuperAdminEditProvider extends Component {
 
     loadData = async () => {
 
-        let URL = "http://localhost:3000/providers/" + this.state.providerId;
+        let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/providers/` + this.state.providerId;
 
 
         const response = await axios({

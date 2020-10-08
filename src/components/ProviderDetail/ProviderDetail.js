@@ -16,7 +16,7 @@ import "firebase/messaging";
 import {messaging} from "../../init-fcm";
 
 
-const mapApiKey = "AIzaSyCOvmLGpbzVEgMywSh3g4g6mbaynTbdIiU";
+const mapApiKey = process.env.REACT_APP_MAP_API_KEY;
 
 const useStyles = makeStyles({
     root: {
@@ -513,8 +513,7 @@ class ProviderDetail extends Component {
 
     handleNewPushToken = async (pushToken) => {
 
-        let URL = "http://localhost:3000/users/" + this.props.user._id;
-        // let URL = "http://localhost:3000/users/authenticate";
+        let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/users/` + this.props.user._id;
 
 
         const config = {
@@ -565,7 +564,7 @@ class ProviderDetail extends Component {
 
     loadData = async () => {
 
-        let URL = "http://localhost:3000/providers/" + this.state.id;
+        let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/providers/` + this.state.id;
 
         const response = await axios({
             method: 'get',
