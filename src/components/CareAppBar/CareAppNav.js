@@ -20,87 +20,35 @@ import {Redirect} from "react-router-dom";
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
     root: {
-        display: "flex",
-    },
-    reactSearch:{
-        // display: 'flex',
-        marginLeft: 605,
-        width:"25%",
+        display: "flex"
     },
     drawer: {
-        width: drawerWidth,
-        flexShrink: 0,
-        whiteSpace: 'nowrap',
-        // [theme.breakpoints.up("sm")]: {
-        //     width: drawerWidth,
-        //     flexShrink: 0
-        // }
+        [theme.breakpoints.up("sm")]: {
+            width: drawerWidth,
+            flexShrink: 0
+        }
     },
-    drawerOpen: {
-        width: drawerWidth,
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    drawerClose: {
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        overflowX: 'hidden',
-        width: theme.spacing(7) + 1,
-        [theme.breakpoints.up('sm')]: {
-            width: theme.spacing(9) + 1,
-        },
-    },
-    // Strickly the app bar on top makes it touch end to end. When Drawer is closed.
     appBar: {
-        zIndex: theme.zIndex.drawer + 1,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        // marginLeft: drawerWidth,
-        // [theme.breakpoints.up("sm")]: {
-        //     width: `calc(100% - ${drawerWidth}px)`
-        // },
-        // backgroundColor: "#132C3C",
-    },
-
-    appBarShift: {
         marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
+        [theme.breakpoints.up("sm")]: {
+            width: `calc(100% - ${drawerWidth}px)`
+        },
+        backgroundColor: "#132C3C",
+
+
     },
     menuButton: {
-        marginRight: 36
-        // marginRight: theme.spacing(2),
-        // [theme.breakpoints.up("sm")]: {
-        //     display: "none"
-        // }
+        marginRight: theme.spacing(2),
+        [theme.breakpoints.up("sm")]: {
+            display: "none"
+        }
     },
-    hide: {
-        display: 'none',
+    toolbar: theme.mixins.toolbar,
+    drawerPaper: {
+        width: drawerWidth
     },
-    toolbar: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        padding: theme.spacing(0, 2),
-        // necessary for content to be below app bar
-        ...theme.mixins.toolbar,
-    },
-    // toolbar: theme.mixins.toolbar,
-    // drawerPaper: {
-    //     width: drawerWidth
-    // },
     content: {
         flexGrow: 1,
-        padding: theme.spacing(3),
     }
 }));
 
@@ -164,7 +112,6 @@ const CareAppNav = (props) => {
         loadData().then(r => console.log(""));
     }, [searchQuery]);
 
-    ;
 
     const loadData = async () => {
         console.log(`loaddata val is ${searchQuery}`);
@@ -195,102 +142,62 @@ const CareAppNav = (props) => {
     }
 
 
-    // todo: maybe change to functional component
     const appBar = (
-        selectedProvider === "" ? <div>
-            <AppBar position="fixed" className={clsx(classes.appBar, {[classes.appBarShift]: open, })}>
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        edge="start"
-                        onClick={handleDrawerOpen}
-                        // onClick={handleDrawerToggle}
-                        className={clsx(classes.menuButton, {[classes.hide]: open, })}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" noWrap>
-                        Care Amarillo
-                    </Typography>
-                    <div className={classes.reactSearch}>
-                        <Select onInputChange={searchChanged} onChange={onChange} value={selectedProvider}  placeholder='Search for Shelter...' autosize={false} options={providers} styles={customStyles} components={{ DropdownIndicator:() => null, IndicatorSeparator:() => null }} />
-                    </div>
-                </Toolbar>
-                {/* <div className={classes.searchBox}>
-              <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                      <SearchIcon />
-                  </div>
-                  <InputBase
-                      placeholder="Search Shelter..."
-                      classes={{
-                          root: classes.inputRoot,
-                          input: classes.inputInput,
-                      }}
-                      // onChange={this.searchChanged}
-                      inputProps={{'area-label': 'search'}}
-                      />
-              </div>
-              </div> */}
-            </AppBar>
-        </div> : <Redirect to={`/providerDtl/${selectedProvider}`}/>
+        <AppBar position="fixed" className={classes.appBar}>
+            <Toolbar>
+                <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    edge="start"
+                    onClick={handleDrawerToggle}
+                    className={classes.menuButton}
+                >
+                    <MenuIcon />
+                </IconButton>
+                <Typography variant="h6" noWrap>
+                    Care Amarillo
+                </Typography>
+            </Toolbar>
+        </AppBar>
     );
-
     return (!props.isHomePage ?
 
-            <div className={classes.root}>
+
+            <div>
                 {appBar}
                 <nav className={classes.drawer} aria-label="mailbox folders">
                     {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-                    {/* <Hidden smUp implementation="css"> */}
-                    <Drawer
-                        // container={container}
-                        // variant="temporary"
-                        // anchor={theme.direction === "rtl" ? "right" : "left"}
-                        // open={props.mobileOpen}
-                        // onClose={handleDrawerToggle}
-                        // classes={{
-                        //     paper: classes.drawerPaper
-                        // }}
-                        // ModalProps={{
-                        //     keepMounted: true // Better open performance on mobile.
-                        // }}
-                        variant="permanent"
-                        className={clsx(classes.drawer, {
-                            [classes.drawerOpen]: open,
-                            [classes.drawerClose]: !open,
-                        })}
-                        classes={{
-                            paper: clsx({
-                                [classes.drawerOpen]: open,
-                                [classes.drawerClose]: !open,
-                            }),
-                        }}
-                    >
-                        <div className={classes.toolbar}>
-                            <IconButton onClick={handleDrawerClose}>
-                                {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                            </IconButton>
-                        </div>
-                        <Divider />
-                        <CareAppDrawer/>
-                    </Drawer>
-                    {/* </Hidden>
-              <Hidden xsDown implementation="css"> */}
-                    {/* <Drawer
-                      classes={{
-                          paper: classes.drawerPaper
-                      }}
-                      variant="permanent"
-                      open
-                  >
-                      <CareAppDrawer/>
-                  </Drawer> */}
-                    {/* </Hidden> */}
-                </nav>
-            </div> : <div></div>
+                    <Hidden smUp implementation="css">
+                        <Drawer
+                            container={container}
+                            variant="temporary"
+                            anchor={theme.direction === "rtl" ? "right" : "left"}
+                            open={props.mobileOpen}
+                            onClose={handleDrawerToggle}
+                            classes={{
+                                paper: classes.drawerPaper
+                            }}
+                            ModalProps={{
+                                keepMounted: true // Better open performance on mobile.
+                            }}
+                        >
+                            <CareAppDrawer/>
 
+                        </Drawer>
+                    </Hidden>
+                    <Hidden xsDown implementation="css">
+                        <Drawer
+                            classes={{
+                                paper: classes.drawerPaper
+                            }}
+                            variant="permanent"
+                            open
+                        >
+                            <CareAppDrawer/>
+                        </Drawer>
+                    </Hidden>
+                </nav>
+            </div>:<div></div>
     )
 }
 
