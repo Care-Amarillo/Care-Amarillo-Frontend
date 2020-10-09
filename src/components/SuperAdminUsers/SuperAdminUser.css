@@ -1,15 +1,18 @@
 #chartContainer{
     /* margin-left: 10px; */
     padding-left: 20px;
-    margin-bottom: 50px;
+    margin-top: 50px;
 }
 
-#superAdminEditContainer{
+.superAdminEditContainer{
     height: 100vh;
+    width: 100%;
+    background-color: lightgray;
 }
 
 .superAdminUserContainer{
 
+    background-color: lightgrey;
     width: 100%;
     height: 100vh;
 }

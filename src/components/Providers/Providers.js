@@ -18,8 +18,8 @@ const useStyles = makeStyles({
         // flexDirection:"column",
         // justifyContent:"center",
         // margin:"10px",
-        // width: "90%",
-        // backgroundColor: "#132C3C",
+        width: "100%",
+        // backgroundColor: "yellow",
     },
     bullet: {
         display: 'inline-block',

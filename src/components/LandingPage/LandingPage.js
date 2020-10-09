@@ -13,7 +13,8 @@ import Copyright from '../Copyright/Copyright';
 const useStyles = makeStyles((theme) => ({
     background: {
         // paddingBottom: '100%',
-        height: '100vh'
+        height: '100%',
+        backgroundColor:"lightgrey"
     },
     root: {
         // padding:"8px",
