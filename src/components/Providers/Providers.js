@@ -67,7 +67,7 @@ const ProviderCard = (props) => {
                     {name}
                 </Typography>
                 <Typography className={classes.secondText} >
-                    Avaliable Beds: {bedCount}
+                    Available Beds: {bedCount}
                 </Typography>
             </CardContent>
             <CardActions>

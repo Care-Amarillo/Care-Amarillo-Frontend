@@ -52,6 +52,7 @@ class ProviderPanel extends Component {
 
 
     componentDidMount() {
+        this.props.setIsHomePage(false);
         this.loadData();
 
     }
@@ -89,23 +90,6 @@ class ProviderPanel extends Component {
 
     }
 
-    getGridListCols = () => {
-        if (isWidthUp('xl', this.props.width)) {
-            return 4;
-        }
-
-        if (isWidthDown('lg', this.props.width)) {
-            return 3;
-        }
-
-        if (isWidthDown('md', this.props.width)) {
-            return 2;
-        }
-
-
-        return 1;
-    }
-
 
     render() {
         let providerButton = <Button variant="contained" id="providerButton" to="/providerSignup" component={Link}>
@@ -123,26 +107,15 @@ class ProviderPanel extends Component {
                 {/*</div>*/}
                 <br/>
                 <div id="title">
-                    <h2>Provider</h2>
+                    <h2>Providers</h2>
                 </div>
 
 
-                {/*<div id="cardContainer">*/}
                 <div id="cardContent">
-
                     {this.state.providers.map((data, index) => (
                         <Providers key={index} index={index} data={data}/>
                     ))}
-
-                    {/*<GridList style={{width: '100%'}} cols={this.getGridListCols}>*/}
-                    {/*        {this.state.providers.map((data, index) => (*/}
-                    {/*            <GridListTile   key={index}>*/}
-                    {/*                <Providers key={index} index={index} data={data}/>*/}
-                    {/*            </GridListTile>*/}
-                    {/*        ))}*/}
-                    {/*    </GridList>*/}
                 </div>
-                {/*</div>*/}
             </div>
         );
     }

@@ -488,6 +488,7 @@ class EditProvider extends Component {
 
 
     componentDidMount() {
+        this.props.setIsHomePage(false);
         this.loadData();
     }
 

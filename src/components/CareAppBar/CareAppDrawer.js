@@ -89,7 +89,7 @@ const RegisterListItem = (props) => {
         <ListItemIcon>
             <AccountCircleIcon/>
         </ListItemIcon>
-        <ListItemText primary="REGISTER NEW USER"/>
+        <ListItemText primary="REGISTER USER"/>
     </ListItem>;
 }
 

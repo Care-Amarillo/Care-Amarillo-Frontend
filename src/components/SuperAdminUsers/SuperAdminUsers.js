@@ -237,6 +237,7 @@ class SuperAdminUsers extends Component {
     }
 
     componentDidMount() {
+        this.props.setIsHomePage(false);
         this.loadProviderData();
     }
 

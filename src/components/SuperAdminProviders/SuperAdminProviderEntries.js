@@ -165,6 +165,8 @@ class SuperAdminProviderEntries extends Component {
 
 
     componentDidMount() {
+
+        this.props.setIsHomePage(false);
         this.loadData();
     }
 
@@ -593,7 +595,7 @@ class SuperAdminProviderEntries extends Component {
                 </Container>
 
                 <div id="chartContainer">
-                    <ProviderEntriesChart entries={this.state.entries}/>
+                    <ProviderEntriesChart entries={this.state.graphEntries}/>
                 </div>
                 <div id="tableContainer">
                     <ProviderTable data={this.state.entries} setOpen={this.setOpen}/>
