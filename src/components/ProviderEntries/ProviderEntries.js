@@ -167,6 +167,7 @@ class ProviderEntries extends Component {
             providerId: "",
             name: "",
             entries: [],
+            graphEntries: [],
             selectedStartDate: todayMidNight,
             selectedEndDate: midNight,
             open: false,
@@ -248,7 +249,75 @@ class ProviderEntries extends Component {
             entries: data
         });
 
+
+        this.getGraphData(data);
+
     }
+
+
+
+    getGraphData = (data) => {
+        let tempDays = [];
+        let currentCount = 0;
+        let currentIndex = 0;
+        let prevDate = null;
+        data.forEach((element) => {
+            console.log(element)
+            let amountChanged = element["amountChanged"];
+            if (amountChanged > 0) {
+                let createdAt = new Date(element["createdAt"]);
+                let createdAtData = element["createdAt"];
+                let day = createdAt.getDay();
+                let month = createdAt.getMonth();
+                let year = createdAt.getFullYear();
+                if (tempDays.length === 0) {
+                    currentCount += amountChanged;
+                    let dateData = {
+                        createdAt: createdAtData,
+                        amountChanged: currentCount
+                    }
+                    tempDays[currentIndex] = dateData;
+                    prevDate = createdAt;
+                } else {
+                    let prevDateDay = prevDate.getDay();
+                    let prevDateMonth = prevDate.getMonth();
+                    if (prevDateDay === day && prevDateMonth === month) {
+                        console.log("found same day");
+                        currentCount += amountChanged;
+                        let dateData = {
+                            createdAt: createdAtData,
+                            amountChanged: currentCount
+                        }
+                        tempDays[currentIndex] = dateData;
+                    } else {
+                        console.log("different day");
+                        currentCount = 0 + amountChanged;
+                        currentIndex++;
+                        let dateData = {
+                            createdAt: createdAtData,
+                            amountChanged: currentCount
+                        }
+                        tempDays[currentIndex] = dateData;
+                    }
+                    prevDate = createdAt;
+                }
+            }
+
+
+        });
+
+        console.log(`tempDays length is ${tempDays.length}`);
+        tempDays.forEach((element) => {
+            console.log(`tempDays element is ${JSON.stringify(element)}`);
+        });
+
+
+        this.setState({
+            graphEntries: tempDays
+        });
+
+    }
+
 
     handleStartDateChange = (e) => {
         // setSelectedStartDate(e);
@@ -579,7 +648,7 @@ class ProviderEntries extends Component {
                     {/*<ProviderGraph data={this.state.entries}/>*/}
                 </Container>
                 <div id="chartContainer">
-                    <ProviderEntriesChart entries={this.state.entries}/>
+                    <ProviderEntriesChart entries={this.state.graphEntries}/>
                 </div>
                 <div id="tableContainer">
                     <ProviderTable data={this.state.entries} setOpen={this.setOpen}/>
