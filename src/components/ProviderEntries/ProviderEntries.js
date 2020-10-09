@@ -185,6 +185,7 @@ class ProviderEntries extends Component {
 
 
     componentDidMount() {
+        this.props.setIsHomePage(false);
         this.loadProviderData();
     }
 

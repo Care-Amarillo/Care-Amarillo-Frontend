@@ -512,6 +512,7 @@ class ProviderRegister extends Component {
 
 
     componentDidMount() {
+        this.props.setIsHomePage(false);
     }
 
     render() {

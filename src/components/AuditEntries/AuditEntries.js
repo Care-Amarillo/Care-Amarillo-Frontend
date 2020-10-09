@@ -216,6 +216,7 @@ class AuditEntries extends Component {
     }
 
     componentDidMount() {
+        this.props.setIsHomePage(false);
         this.loadData();
     }
 

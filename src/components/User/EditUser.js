@@ -222,6 +222,7 @@ class EditProfile extends Component {
 
 
     componentDidMount() {
+        this.props.setIsHomePage(false);
         this.setState({
             fName: this.props.user.fName,
             lName: this.props.user.lName,

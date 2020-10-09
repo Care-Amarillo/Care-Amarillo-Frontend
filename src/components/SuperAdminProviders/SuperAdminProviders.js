@@ -224,6 +224,7 @@ class SuperAdminProviders extends Component {
     }
 
     componentDidMount() {
+        this.props.setIsHomePage(false);
         this.loadProviderData();
     }
 

@@ -278,6 +278,7 @@ class SuperAdminEditUser extends Component {
 
 
     componentDidMount() {
+        this.props.setIsHomePage(false);
         const id = this.props.match.params.id;
         this.setState({
             userId: id

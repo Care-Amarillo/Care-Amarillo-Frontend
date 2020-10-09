@@ -471,6 +471,7 @@ class SuperAdminEditProvider extends Component {
 
 
     componentDidMount() {
+        this.props.setIsHomePage(false);
         const id = this.props.match.params.id;
         this.setState({
             // data: this.props.location.state.data,
