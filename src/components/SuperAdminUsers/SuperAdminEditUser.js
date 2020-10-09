@@ -238,7 +238,7 @@ class SuperAdminEditUser extends Component {
 
 
 
-        let URL = "http://localhost:3000/users/" + this.state.userId;
+        let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/users/` + this.state.userId;
 
 
         const config = {
