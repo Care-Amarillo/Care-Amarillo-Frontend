@@ -133,8 +133,6 @@ const ProviderTable = (props) => {
 }
 
 
-
-
 class SuperAdminProviderEntries extends Component {
     constructor(props) {
         super(props);
@@ -203,7 +201,7 @@ class SuperAdminProviderEntries extends Component {
 
     }
 
-    getGraphData = (data) =>{
+    getGraphData = (data) => {
         let tempDays = [];
         let currentCount = 0;
         let currentIndex = 0;
@@ -211,13 +209,13 @@ class SuperAdminProviderEntries extends Component {
         data.forEach((element) => {
             console.log(element)
             let amountChanged = element["amountChanged"];
-            if(amountChanged > 0){
+            if (amountChanged > 0) {
                 let createdAt = new Date(element["createdAt"]);
                 let createdAtData = element["createdAt"];
                 let day = createdAt.getDay();
                 let month = createdAt.getMonth();
                 let year = createdAt.getFullYear();
-                if(tempDays.length === 0){
+                if (tempDays.length === 0) {
                     currentCount += amountChanged;
                     let dateData = {
                         createdAt: createdAtData,
@@ -225,11 +223,10 @@ class SuperAdminProviderEntries extends Component {
                     }
                     tempDays[currentIndex] = dateData;
                     prevDate = createdAt;
-                }
-                else{
+                } else {
                     let prevDateDay = prevDate.getDay();
                     let prevDateMonth = prevDate.getMonth();
-                    if(prevDateDay === day && prevDateMonth === month){
+                    if (prevDateDay === day && prevDateMonth === month) {
                         console.log("found same day");
                         currentCount += amountChanged;
                         let dateData = {
@@ -237,8 +234,7 @@ class SuperAdminProviderEntries extends Component {
                             amountChanged: currentCount
                         }
                         tempDays[currentIndex] = dateData;
-                    }
-                    else{
+                    } else {
                         console.log("different day");
                         currentCount = 0 + amountChanged;
                         currentIndex++;
@@ -253,11 +249,10 @@ class SuperAdminProviderEntries extends Component {
             }
 
 
-
         });
 
         console.log(`tempDays length is ${tempDays.length}`);
-        tempDays.forEach((element)=>{
+        tempDays.forEach((element) => {
             console.log(`tempDays element is ${JSON.stringify(element)}`);
         });
 
@@ -546,27 +541,27 @@ class SuperAdminProviderEntries extends Component {
     render() {
         return (
             <div className="providerEntryContainer">
-                <Container maxWidth="lg" className="providerEntryContainer">
-                    <ToastContainer
-                        ref={ref => this.container = ref}
-                        className="toast-bottom-right"
-                    />
-                    {/*dialog used to open csv option*/}
-                    <AlertDialogSlide open={this.state.open} setOpen={this.setOpen}
-                                      alertSlideCallback={this.slideAlertCallback} title={this.state.alertTitle}
-                                      description={this.state.alertDescription}
-                                      yesOptionTitle={this.state.alertYesOptionTitle}
-                                      noOptionTitle={this.state.alertNoOptionTitle}/>
+                <ToastContainer
+                    ref={ref => this.container = ref}
+                    className="toast-bottom-right"
+                />
+                {/*dialog used to open csv option*/}
+                <AlertDialogSlide open={this.state.open} setOpen={this.setOpen}
+                                  alertSlideCallback={this.slideAlertCallback} title={this.state.alertTitle}
+                                  description={this.state.alertDescription}
+                                  yesOptionTitle={this.state.alertYesOptionTitle}
+                                  noOptionTitle={this.state.alertNoOptionTitle}/>
 
 
-                    {/*dialog for copy or open in new tab of google sheets link */}
-                    <AlertDialogSlide open={this.state.sheetsDialogOpen} setOpen={this.setSheetsDialogOpen}
-                                      alertSlideCallback={this.sheetsSlideAlertCallback}
-                                      title={this.state.alertSheetsTitle}
-                                      description={this.state.alertSheetsDescriptionDescription}
-                                      yesOptionTitle={this.state.alertSheetsYesOptionTitle}
-                                      noOptionTitle={this.state.alertSheetsNoOptionTitle}/>
+                {/*dialog for copy or open in new tab of google sheets link */}
+                <AlertDialogSlide open={this.state.sheetsDialogOpen} setOpen={this.setSheetsDialogOpen}
+                                  alertSlideCallback={this.sheetsSlideAlertCallback}
+                                  title={this.state.alertSheetsTitle}
+                                  description={this.state.alertSheetsDescriptionDescription}
+                                  yesOptionTitle={this.state.alertSheetsYesOptionTitle}
+                                  noOptionTitle={this.state.alertSheetsNoOptionTitle}/>
 
+                <Container id="datesContainer">
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <div id="dateContainer">
                             <KeyboardDatePicker
@@ -595,11 +590,16 @@ class SuperAdminProviderEntries extends Component {
                             />
                         </div>
                     </MuiPickersUtilsProvider>
-                    <ProviderEntriesChart entries={this.state.entries}/>
-                    <br/>
-                    <ProviderTable data={this.state.entries} setOpen={this.setOpen}/>
-                    <br/>
                 </Container>
+
+                <div id="chartContainer">
+                    <ProviderEntriesChart entries={this.state.entries}/>
+                </div>
+                <div id="tableContainer">
+                    <ProviderTable data={this.state.entries} setOpen={this.setOpen}/>
+                </div>
+
+
             </div>
         );
     }

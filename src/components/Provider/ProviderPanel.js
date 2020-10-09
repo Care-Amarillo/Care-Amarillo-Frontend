@@ -118,9 +118,9 @@ class ProviderPanel extends Component {
 
         return (
             <div class="providerPanelContainer">
-                <div id="chartContainer">
-                    {/*<Chart/>*/}
-                </div>
+                {/*<div id="chartContainer">*/}
+                {/*    /!*<Chart/>*!/*/}
+                {/*</div>*/}
                 <br/>
                 <div id="title">
                     <h2>Provider</h2>

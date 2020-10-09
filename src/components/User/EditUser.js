@@ -34,6 +34,17 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1),
     },
+    formContainer:{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent:"space-evenly",
+        alignItems:"center",
+        [theme.breakpoints.down('md')]: {
+            display:"flex",
+            flexDirection:"column-reverse"
+        },
+
+    },
     form: {
         '& > *': {
             margin: theme.spacing(2),
@@ -41,19 +52,15 @@ const useStyles = makeStyles((theme) => ({
         },
         display: "flex",
         flexDirection: "column",
-        alignItems: "left",
-        marginLeft: "10%",
-        marginTop: "-15%"
     },
     large: {
         width: theme.spacing(20),
         height: theme.spacing(20),
         display: 'flex',
-        marginLeft: "60%",
+        // marginLeft: "60%",
         marginTop: "5%"
     },
 }));
-
 
 
 const FormOne = (props) => {
@@ -85,17 +92,21 @@ const FormOne = (props) => {
     };
 
 
-    return <form className={classes.form} noValidate autoComplete="off">
-        <TextField id="firstName" label="First Name" value={registerComponent.state.fName} onChange={onChangeFirstName}
-                   variant="outlined"/>
-        <TextField id="lastName" label="Last Name" onChange={onChangeLastName} value={registerComponent.state.lName}
-                   variant="outlined"/>
-        <TextField id="email" label="Email" onChange={onChangeEmail} value={registerComponent.state.email}
-                   variant="outlined"/>
-        <TextField id="phone" label="Phone Number" onChange={onChangePhone} value={registerComponent.state.phone}
-                   type="number" variant="outlined"/>
+    return <div className={classes.formContainer}>
+        <form className={classes.form} noValidate autoComplete="off">
+            <TextField id="firstName" label="First Name" value={registerComponent.state.fName}
+                       onChange={onChangeFirstName}
+                       variant="outlined"/>
+            <TextField id="lastName" label="Last Name" onChange={onChangeLastName} value={registerComponent.state.lName}
+                       variant="outlined"/>
+            <TextField id="email" label="Email" onChange={onChangeEmail} value={registerComponent.state.email}
+                       variant="outlined"/>
+            <TextField id="phone" label="Phone Number" onChange={onChangePhone} value={registerComponent.state.phone}
+                       type="number" variant="outlined"/>
 
-    </form>;
+        </form>
+        <Avatar  alt="userAvatar" src="" className={classes.large} />
+    </div>;
 }
 
 
@@ -109,26 +120,24 @@ const HorizontalLinearStepper = (props) => {
     const noOptionTitle = "Cancel";
 
     const alertDescription = <div>
-        <div>
-            First Name: {registerState.fName}
+            <div>
+                First Name: {registerState.fName}
+            </div>
+            <div>
+                Last Name: {registerState.lName}
+            </div>
+            <div>
+                Phone: {registerState.phone}
+            </div>
+            <div>
+                Email: {registerState.email}
+            </div>
         </div>
-        <div>
-            Last Name: {registerState.lName}
-        </div>
-        <div>
-            Phone: {registerState.phone}
-        </div>
-        <div>
-            Email: {registerState.email}
-        </div>
-    </div>
 
 
-  
+    ;
 
-   ;
 
-  
     const slideAlertCallback = (isTrue) => {
         if (isTrue) {
             registerComponent.updateUser();
@@ -145,20 +154,16 @@ const HorizontalLinearStepper = (props) => {
             <AlertDialogSlide open={open} setOpen={setOpen} alertSlideCallback={slideAlertCallback} title={alertTitle}
                               description={alertDescription} yesOptionTitle={yesOptionTitle}
                               noOptionTitle={noOptionTitle}/>
-          
             <div>
-                <Avatar  alt="userAvatar" src="" className={classes.large} />
-            </div>
-            <div>
-            <FormOne registerComponent={registerComponent}/>
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={askForConfirmation }
-                className={classes.button}
-            >
-                Update 
-            </Button>
+                <FormOne registerComponent={registerComponent}/>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={askForConfirmation}
+                    className={classes.button}
+                >
+                    Update
+                </Button>
 
             </div>
         </div>

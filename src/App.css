@@ -1,7 +1,9 @@
 .App {
   text-align: center;
-  /* display: flex; */
-  justify-content: center;
+   /*display: flex;*/
+   /* flex-direction: column;*/
+    height: 100vh;
+  /*justify-content: center;*/
   background-color: lightgray;
 }
 
@@ -32,6 +34,7 @@
 
 body{
   background-color: lightgray;
+  height: 100vh;
 
 }
 

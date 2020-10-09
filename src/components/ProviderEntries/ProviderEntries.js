@@ -526,7 +526,6 @@ class ProviderEntries extends Component {
     render() {
         return (
             <div class="providerEntryContainer">
-                <Container maxWidth="lg" className="providerEntryContainer" id="chartContainer">
                     <ToastContainer
                         ref={ref => this.container = ref}
                         className="toast-bottom-right"
@@ -547,6 +546,7 @@ class ProviderEntries extends Component {
                                       yesOptionTitle={this.state.alertSheetsYesOptionTitle}
                                       noOptionTitle={this.state.alertSheetsNoOptionTitle}/>
 
+                <Container >
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <div id="dateContainer">
                             <KeyboardDatePicker
@@ -576,9 +576,13 @@ class ProviderEntries extends Component {
                         </div>
                     </MuiPickersUtilsProvider>
                     {/*<ProviderGraph data={this.state.entries}/>*/}
-                    <ProviderEntriesChart entries={this.state.entries}/>
-                    <ProviderTable data={this.state.entries} setOpen={this.setOpen}/>
                 </Container>
+                <div id="chartContainer">
+                    <ProviderEntriesChart entries={this.state.entries}/>
+                </div>
+                <div id="tableContainer">
+                    <ProviderTable data={this.state.entries} setOpen={this.setOpen}/>
+                </div>
             </div>
         );
     }
