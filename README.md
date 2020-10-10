@@ -1,8 +1,74 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Provider Frontend 
 
-## Available Scripts
+![Project Image](project-image-url)
 
-In the project directory, you can run:
+---
+
+### Table of Contents
+You're sections headers will be used to reference location of destination.
+
+- [Description](#description)
+- [How To Use](#how-to-use)
+- [References](#references)
+- [License](#license)
+- [Author Info](#author-info)
+
+---
+
+## Description
+
+Distributed Provider System 
+
+#### Technologies
+
+- React.js
+
+[Back To The Top](#provider-frontend)
+
+
+---
+## Care Amarillo Backend
+
+- Backend Code - [code](https://github.com/Care-Amarillo/Care-Amarillo-Backend)
+
+---
+## How To Use
+
+#### Installation
+
+In the project directory:
+
+- git clone https://github.com/Care-Amarillo/Care-Amarillo-Frontend.git
+- cd Care-Amarillo-Frontend
+- npm i 
+
+### `Create the .env file`
+Create a .env file in the root of your project directory with these credentials:
+The main thing you will need to change is your backend endpoint, when you get ready for deployment
+
+REACT_APP_BACKEND_ENDPOINT=http://localhost:3000
+
+REACT_APP_AUTOCOMPLETE_GOOGLE_API_KEY=AIzaSyCOvmLGpbzVEgMywSh3g4g6mbaynTbdIiU
+
+REACT_APP_MAP_API_KEY=testApiKey
+
+REACT_APP_SHEETS_GOOGLE_API_KEY=testApiKey
+
+REACT_APP_SHEETS_CLIENT_ID=testId.apps.googleusercontent.com
+
+REACT_APP_FIREBASE_PUBLIC_VAPID_KEY=testVapidKey
+
+REACT_APP_FIREBASE_API_KEY=testApiKey
+
+REACT_APP_FIREBASE_AUTH_DOMAIN=myapp.firebaseapp.com
+
+REACT_APP_FIREBASE_DATABASE_URL=https://myapp.firebaseio.com
+
+REACT_APP_FIREBASE_PROJECT_ID=myapp
+REACT_APP_FIREBASE_STORAGE_BUCKET=myapp.appspot.com
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=1234456
+REACT_APP_FIREBASE_APP_ID=1:123434:web:1234456
+REACT_APP_FIREBASE_MEASUREMENT_ID=G-TEST8ID
 
 ### `npm start`
 
@@ -12,10 +78,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
@@ -27,42 +89,51 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+[Back To The Top](#provider-frontend)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## References
+[Back To The Top](#provider-frontend)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+---
 
-## Learn More
+## License
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+MIT License
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Copyright (c) [2020] [Care Amarillo]
 
-### Code Splitting
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-### Analyzing the Bundle Size
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+[Back To The Top](#provider-frontend)
 
-### Making a Progressive Web App
+---
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+## Author Info
 
-### Advanced Configuration
+- Jean Ngirakwizera - [jngirakwizera](https://github.com/jngirakwizera)
+- Chris White - [Burnhil](https://github.com/Burnhil)
+- Chris Coffee - [cmcoffee91](https://github.com/cmcoffee91)
+- Ariana Rangel - [Arangel4](https://github.com/Arangel4)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+[Back To The Top](#provider-frontend)
 
-### Deployment
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
