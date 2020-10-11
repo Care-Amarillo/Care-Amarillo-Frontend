@@ -68,28 +68,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const LoginForm = (props) => {
+const ResetForm = (props) => {
     const classes = useStyles();
     const theme = useTheme();
 
     return (
         <div id="background">
-            {/* <CareAppNav /> */}
             <div>
                 <Container component="main" maxWidth="xs">
                     <Avatar className={classes.avatar}>
                         <LockOutlinedIcon/>
                     </Avatar>
-                    <Typography component="h1" variant="h5">Sign In</Typography>
+                    <Typography component="h1" variant="h5">Reset Password</Typography>
                     <br/>
                     <ThemeProvider theme={theme}>
-                        <form className={classes.form} noValidat autoComplete="off">
+                        <form className={classes.form} noValidate autoComplete="off">
 
-                            <TextField id="email" label="Email" onChange={props.onChangeEmail} variant="outlined"/>
-                            <TextField id="password" label="Password" onChange={props.onChangePass} type="password"
+                            <TextField id="password" label="Password" onChange={props.onChangePass} variant="outlined" type="password"/>
+                            <TextField id="confirmpassword" label="Confirm Password" onChange={props.onChangeConfirmPass} type="password"
                                        variant="outlined"/>
-                            <Button onClick={props.loginClicked} variant="contained" id="loginButton">
-                                Login
+                            <Button onClick={props.resetPassword} variant="contained" id="loginButton">
+                                Reset
                             </Button>
 
 
@@ -102,13 +101,16 @@ const LoginForm = (props) => {
 }
 
 
-class Login extends Component {
+class ResetPassword extends Component {
     constructor(props) {
         super(props);
         this.state = {
             jwt: "",
             email: "",
+            userId: "",
+            goToLogin: false,
             password: "",
+            confirmPassword: "",
             openDialog: false,
         }
     }
@@ -116,6 +118,7 @@ class Login extends Component {
 
     componentDidMount() {
         this.props.setIsHomePage(false);
+        this.checkForValidUUID();
     }
 
     togglePop = () => {
@@ -126,28 +129,23 @@ class Login extends Component {
 
 
     resetDone = () =>{
-       this.togglePop();
         this.container.success(`Successfully Sent Password Reset Link`, `Success`, {
             closeButton: true,
         });
     }
 
-    // todo: put in its own class so not duplicated across register
-    login = async () => {
 
-        this.props.setToken(this.state);
 
-    }
-
-    onChangeEmail = (e) => {
-        this.setState({
-            email: e.target.value,
-        });
-    }
 
     onChangePass = (e) => {
         this.setState({
             password: e.target.value,
+        });
+    }
+
+    onChangeConfirmPass = (e) => {
+        this.setState({
+            confirmPassword: e.target.value,
         });
     }
 
@@ -161,25 +159,114 @@ class Login extends Component {
         this.login();
     }
 
+    resetPassword = async () => {
+
+
+        if(this.state.password.length < 6){
+            this.container.error(`Please enter a password with at least a length of 6 characters`, `Error`, {
+                closeButton: true,
+            });
+            return ;
+        }
+
+
+        if(this.state.password !== this.state.confirmPassword){
+            this.container.error(`Passwords do not match`, `Error`, {
+                closeButton: true,
+            });
+            return ;
+        }
+
+
+
+        let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/users/passwordRecovery`;
+
+        const response = await axios({
+            method: 'put',
+            url: URL,
+            data:{
+                userId:this.state.userId,
+                uuid:this.state.uuid,
+                password:this.state.password,
+            }
+
+        });
+
+        const data = await response.data;
+        console.log(`data: ${JSON.stringify(data)}`);
+
+        const message = data["Message"];
+        if(message && message === "Updated User successfully"){
+            this.setState({
+                goToLogin: true,
+            });
+        }
+        else{
+            this.container.error(`Error Updating Password`, `Error`, {
+                closeButton: true,
+            });
+
+        }
+
+
+
+    }
+
+
+    checkForValidUUID = async () => {
+
+        const uuid = this.props.match.params.id;
+
+        this.setState({
+            uuid: uuid,
+        });
+
+        let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/getForgotPassword`;
+
+        const response = await axios({
+            method: 'post',
+            url: URL,
+            data:{
+                uuid:uuid,
+            }
+
+        });
+
+        const data = await response.data;
+        console.log(`data: ${JSON.stringify(data)}`);
+        const message = data["Message"];
+        if(message && message === "Successfully retrieved Password Recovery"){
+            const recoveryData = data["data"];
+            this.setState({
+                userId: recoveryData["user"],
+            });
+
+        }
+        else{
+            this.setState({
+                goToLogin: true,
+            });
+        }
+
+
+
+    }
+
     render() {
-        return !this.props.token ? (
+        return !this.state.goToLogin ? (
             <div id="loginContainer">
                 <ToastContainer
                     ref={ref => this.container = ref}
                     className="toast-bottom-right"
                 />
 
-                <LoginForm onChangeEmail={this.onChangeEmail} onChangePass={this.onChangePass}
-                           loginClicked={this.loginClicked}/>
-                <Button onClick={this.togglePop} variant="outlined">
-                    Forgot Password?
-                </Button>
-                <ForgotPasswordDialog open={this.state.openDialog} resetDone={this.resetDone} toggleClicked={this.togglePop}/>
+                <ResetForm onChangeConfirmPass={this.onChangeConfirmPass} onChangePass={this.onChangePass}
+                           resetPassword={this.resetPassword}/>
             </div>
 
-        ) : <Redirect to="/provider"/>;
+        ) : <Redirect to="/login"/>;
 
     }
 }
 
-export default Login;
+export default ResetPassword;
