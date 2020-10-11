@@ -272,7 +272,7 @@ class SuperAdminProviders extends Component {
         }
         this.setState({
                 selectedStartDate: e,
-
+                
             },
             () => {
                 this.loadData();
@@ -292,6 +292,7 @@ class SuperAdminProviders extends Component {
             // not a date
             return;
         }
+
         this.setState({
                 selectedEndDate: e
             },
@@ -498,6 +499,44 @@ class SuperAdminProviders extends Component {
         }).then((response) => {
             let result = response.result;
         });
+    }
+
+    //create loadData function to update providers when start/end date is changed 
+    loadData = async () => {
+        //set backend endpoint providersByDate and pass in the new dates being searched by the user
+        let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/providersByDate/` + "?startDate=" + this.state.selectedStartDate.toISOString() + "&endDate=" + this.state.selectedEndDate.toISOString();
+
+        //set providers to empty array
+        this.setState({
+            providers: []
+        });
+
+        //test data to console for debugging
+        //console.log(`startdate = ${this.state.selectedStartDate}`);
+        //console.log(`enddate = ${this.state.selectedEndDate}`);
+        //console.log(`url is ${URL}`);
+
+        //set verify authorization information
+        const config = {
+            "Authorization": `Bearer ${this.props.token}`
+        };
+
+        //call endpoint with user data to retrieve new provider data
+        const response = await axios({
+            method: 'get',
+            url: URL,
+            headers: config
+        });
+
+        //retrieve data back from backend
+        const data = await response.data;
+        //console.log("data " + JSON.stringify(data));
+
+        //set new provider data to be displayed to users
+        this.setState({
+            providers: data
+        });
+
     }
 
     render() {
