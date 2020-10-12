@@ -204,7 +204,7 @@ class SuperAdminEditUser extends Component {
 
     loadData = async () => {
 
-        let URL = "http://localhost:3000/users/" + this.state.userId;
+        let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/users/` + this.state.userId;
         console.log(`url is ${URL}`);
         const config = {
             "Authorization": `Bearer ${this.props.token}`

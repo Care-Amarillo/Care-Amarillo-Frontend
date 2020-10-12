@@ -77,10 +77,18 @@ const FormOne = (props) => {
             phone: e.target.value,
         });
     };
+
+    const onChangeServices = (e) => {
+        registerComponent.setState({
+            services: e.target.value,
+        });
+    };
     return <form className={classes.form} noValidate autoComplete="off">
         <TextField id="name" label="Name" onChange={onChangeName} value={registerComponent.state.name}
                    variant="outlined"/>
         <TextField id="title" label="Title" value={registerComponent.state.title} onChange={onChangeTitle}
+                   variant="outlined"/>
+        <TextField id="services" label="Services" value={registerComponent.state.services} onChange={onChangeServices}
                    variant="outlined"/>
         <TextField id="phone" label="Phone Number" onChange={onChangePhone} value={registerComponent.state.phone}
                    type="number" variant="outlined"/>
@@ -347,6 +355,7 @@ class SuperAdminEditProvider extends Component {
             email: "",
             address: "",
             place_id: "",
+            services: "",
             zip: "",
             totalBeds: "0",
             lat: "",
@@ -443,6 +452,7 @@ class SuperAdminEditProvider extends Component {
                 email: this.state.email,
                 address: this.state.address,
                 place_id: this.state.place_id,
+                services: this.state.services,
                 zip: this.state.zip,
                 lat: this.state.lat.toString(),
                 long: this.state.long.toString(),
@@ -500,6 +510,7 @@ class SuperAdminEditProvider extends Component {
             phone: provider.phone,
             email: provider.email,
             address: provider.address,
+            services: provider.services,
             place_id: provider.place_id,
             zip: provider.zip,
             totalBeds: provider.totalBeds,

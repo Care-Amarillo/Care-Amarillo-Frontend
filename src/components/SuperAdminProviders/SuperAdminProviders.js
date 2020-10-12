@@ -288,6 +288,9 @@ class SuperAdminProviders extends Component {
                 return;
             }
             // date is valid
+            // e.setHours(23, 59,0, 0);
+
+            console.log(e);
         } else {
             // not a date
             return;
@@ -505,6 +508,7 @@ class SuperAdminProviders extends Component {
     loadData = async () => {
         //set backend endpoint providersByDate and pass in the new dates being searched by the user
         let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/providersByDate/` + "?startDate=" + this.state.selectedStartDate.toISOString() + "&endDate=" + this.state.selectedEndDate.toISOString();
+
 
         //set providers to empty array
         this.setState({
