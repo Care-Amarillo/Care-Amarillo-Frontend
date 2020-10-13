@@ -417,7 +417,7 @@ class Register extends Component {
 
 
 
-        let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/${this.state.chosenProvider._id}`;
+        let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/users/provider/${this.state.chosenProvider._id}`;
 
         this.setState({
             jwt: []

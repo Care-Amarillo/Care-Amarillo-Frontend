@@ -69,12 +69,21 @@ const FormOne = (props) => {
             phone: e.target.value,
         });
     };
+
+    const onChangeServices = (e) => {
+        registerComponent.setState({
+            services: e.target.value,
+        });
+    };
     return(
      <form className={classes.form} noValidate autoComplete="off">
         <TextField id="name" label="Name" onChange={onChangeName} value={registerComponent.state.name}
                    variant="outlined"/>
         <TextField id="title" label="Title" value={registerComponent.state.title} onChange={onChangeTitle}
                    variant="outlined"/>
+
+         <TextField id="services" label="Services" value={registerComponent.state.services} onChange={onChangeServices}
+                    variant="outlined"/>
         <TextField id="phone" label="Phone Number" onChange={onChangePhone} value={registerComponent.state.phone}
                    type="number" inputProps={{ maxLength: 10 }} onInput={(e)=>{
             e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,10)
@@ -356,6 +365,7 @@ class ProviderRegister extends Component {
             totalBeds: "0",
             lat: "",
             long: "",
+            services: "",
             bedsUsed: "0",
             createProvider: false,
             isCreated: false,
@@ -476,6 +486,7 @@ class ProviderRegister extends Component {
                 address: this.state.address,
                 place_id: this.state.place_id,
                 zip: this.state.zip,
+                services: this.state.services,
                 lat: this.state.lat.toString(),
                 long: this.state.long.toString(),
                 type: 1,

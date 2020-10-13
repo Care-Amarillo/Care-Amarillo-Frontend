@@ -365,6 +365,10 @@ const ProviderDtlVacancyCard = (props) => {
     const data = props.data;
     const bedsUsed = data.bedsUsed;
     const totalBeds = data.totalBeds;
+    let services = "";
+    if(data["services"]){
+        services = data.services;
+    }
     const availableBeds = totalBeds - bedsUsed;
     return (
 
@@ -375,6 +379,14 @@ const ProviderDtlVacancyCard = (props) => {
                 </Typography>
                 <Typography className={classes.secondText}>
                     {availableBeds}
+                </Typography>
+            </CardContent>
+            <CardContent>
+                <Typography className={classes.title}>
+                    Services
+                </Typography>
+                <Typography className={classes.secondText}>
+                    {services}
                 </Typography>
             </CardContent>
             <CardActions>

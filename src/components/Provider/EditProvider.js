@@ -79,11 +79,19 @@ const FormOne = (props) => {
             phone: e.target.value,
         });
     };
+
+    const onChangeServices = (e) => {
+        registerComponent.setState({
+            services: e.target.value,
+        });
+    };
        return <form className={classes.form} noValidate autoComplete="off">
             <TextField id="name" label="Name" onChange={onChangeName} value={registerComponent.state.name}
                        variant="outlined"/>
             <TextField id="title" label="Title" value={registerComponent.state.title} onChange={onChangeTitle}
                        variant="outlined"/>
+           <TextField id="services" label="Services" value={registerComponent.state.services} onChange={onChangeServices}
+                      variant="outlined"/>
             <TextField id="phone" label="Phone Number" onChange={onChangePhone} value={registerComponent.state.phone}
                        type="number" variant="outlined"/>
             <TextField id="email" label="Email" onChange={onChangeEmail} value={registerComponent.state.email}
@@ -332,6 +340,7 @@ class EditProvider extends Component {
             title: "",
             phone: "",
             email: "",
+            services: "",
             address: "",
             place_id: "",
             zip: "",
@@ -459,6 +468,7 @@ class EditProvider extends Component {
                 email: this.state.email,
                 address: this.state.address,
                 place_id: this.state.place_id,
+                services: this.state.services,
                 zip: this.state.zip,
                 lat: this.state.lat.toString(),
                 long: this.state.long.toString(),
@@ -480,6 +490,7 @@ class EditProvider extends Component {
                 closeButton: true,
             });
             this.props.setProvider(provider);
+
         } else {
             console.log("unsuccessfully updated provider");
         }
@@ -516,6 +527,7 @@ class EditProvider extends Component {
         });
 
         const data = await response.data;
+        console.log(`response data is ${JSON.stringify(data)}`);
         if (data.length > 0) {
             let provider = data[0].provider;
             this.setState({
@@ -526,6 +538,7 @@ class EditProvider extends Component {
                 address: provider.address,
                 place_id: provider.place_id,
                 zip: provider.zip,
+                services: provider.services,
                 totalBeds: provider.totalBeds,
                 active: provider.active,
                 lat: provider.lat,
