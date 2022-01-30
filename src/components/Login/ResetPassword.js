@@ -9,12 +9,8 @@ import {Link, Redirect} from "react-router-dom";
 import {createMuiTheme} from '@material-ui/core/styles';
 import {ThemeProvider} from "@material-ui/styles";
 import {ToastContainer} from "react-toastr";
-import Copyright from '../Copyright/Copyright';
 import {Avatar, Container} from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import PopUp from './PopUp';
-import CareAppNav from '../../containers/CareAppNav';
-import ForgotPasswordDialog from "./ForgotPasswordDialog";
 
 const theme = createMuiTheme({
     palette: {
@@ -193,7 +189,6 @@ class ResetPassword extends Component {
         });
 
         const data = await response.data;
-        // console.log(`data: ${JSON.stringify(data)}`);
 
         const message = data["Message"];
         if(message && message === "Updated User successfully"){
@@ -233,7 +228,6 @@ class ResetPassword extends Component {
         });
 
         const data = await response.data;
-        // console.log(`data: ${JSON.stringify(data)}`);
         const message = data["Message"];
         if(message && message === "Successfully retrieved Password Recovery"){
             const recoveryData = data["data"];

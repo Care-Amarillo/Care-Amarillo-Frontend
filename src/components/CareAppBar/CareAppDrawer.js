@@ -8,12 +8,9 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Home from "@material-ui/icons/Home";
 import ListItemText from "@material-ui/core/ListItemText";
 import {makeStyles} from "@material-ui/core/styles";
-import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
-import AddIcon from '@material-ui/icons/Add';
 import TableChartIcon from '@material-ui/icons/TableChart';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import SendIcon from '@material-ui/icons/Send';
 import Login from '../../containers/Login';
 import LandingPage from '../../containers/LandingPage';
 import SuperAdminProviderEntries from '../../containers/SuperAdminProviderEntries';
@@ -21,7 +18,6 @@ import Profile from '../../containers/EditUser';
 import EditProvider from '../../containers/EditProvider';
 import ProviderEntries from '../../containers/ProviderEntries';
 import { Provider } from 'react-redux';
-import { TableChart } from '@material-ui/icons';
 import SuperAdminProviders from '../../containers/SuperAdminProviders';
 import AuditEntries from '../../containers/AuditEntries';
 import SuperAdminUsers from '../../containers/SuperAdminUsers';
@@ -205,7 +201,7 @@ const CareAppDrawer = (props) => {
     //todo: check active status of user and providers
     listOfListItems.push(<HomeListItem handleClick={handleClick} />);
     listOfListItems.push(<ProviderListItem handleClick={handleClick}/>);
-    
+
 
     //if user is there and is NOT an admin, add to the list
     if (props.token && props.user && !props.user.admin && props.user.superAdmin) {
@@ -242,7 +238,6 @@ const CareAppDrawer = (props) => {
     return (
         <div>
             <div className={classes.toolbar}/>
-            {/*<img className={classes.logo}  src={'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRiGh1xwMqN286EqsRuHP0xoy6e6IEsIN_T_g&usqp=CAU'} alt="cityOfAmarillo" />*/}
             <List>
                 {
                     listOfListItems.map((data, index) => (

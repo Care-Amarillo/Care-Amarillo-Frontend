@@ -1,19 +1,11 @@
 import React, {Component} from 'react';
 import {
     Container,
-    Paper,
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableRow
 } from '@material-ui/core';
-import {LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer} from 'recharts';
 import format from "date-fns/format";
 import DateFnsUtils from '@date-io/date-fns';
 import {
     MuiPickersUtilsProvider,
-    KeyboardTimePicker,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
 import Button from '@material-ui/core/Button';
@@ -21,7 +13,6 @@ import 'date-fns';
 import axios from "axios";
 import MaterialTable from "material-table";
 import {forwardRef} from 'react';
-import DefaultTooltipContent from 'recharts/lib/component/DefaultTooltipContent';
 
 
 import AddBox from '@material-ui/icons/AddBox';
@@ -63,10 +54,6 @@ const tableIcons = {
     ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref}/>),
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref}/>)
 };
-
-
-const CLIENT_ID = '461686716459-krre353uecr54mdkbbj094vf9mevti55.apps.googleusercontent.com';
-const API_KEY = 'AIzaSyCOvmLGpbzVEgMywSh3g4g6mbaynTbdIiU';
 
 // Array of API discovery doc URLs for APIs used by the quickstart
 const DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
@@ -209,7 +196,6 @@ class SuperAdminProviderEntries extends Component {
         let currentIndex = 0;
         let prevDate = null;
         data.forEach((element) => {
-            // console.log(element)
             let amountChanged = element["amountChanged"];
             if (amountChanged > 0) {
                 let createdAt = new Date(element["createdAt"]);
@@ -229,7 +215,6 @@ class SuperAdminProviderEntries extends Component {
                     let prevDateDay = prevDate.getDay();
                     let prevDateMonth = prevDate.getMonth();
                     if (prevDateDay === day && prevDateMonth === month) {
-                        // console.log("found same day");
                         currentCount += amountChanged;
                         let dateData = {
                             createdAt: createdAtData,
@@ -237,7 +222,6 @@ class SuperAdminProviderEntries extends Component {
                         }
                         tempDays[currentIndex] = dateData;
                     } else {
-                        // console.log("different day");
                         currentCount = 0 + amountChanged;
                         currentIndex++;
                         let dateData = {
@@ -252,12 +236,6 @@ class SuperAdminProviderEntries extends Component {
 
 
         });
-
-        // console.log(`tempDays length is ${tempDays.length}`);
-        tempDays.forEach((element) => {
-            // console.log(`tempDays element is ${JSON.stringify(element)}`);
-        });
-
 
         this.setState({
             graphEntries: tempDays

@@ -2,18 +2,15 @@ import React, {Component} from 'react';
 import axios from "axios";
 import {makeStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import {Link, Redirect} from "react-router-dom";
 import {ToastContainer} from "react-toastr";
 import './SuperAdminSendPush.css';
-
 
 
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
-        height:'100vh'
+        height: '100vh'
     },
     button: {
         marginRight: theme.spacing(1),
@@ -39,8 +36,9 @@ const MessageForm = (props) => {
 
     return <form className={classes.form} noValidate autoComplete="off">
         <TextField id="title" label="Title" onChange={props.onChangeTitle} variant="outlined"/>
-        <TextField id="message" label="Message" onChange={props.onChangeMessage} type="text" multiline variant="outlined"/>
-        <Button onClick={props.pushClicked} variant="contained" id="pushButton" >
+        <TextField id="message" label="Message" onChange={props.onChangeMessage} type="text" multiline
+                   variant="outlined"/>
+        <Button onClick={props.pushClicked} variant="contained" id="pushButton">
             Send Push Message
         </Button>
     </form>;
@@ -111,7 +109,7 @@ class SuperAdminSendPush extends Component {
     }
 
     render() {
-        return   (
+        return (
             <div id="pushContainer">
                 <ToastContainer
                     ref={ref => this.container = ref}
@@ -119,7 +117,7 @@ class SuperAdminSendPush extends Component {
                 />
 
                 <MessageForm onChangeTitle={this.onChangeTitle} onChangeMessage={this.onChangeMessage}
-                           pushClicked={this.pushClicked}/>
+                             pushClicked={this.pushClicked}/>
             </div>
         );
 

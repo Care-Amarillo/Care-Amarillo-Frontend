@@ -1,16 +1,11 @@
 import React, {Component} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import './EditUser.css';
 import axios from "axios";
 import AlertDialogSlide from "../AlertDialogSlide";
 import {ToastContainer} from "react-toastr";
-import {createMuiTheme} from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 
 const useStyles = makeStyles((theme) => ({
@@ -215,7 +210,6 @@ class EditProfile extends Component {
             });
             this.props.setUser(user);
         } else {
-            // console.log("unsuccessfully updated user");
             this.container.error(`Error`, `Please Try Again`, {
                 closeButton: true,
             });

@@ -1,16 +1,11 @@
 import React, {Component} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import '../User/EditUser.css';
 import axios from "axios";
 import AlertDialogSlide from "../AlertDialogSlide";
 import {ToastContainer} from "react-toastr";
-import {createMuiTheme} from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
@@ -205,7 +200,6 @@ class SuperAdminEditUser extends Component {
     loadData = async () => {
 
         let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/users/` + this.state.userId;
-        // console.log(`url is ${URL}`);
         const config = {
             "Authorization": `Bearer ${this.props.token}`
         };
@@ -217,9 +211,7 @@ class SuperAdminEditUser extends Component {
             headers: config
         });
 
-        const data = await response.data;
-        let user = data;
-        // console.log(data);
+        let user = await response.data;
 
 
         this.setState({
@@ -237,9 +229,7 @@ class SuperAdminEditUser extends Component {
     updateUser = async () => {
 
 
-
         let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/users/` + this.state.userId;
-
 
 
         const config = {
@@ -262,7 +252,6 @@ class SuperAdminEditUser extends Component {
 
 
         const data = await response.data;
-        // console.log(data);
         const user = data.user;
         const msg = data.Message;
 
@@ -271,7 +260,6 @@ class SuperAdminEditUser extends Component {
                 closeButton: true,
             });
         } else {
-            // console.log("unsuccessfully updated user");
             this.container.error(`Error`, `Please Try Again`, {
                 closeButton: true,
             });

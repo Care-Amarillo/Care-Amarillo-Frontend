@@ -75,22 +75,23 @@ const FormOne = (props) => {
             services: e.target.value,
         });
     };
-    return(
-     <form className={classes.form} noValidate autoComplete="off">
-        <TextField id="name" label="Name" onChange={onChangeName} value={registerComponent.state.name}
-                   variant="outlined"/>
-        <TextField id="title" label="Title" value={registerComponent.state.title} onChange={onChangeTitle}
-                   variant="outlined"/>
+    return (
+        <form className={classes.form} noValidate autoComplete="off">
+            <TextField id="name" label="Name" onChange={onChangeName} value={registerComponent.state.name}
+                       variant="outlined"/>
+            <TextField id="title" label="Title" value={registerComponent.state.title} onChange={onChangeTitle}
+                       variant="outlined"/>
 
-         <TextField id="services" label="Services" value={registerComponent.state.services} onChange={onChangeServices}
-                    variant="outlined"/>
-        <TextField id="phone" label="Phone Number" onChange={onChangePhone} value={registerComponent.state.phone}
-                   type="number" inputProps={{ maxLength: 10 }} onInput={(e)=>{
-            e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,10)
-        }} variant="outlined" />
-        <TextField id="email" label="Email" onChange={onChangeEmail} value={registerComponent.state.email}
-                   variant="outlined"/>
-    </form>
+            <TextField id="services" label="Services" value={registerComponent.state.services}
+                       onChange={onChangeServices}
+                       variant="outlined"/>
+            <TextField id="phone" label="Phone Number" onChange={onChangePhone} value={registerComponent.state.phone}
+                       type="number" inputProps={{maxLength: 10}} onInput={(e) => {
+                e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
+            }} variant="outlined"/>
+            <TextField id="email" label="Email" onChange={onChangeEmail} value={registerComponent.state.email}
+                       variant="outlined"/>
+        </form>
     );
 }
 
@@ -224,39 +225,36 @@ const HorizontalLinearStepper = (props) => {
     const slideAlertCallback = (isTrue) => {
         if (isTrue) {
             registerComponent.register();
-        } else {
-            // console.log("is false");
         }
     }
 
     const askForConfirmation = () => {
 
 
-        if(registerState.email === "" || registerState.address === "" ||registerState.title === ""  || registerState.name === ""  || registerState.zip === "" || registerState.phone === "" || registerState.totalBeds === "" || registerState.bedsUsed === ""){
+        if (registerState.email === "" || registerState.address === "" || registerState.title === "" || registerState.name === "" || registerState.zip === "" || registerState.phone === "" || registerState.totalBeds === "" || registerState.bedsUsed === "") {
             registerComponent.container.error(`Please fill out all fields`, `Error`, {
                 closeButton: true,
             });
-            return ;
+            return;
         }
 
 
-        if(registerState.phone.length !== 10){
+        if (registerState.phone.length !== 10) {
             registerComponent.container.error(`Please enter a 10 digit phone number`, `Error`, {
                 closeButton: true,
             });
-            return ;
+            return;
         }
 
 
-
         let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        let validEmail =  re.test(String(registerState.email).toLowerCase());
+        let validEmail = re.test(String(registerState.email).toLowerCase());
 
-        if(!validEmail){
+        if (!validEmail) {
             registerComponent.container.error(`Please enter a valid email`, `Error`, {
                 closeButton: true,
             });
-            return ;
+            return;
         }
 
         setOpen(true);

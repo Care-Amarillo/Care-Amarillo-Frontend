@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Hidden from "@material-ui/core/Hidden";
 import Drawer from "@material-ui/core/Drawer";
 import {makeStyles, useTheme} from "@material-ui/core/styles";
@@ -8,13 +8,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Typography from "@material-ui/core/Typography";
-import clsx from 'clsx';
-import ChevronRightIcon from '@material-ui/icons/ChevronLeft';
-import ChevronLeftIcon from '@material-ui/icons/ChevronRight';
-import Divider from '@material-ui/core/Divider';
-import Select from 'react-select';
 import axios from "axios";
-import {Redirect} from "react-router-dom";
 
 
 const drawerWidth = 240;
@@ -53,7 +47,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-
 // simply write a function in ES6+ then pass in the keyword props to access this special object
 const CareAppNav = (props) => {
     const [searchQuery, setSearchQuery] = useState("");
@@ -64,7 +57,7 @@ const CareAppNav = (props) => {
     const classes = useStyles();
     // every component in React MUST return something...
     // notice the ( ) after the return. This is called an implicit return
-    const { container } = props;
+    const {container} = props;
     const theme = useTheme();
 
     // Allows the drawer to open and close
@@ -77,18 +70,15 @@ const CareAppNav = (props) => {
     }
 
     const handleDrawerToggle = () => {
-        // console.log("handle drawer toggle");
         // setMobileOpen(!mobileOpen);
         props.setOpen(!props.mobileOpen);
     };
 
     const searchChanged = (e) => {
-        // console.log(`value is ${e}`);
         setSearchQuery(e);
     }
 
-    const onChange = (e,a) => {
-        // console.log(`selected provider id is ${JSON.stringify(e)} and ${JSON.stringify(a)}`);
+    const onChange = (e, a) => {
         setSelectedProvider(e.value);
     }
 
@@ -114,23 +104,20 @@ const CareAppNav = (props) => {
 
 
     const loadData = async () => {
-        // console.log(`loaddata val is ${searchQuery}`);
         let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/providersActive`;
 
         const response = await axios({
             method: 'get',
             url: URL,
-            params:{
+            params: {
                 searchQuery: searchQuery
             }
         });
 
         const data = await response.data;
-        // console.log(`data is ${data}`);
 
         let tempData = [];
-        for(let obj in data){
-            // console.log(`obj data is ${JSON.stringify(data[obj])}`);
+        for (let obj in data) {
             let actualObj = data[obj];
             let val = actualObj._id;
             let label = actualObj.name;
@@ -152,7 +139,7 @@ const CareAppNav = (props) => {
                     onClick={handleDrawerToggle}
                     className={classes.menuButton}
                 >
-                    <MenuIcon />
+                    <MenuIcon/>
                 </IconButton>
                 <Typography variant="h6" noWrap>
                     Care Amarillo
@@ -197,7 +184,7 @@ const CareAppNav = (props) => {
                         </Drawer>
                     </Hidden>
                 </nav>
-            </div>:<div></div>
+            </div> : <div></div>
     )
 }
 

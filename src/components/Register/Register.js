@@ -7,11 +7,9 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import './Register.css';
-import {Redirect} from "react-router-dom";
 import axios from "axios";
 import AlertDialogSlide from "../AlertDialogSlide";
 import {ToastContainer} from "react-toastr";
-import Providers from "../Providers/Providers";
 import RegisterDialog from "./RegisterDialog";
 
 
@@ -38,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const getSteps = () => {
-    return ['Choose Provider','Personal Info', 'Login Info'];
+    return ['Choose Provider', 'Personal Info', 'Login Info'];
 }
 
 const FormOne = (props) => {
@@ -63,10 +61,12 @@ const FormOne = (props) => {
         });
     };
     return <form className={classes.form} noValidate autoComplete="off">
-        <TextField id="firstName" label="First Name" onChange={onChangeFirstName} variant="outlined" value={registerComponent.state.firstName}/>
-        <TextField id="lastName" label="Last Name" value={registerComponent.state.lastName} onChange={onChangeLastName} variant="outlined"/>
-        <TextField id="phone" label="Phone Number"  inputProps={{ maxLength: 10 }} onInput={(e)=>{
-            e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,10)
+        <TextField id="firstName" label="First Name" onChange={onChangeFirstName} variant="outlined"
+                   value={registerComponent.state.firstName}/>
+        <TextField id="lastName" label="Last Name" value={registerComponent.state.lastName} onChange={onChangeLastName}
+                   variant="outlined"/>
+        <TextField id="phone" label="Phone Number" inputProps={{maxLength: 10}} onInput={(e) => {
+            e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
         }} onChange={onChangePhone} type="number" value={registerComponent.state.phone} variant="outlined"/>
     </form>;
 }
@@ -90,12 +90,9 @@ const ProviderForm = (props) => {
     };
 
     const openProvider = (e) => {
-        // console.log("open provider")
-      setOpen(true);
+        setOpen(true);
     };
 
-    // console.log(`registerComponent states ${JSON.stringify(registerComponent.state.providers)}`)
-    // console.log(`registerComponent states ${registerComponent.state.providers.length}`)
 
     return <form className={classes.form} noValidate autoComplete="off">
         <Button color="primary" onClick={() => openProvider()} className={classes.button}>
@@ -129,9 +126,12 @@ const FormTwo = (props) => {
         });
     };
     return <form className={classes.form} noValidate autoComplete="off">
-        <TextField id="email" label="Email" value={registerComponent.state.email} onChange={onChangeEmail} variant="outlined"/>
-        <TextField id="password" label="Password" value={registerComponent.state.password} onChange={onChangePass} type="password" variant="outlined"/>
-        <TextField id="confirmPassword" label="Confirm Password" value={registerComponent.state.confirmPassword} onChange={onChangeConfirmPass} type="password"
+        <TextField id="email" label="Email" value={registerComponent.state.email} onChange={onChangeEmail}
+                   variant="outlined"/>
+        <TextField id="password" label="Password" value={registerComponent.state.password} onChange={onChangePass}
+                   type="password" variant="outlined"/>
+        <TextField id="confirmPassword" label="Confirm Password" value={registerComponent.state.confirmPassword}
+                   onChange={onChangeConfirmPass} type="password"
                    variant="outlined"/>
     </form>;
 }
@@ -206,7 +206,6 @@ const HorizontalLinearStepper = (props) => {
         if (isTrue) {
             registerComponent.register();
         } else {
-            // console.log("is false");
         }
     }
 
@@ -221,51 +220,51 @@ const HorizontalLinearStepper = (props) => {
 
     const askForConfirmation = () => {
 
-        if(registerState.email === "" || registerState.password === "" ||registerState.confirmPassword === ""  || registerState.firstName === ""  || registerState.lastName === "" || registerState.phone === ""){
+        if (registerState.email === "" || registerState.password === "" || registerState.confirmPassword === "" || registerState.firstName === "" || registerState.lastName === "" || registerState.phone === "") {
             registerComponent.container.error(`Please fill out all fields`, `Error`, {
                 closeButton: true,
             });
-            return ;
+            return;
         }
 
-        if(registerState.password !== registerState.confirmPassword){
+        if (registerState.password !== registerState.confirmPassword) {
             registerComponent.container.error(`Passwords do not match`, `Error`, {
                 closeButton: true,
             });
-            return ;
+            return;
         }
 
 
-        if(registerState.phone.length !== 10){
+        if (registerState.phone.length !== 10) {
             registerComponent.container.error(`Please enter a 10 digit phone number`, `Error`, {
                 closeButton: true,
             });
-            return ;
+            return;
         }
 
-        if(registerState.password.length < 6){
+        if (registerState.password.length < 6) {
             registerComponent.container.error(`Please enter a password with at least a length of 6 characters`, `Error`, {
                 closeButton: true,
             });
-            return ;
+            return;
         }
 
         let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        let validEmail =  re.test(String(registerState.email).toLowerCase());
+        let validEmail = re.test(String(registerState.email).toLowerCase());
 
-        if(!validEmail){
+        if (!validEmail) {
             registerComponent.container.error(`Please enter a valid email`, `Error`, {
                 closeButton: true,
             });
-            return ;
+            return;
         }
 
 
-        if(registerState.chosenProvider == null){
+        if (registerState.chosenProvider == null) {
             registerComponent.container.error(`Please choose a provider`, `Error`, {
                 closeButton: true,
             });
-            return ;
+            return;
         }
 
 
@@ -296,7 +295,8 @@ const HorizontalLinearStepper = (props) => {
             <AlertDialogSlide open={open} setOpen={setOpen} alertSlideCallback={slideAlertCallback} title={alertTitle}
                               description={alertDescription} yesOptionTitle={yesOptionTitle}
                               noOptionTitle={noOptionTitle}/>
-            <RegisterDialog open={openProviders} setOpen={setOpenProviders} providerDialogCallback={providerRegisterCallback}/>
+            <RegisterDialog open={openProviders} setOpen={setOpenProviders}
+                            providerDialogCallback={providerRegisterCallback}/>
             <Stepper activeStep={activeStep} nonLinear orientation={"horizontal"}>
                 {steps.map((label, index) => {
                     const stepProps = {};
@@ -392,11 +392,10 @@ class Register extends Component {
         let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/providersActive`;
 
 
-
         const response = await axios({
             method: 'get',
             url: URL,
-            params:{
+            params: {
                 searchQuery: this.state.searchQuery
             }
 
@@ -404,7 +403,6 @@ class Register extends Component {
 
 
         const data = await response.data;
-        // console.log("providers data: " + JSON.stringify((data)));
 
         this.setState({
             providers: data
@@ -414,7 +412,6 @@ class Register extends Component {
 
 
     register = async () => {
-
 
 
         let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/users/provider/${this.state.chosenProvider._id}`;
@@ -457,8 +454,6 @@ class Register extends Component {
             this.container.success(`Successfully linked user with provider`, `Success`, {
                 closeButton: true,
             });
-        } else {
-            // console.log("unsuccessfully created user");
         }
 
     }
@@ -469,7 +464,7 @@ class Register extends Component {
     }
 
     render() {
-        return  (
+        return (
             <div id="registerContainer">
                 <ToastContainer
                     ref={ref => this.container = ref}
@@ -477,7 +472,7 @@ class Register extends Component {
                 />
                 <HorizontalLinearStepper registerComponent={this}/>
             </div>
-        ) ;
+        );
     }
 }
 

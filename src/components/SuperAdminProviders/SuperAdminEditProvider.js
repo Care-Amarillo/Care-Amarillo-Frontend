@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -257,7 +256,6 @@ const HorizontalLinearStepper = (props) => {
         if (isTrue) {
             registerComponent.updateProvider();
         } else {
-            // console.log("is false");
         }
     }
 
@@ -474,7 +472,6 @@ class SuperAdminEditProvider extends Component {
                 closeButton: true,
             });
         } else {
-            // console.log("unsuccessfully updated provider");
         }
 
     }
@@ -503,7 +500,6 @@ class SuperAdminEditProvider extends Component {
 
         const data = await response.data;
         let provider = data;
-        // console.log("provider title is " + provider.title);
         this.setState({
             name: provider.name,
             title: provider.title,
