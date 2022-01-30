@@ -215,7 +215,10 @@ class EditProfile extends Component {
             });
             this.props.setUser(user);
         } else {
-            console.log("unsuccessfully updated user");
+            // console.log("unsuccessfully updated user");
+            this.container.error(`Error`, `Please Try Again`, {
+                closeButton: true,
+            });
         }
 
     }

@@ -90,12 +90,12 @@ const ProviderForm = (props) => {
     };
 
     const openProvider = (e) => {
-        console.log("open provider")
+        // console.log("open provider")
       setOpen(true);
     };
 
     // console.log(`registerComponent states ${JSON.stringify(registerComponent.state.providers)}`)
-    console.log(`registerComponent states ${registerComponent.state.providers.length}`)
+    // console.log(`registerComponent states ${registerComponent.state.providers.length}`)
 
     return <form className={classes.form} noValidate autoComplete="off">
         <Button color="primary" onClick={() => openProvider()} className={classes.button}>
@@ -206,7 +206,7 @@ const HorizontalLinearStepper = (props) => {
         if (isTrue) {
             registerComponent.register();
         } else {
-            console.log("is false");
+            // console.log("is false");
         }
     }
 
@@ -404,7 +404,7 @@ class Register extends Component {
 
 
         const data = await response.data;
-        console.log("providers data: " + JSON.stringify((data)));
+        // console.log("providers data: " + JSON.stringify((data)));
 
         this.setState({
             providers: data
@@ -437,7 +437,7 @@ class Register extends Component {
                 lName: this.state.lastName,
                 title: "No Title",
                 active: true,
-                admin: false,
+                admin: true,
                 superAdmin: false,
                 userType: 1,
                 email: this.state.email,
@@ -458,7 +458,7 @@ class Register extends Component {
                 closeButton: true,
             });
         } else {
-            console.log("unsuccessfully created user");
+            // console.log("unsuccessfully created user");
         }
 
     }

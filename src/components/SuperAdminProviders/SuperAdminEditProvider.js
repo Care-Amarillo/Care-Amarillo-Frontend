@@ -257,7 +257,7 @@ const HorizontalLinearStepper = (props) => {
         if (isTrue) {
             registerComponent.updateProvider();
         } else {
-            console.log("is false");
+            // console.log("is false");
         }
     }
 
@@ -474,7 +474,7 @@ class SuperAdminEditProvider extends Component {
                 closeButton: true,
             });
         } else {
-            console.log("unsuccessfully updated provider");
+            // console.log("unsuccessfully updated provider");
         }
 
     }
@@ -503,7 +503,7 @@ class SuperAdminEditProvider extends Component {
 
         const data = await response.data;
         let provider = data;
-        console.log("provider title is " + provider.title);
+        // console.log("provider title is " + provider.title);
         this.setState({
             name: provider.name,
             title: provider.title,

@@ -35,7 +35,7 @@ export default function ForgotPasswordDialog(props) {
         });
 
         const data = await response.data;
-        console.log(`data: ${JSON.stringify(data)}`);
+        // console.log(`data: ${JSON.stringify(data)}`);
 
         props.resetDone();
 
@@ -43,7 +43,7 @@ export default function ForgotPasswordDialog(props) {
     }
 
     const onChangeEmail = (e) => {
-        console.log(`onChange email is ${e.target.value}`)
+        // console.log(`onChange email is ${e.target.value}`)
         setEmail(e.target.value);
     }
 

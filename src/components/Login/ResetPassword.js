@@ -193,7 +193,7 @@ class ResetPassword extends Component {
         });
 
         const data = await response.data;
-        console.log(`data: ${JSON.stringify(data)}`);
+        // console.log(`data: ${JSON.stringify(data)}`);
 
         const message = data["Message"];
         if(message && message === "Updated User successfully"){
@@ -233,7 +233,7 @@ class ResetPassword extends Component {
         });
 
         const data = await response.data;
-        console.log(`data: ${JSON.stringify(data)}`);
+        // console.log(`data: ${JSON.stringify(data)}`);
         const message = data["Message"];
         if(message && message === "Successfully retrieved Password Recovery"){
             const recoveryData = data["data"];

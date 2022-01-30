@@ -209,7 +209,7 @@ class SuperAdminProviderEntries extends Component {
         let currentIndex = 0;
         let prevDate = null;
         data.forEach((element) => {
-            console.log(element)
+            // console.log(element)
             let amountChanged = element["amountChanged"];
             if (amountChanged > 0) {
                 let createdAt = new Date(element["createdAt"]);
@@ -229,7 +229,7 @@ class SuperAdminProviderEntries extends Component {
                     let prevDateDay = prevDate.getDay();
                     let prevDateMonth = prevDate.getMonth();
                     if (prevDateDay === day && prevDateMonth === month) {
-                        console.log("found same day");
+                        // console.log("found same day");
                         currentCount += amountChanged;
                         let dateData = {
                             createdAt: createdAtData,
@@ -237,7 +237,7 @@ class SuperAdminProviderEntries extends Component {
                         }
                         tempDays[currentIndex] = dateData;
                     } else {
-                        console.log("different day");
+                        // console.log("different day");
                         currentCount = 0 + amountChanged;
                         currentIndex++;
                         let dateData = {
@@ -253,9 +253,9 @@ class SuperAdminProviderEntries extends Component {
 
         });
 
-        console.log(`tempDays length is ${tempDays.length}`);
+        // console.log(`tempDays length is ${tempDays.length}`);
         tempDays.forEach((element) => {
-            console.log(`tempDays element is ${JSON.stringify(element)}`);
+            // console.log(`tempDays element is ${JSON.stringify(element)}`);
         });
 
 

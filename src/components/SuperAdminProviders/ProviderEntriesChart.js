@@ -8,7 +8,7 @@ export default function ProviderEntriesChart(props) {
 
 
     const formatXAxis = tickItem => {
-        console.log(tickItem);
+        // console.log(tickItem);
         if (tickItem != null) {
             return format(new Date(tickItem), "MM/d/yyyy").toString();
         } else {

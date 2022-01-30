@@ -205,7 +205,7 @@ class SuperAdminEditUser extends Component {
     loadData = async () => {
 
         let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/users/` + this.state.userId;
-        console.log(`url is ${URL}`);
+        // console.log(`url is ${URL}`);
         const config = {
             "Authorization": `Bearer ${this.props.token}`
         };
@@ -219,7 +219,7 @@ class SuperAdminEditUser extends Component {
 
         const data = await response.data;
         let user = data;
-        console.log(data);
+        // console.log(data);
 
 
         this.setState({
@@ -262,7 +262,7 @@ class SuperAdminEditUser extends Component {
 
 
         const data = await response.data;
-        console.log(data);
+        // console.log(data);
         const user = data.user;
         const msg = data.Message;
 
@@ -271,7 +271,10 @@ class SuperAdminEditUser extends Component {
                 closeButton: true,
             });
         } else {
-            console.log("unsuccessfully updated user");
+            // console.log("unsuccessfully updated user");
+            this.container.error(`Error`, `Please Try Again`, {
+                closeButton: true,
+            });
         }
 
     }

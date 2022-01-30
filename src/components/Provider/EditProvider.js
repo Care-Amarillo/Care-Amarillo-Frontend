@@ -527,7 +527,7 @@ class EditProvider extends Component {
         });
 
         const data = await response.data;
-        console.log(`response data is ${JSON.stringify(data)}`);
+        // console.log(`response data is ${JSON.stringify(data)}`);
         if (data.length > 0) {
             let provider = data[0].provider;
             this.setState({

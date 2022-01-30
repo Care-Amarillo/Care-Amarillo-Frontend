@@ -86,7 +86,7 @@ class SuperAdminSendPush extends Component {
 
 
         const data = await response.data;
-        console.log(`response date is ${JSON.stringify(data)}`);
+        // console.log(`response date is ${JSON.stringify(data)}`);
         this.container.success(`Push Message Sent`, `Success`, {
             closeButton: true,
         });

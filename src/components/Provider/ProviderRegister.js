@@ -225,7 +225,7 @@ const HorizontalLinearStepper = (props) => {
         if (isTrue) {
             registerComponent.register();
         } else {
-            console.log("is false");
+            // console.log("is false");
         }
     }
 

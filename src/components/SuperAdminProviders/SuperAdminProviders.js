@@ -290,7 +290,7 @@ class SuperAdminProviders extends Component {
             // date is valid
             // e.setHours(23, 59,0, 0);
 
-            console.log(e);
+            // console.log(e);
         } else {
             // not a date
             return;

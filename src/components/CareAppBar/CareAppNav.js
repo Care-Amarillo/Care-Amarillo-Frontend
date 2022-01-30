@@ -77,18 +77,18 @@ const CareAppNav = (props) => {
     }
 
     const handleDrawerToggle = () => {
-        console.log("handle drawer toggle");
+        // console.log("handle drawer toggle");
         // setMobileOpen(!mobileOpen);
         props.setOpen(!props.mobileOpen);
     };
 
     const searchChanged = (e) => {
-        console.log(`value is ${e}`);
+        // console.log(`value is ${e}`);
         setSearchQuery(e);
     }
 
     const onChange = (e,a) => {
-        console.log(`selected provider id is ${JSON.stringify(e)} and ${JSON.stringify(a)}`);
+        // console.log(`selected provider id is ${JSON.stringify(e)} and ${JSON.stringify(a)}`);
         setSelectedProvider(e.value);
     }
 
@@ -114,7 +114,7 @@ const CareAppNav = (props) => {
 
 
     const loadData = async () => {
-        console.log(`loaddata val is ${searchQuery}`);
+        // console.log(`loaddata val is ${searchQuery}`);
         let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/providersActive`;
 
         const response = await axios({
@@ -126,11 +126,11 @@ const CareAppNav = (props) => {
         });
 
         const data = await response.data;
-        console.log(`data is ${data}`);
+        // console.log(`data is ${data}`);
 
         let tempData = [];
         for(let obj in data){
-            console.log(`obj data is ${JSON.stringify(data[obj])}`);
+            // console.log(`obj data is ${JSON.stringify(data[obj])}`);
             let actualObj = data[obj];
             let val = actualObj._id;
             let label = actualObj.name;

@@ -112,7 +112,7 @@ const ProviderTable = (props) => {
 }
 
 const formatXAxis = tickItem => {
-    console.log(tickItem);
+    // console.log(tickItem);
     if (tickItem != null && tickItem !== undefined) {
         return format(new Date(tickItem), "MM/d/yyyy h:mma").toString();
     } else {

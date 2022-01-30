@@ -192,10 +192,10 @@ class AuditEntries extends Component {
 
     slideAlertCallback = (isCSV) => {
         if (isCSV) {
-            console.log("is csv");
+            //console.log("is csv");
             this.exportReport();
         } else {
-            console.log("is sheets");
+            //console.log("is sheets");
             this.exportReportToGoogleSheets();
         }
     }
@@ -203,14 +203,14 @@ class AuditEntries extends Component {
 
     sheetsSlideAlertCallback = (isCopy) => {
         if (isCopy) {
-            console.log("is copy");
+            //console.log("is copy");
             navigator.clipboard.writeText(this.state.sheetUrl);
 
             this.container.success(`Link Copied To Clipboard`, `Success`, {
                 closeButton: true,
             });
         } else {
-            console.log("is open in new tab");
+            //console.log("is open in new tab");
             window.open(this.state.sheetUrl, '_blank');
         }
     }
@@ -229,7 +229,7 @@ class AuditEntries extends Component {
         });
 
 
-        console.log(`url is ${URL}`);
+        //console.log(`url is ${URL}`);
 
 
         const config = {
@@ -244,7 +244,7 @@ class AuditEntries extends Component {
 
 
         const data = await response.data;
-        console.log("data " + JSON.stringify(data));
+        //console.log("data " + JSON.stringify(data));
 
         this.setState({
             entries: data
@@ -384,7 +384,7 @@ class AuditEntries extends Component {
 
 
     updateSignInStatus = (isSignedIn) => {
-        console.log("updateSignInStatus = " + isSignedIn);
+        //console.log("updateSignInStatus = " + isSignedIn);
         if (isSignedIn) {
             this.makeGoogleSheetsApiCall();
             // saveDataToSheet();
@@ -424,10 +424,10 @@ class AuditEntries extends Component {
         let sheetOne = sheets[0];
         let sheetId = result.spreadsheetId;
         let sheetUrl = result.spreadsheetUrl;
-        console.log("sheets " + sheets);
-        console.log("sheetOne " + sheetOne);
-        console.log("sheetOne id " + sheetId);
-        console.log("sheetOne url " + sheetUrl);
+        //console.log("sheets " + sheets);
+        //console.log("sheetOne " + sheetOne);
+        //console.log("sheetOne id " + sheetId);
+        //console.log("sheetOne url " + sheetUrl);
 
         this.setState({
             sheetUrl: sheetUrl
@@ -491,14 +491,14 @@ class AuditEntries extends Component {
 
         let spreadsheetId = sheetId;
 
-        console.log("arr " + JSON.stringify(arr));
+        //console.log("arr " + JSON.stringify(arr));
 
         window.gapi.client.sheets.spreadsheets.values.batchUpdate({
             spreadsheetId: spreadsheetId,
             resource: body
         }).then((response) => {
             let result = response.result;
-            console.log(`${result.totalUpdatedCells} cells updated.`);
+            //console.log(`${result.totalUpdatedCells} cells updated.`);
         });
     }
 
