@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import TextField from "@material-ui/core/TextField";
 import './AutoCompleteInput.css';
 
 let autoComplete;
@@ -55,7 +54,6 @@ const AutoCompleteInput = (props) => {
 
     return (
         <div className="search-location-input">
-            {/*<TextField*/}
             <input
                 id="placesAuto"
                 ref={autoCompleteRef}

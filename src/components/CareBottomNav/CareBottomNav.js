@@ -22,7 +22,7 @@ const useStyles = makeStyles({
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
-        console.log("new val is " + newValue);
+        // console.log("new val is " + newValue);
         history.push(`/${newValue}`);
         setValue(newValue);
     };

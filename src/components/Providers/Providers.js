@@ -14,12 +14,7 @@ import {
 
 const useStyles = makeStyles({
     root: {
-        // display:"flex",
-        // flexDirection:"column",
-        // justifyContent:"center",
-        // margin:"10px",
         width: "100%",
-        // backgroundColor: "yellow",
     },
     bullet: {
         display: 'inline-block',
@@ -30,12 +25,9 @@ const useStyles = makeStyles({
         fontSize: 17,
         textAlign:"center",
         fontWeight: "bold",
-        // color:"white"
     },
     secondText: {
         textAlign:"center",
-        // color:"white"
-
     },
     sound: {
         width:"100%"

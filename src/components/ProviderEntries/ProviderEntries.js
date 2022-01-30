@@ -1,11 +1,6 @@
 import React, {Component} from 'react';
 import {
     Container,
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableRow
 } from '@material-ui/core';
 import {LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip} from 'recharts';
 import DefaultTooltipContent from 'recharts/lib/component/DefaultTooltipContent';
@@ -14,10 +9,8 @@ import format from "date-fns/format";
 import DateFnsUtils from '@date-io/date-fns';
 import {
     MuiPickersUtilsProvider,
-    KeyboardTimePicker,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
-import Button from '@material-ui/core/Button';
 import 'date-fns';
 import axios from "axios";
 import MaterialTable from "material-table";
@@ -79,22 +72,26 @@ const ProviderTable = (props) => {
         <MaterialTable
             icons={tableIcons}
             columns={[
-                {title: "Amount Changed", field: "amountChanged", headerStyle: {
+                {
+                    title: "Amount Changed", field: "amountChanged", headerStyle: {
                         width: 20,
                         maxWidth: 20,
                     }, cellStyle: {
                         width: 20,
                         maxWidth: 20,
                         fontSize: 14
-                    },},
-                {title: "Date", field: "createdAt", type: "datetime", searchable: false, headerStyle: {
+                    },
+                },
+                {
+                    title: "Date", field: "createdAt", type: "datetime", searchable: false, headerStyle: {
                         width: 20,
                         maxWidth: 20,
                     }, cellStyle: {
                         width: 20,
                         maxWidth: 20,
                         fontSize: 14
-                    },},
+                    },
+                },
             ]}
             data={props.data}
             title="Provider Entry"
@@ -112,7 +109,6 @@ const ProviderTable = (props) => {
 }
 
 const formatXAxis = tickItem => {
-    console.log(tickItem);
     if (tickItem != null && tickItem !== undefined) {
         return format(new Date(tickItem), "MM/d/yyyy h:mma").toString();
     } else {
@@ -128,7 +124,6 @@ const CustomTooltip = props => {
     }
     // mutating props directly is against react's conventions
     // so we create a new payload with the name and value fields set to what we want
-    // console.log(`payload is ${JSON.stringify(props.payload[0].payload)}`)
     const newPayload = [
         {
             name: 'Amount Changed',
@@ -255,14 +250,12 @@ class ProviderEntries extends Component {
     }
 
 
-
     getGraphData = (data) => {
         let tempDays = [];
         let currentCount = 0;
         let currentIndex = 0;
         let prevDate = null;
         data.forEach((element) => {
-            console.log(element)
             let amountChanged = element["amountChanged"];
             if (amountChanged > 0) {
                 let createdAt = new Date(element["createdAt"]);
@@ -282,7 +275,6 @@ class ProviderEntries extends Component {
                     let prevDateDay = prevDate.getDay();
                     let prevDateMonth = prevDate.getMonth();
                     if (prevDateDay === day && prevDateMonth === month) {
-                        console.log("found same day");
                         currentCount += amountChanged;
                         let dateData = {
                             createdAt: createdAtData,
@@ -290,7 +282,6 @@ class ProviderEntries extends Component {
                         }
                         tempDays[currentIndex] = dateData;
                     } else {
-                        console.log("different day");
                         currentCount = 0 + amountChanged;
                         currentIndex++;
                         let dateData = {
@@ -306,11 +297,6 @@ class ProviderEntries extends Component {
 
         });
 
-        console.log(`tempDays length is ${tempDays.length}`);
-        tempDays.forEach((element) => {
-            console.log(`tempDays element is ${JSON.stringify(element)}`);
-        });
-
 
         this.setState({
             graphEntries: tempDays
@@ -320,7 +306,6 @@ class ProviderEntries extends Component {
 
 
     handleStartDateChange = (e) => {
-        // setSelectedStartDate(e);
         if (Object.prototype.toString.call(e) === "[object Date]") {
             // it is a date
             if (isNaN(e.getTime())) {  // d.valueOf() could also work
@@ -596,27 +581,27 @@ class ProviderEntries extends Component {
     render() {
         return (
             <div class="providerEntryContainer">
-                    <ToastContainer
-                        ref={ref => this.container = ref}
-                        className="toast-bottom-right"
-                    />
-                    {/*dialog used to open csv option*/}
-                    <AlertDialogSlide open={this.state.open} setOpen={this.setOpen}
-                                      alertSlideCallback={this.slideAlertCallback} title={this.state.alertTitle}
-                                      description={this.state.alertDescription}
-                                      yesOptionTitle={this.state.alertYesOptionTitle}
-                                      noOptionTitle={this.state.alertNoOptionTitle}/>
+                <ToastContainer
+                    ref={ref => this.container = ref}
+                    className="toast-bottom-right"
+                />
+                {/*dialog used to open csv option*/}
+                <AlertDialogSlide open={this.state.open} setOpen={this.setOpen}
+                                  alertSlideCallback={this.slideAlertCallback} title={this.state.alertTitle}
+                                  description={this.state.alertDescription}
+                                  yesOptionTitle={this.state.alertYesOptionTitle}
+                                  noOptionTitle={this.state.alertNoOptionTitle}/>
 
 
-                    {/*dialog for copy or open in new tab of google sheets link */}
-                    <AlertDialogSlide open={this.state.sheetsDialogOpen} setOpen={this.setSheetsDialogOpen}
-                                      alertSlideCallback={this.sheetsSlideAlertCallback}
-                                      title={this.state.alertSheetsTitle}
-                                      description={this.state.alertSheetsDescriptionDescription}
-                                      yesOptionTitle={this.state.alertSheetsYesOptionTitle}
-                                      noOptionTitle={this.state.alertSheetsNoOptionTitle}/>
+                {/*dialog for copy or open in new tab of google sheets link */}
+                <AlertDialogSlide open={this.state.sheetsDialogOpen} setOpen={this.setSheetsDialogOpen}
+                                  alertSlideCallback={this.sheetsSlideAlertCallback}
+                                  title={this.state.alertSheetsTitle}
+                                  description={this.state.alertSheetsDescriptionDescription}
+                                  yesOptionTitle={this.state.alertSheetsYesOptionTitle}
+                                  noOptionTitle={this.state.alertSheetsNoOptionTitle}/>
 
-                <Container >
+                <Container>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <div id="dateContainer">
                             <KeyboardDatePicker

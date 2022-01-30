@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import axios from "axios";
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import './Login.css';
@@ -9,11 +8,8 @@ import {Link, Redirect} from "react-router-dom";
 import {createMuiTheme} from '@material-ui/core/styles';
 import {ThemeProvider} from "@material-ui/styles";
 import {ToastContainer} from "react-toastr";
-import Copyright from '../Copyright/Copyright';
 import {Avatar, Container} from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import PopUp from './PopUp';
-import CareAppNav from '../../containers/CareAppNav';
 import ForgotPasswordDialog from "./ForgotPasswordDialog";
 
 const theme = createMuiTheme({
@@ -125,8 +121,8 @@ class Login extends Component {
     };
 
 
-    resetDone = () =>{
-       this.togglePop();
+    resetDone = () => {
+        this.togglePop();
         this.container.success(`Successfully Sent Password Reset Link`, `Success`, {
             closeButton: true,
         });
@@ -174,7 +170,8 @@ class Login extends Component {
                 <Button onClick={this.togglePop} variant="outlined">
                     Forgot Password?
                 </Button>
-                <ForgotPasswordDialog open={this.state.openDialog} resetDone={this.resetDone} toggleClicked={this.togglePop}/>
+                <ForgotPasswordDialog open={this.state.openDialog} resetDone={this.resetDone}
+                                      toggleClicked={this.togglePop}/>
             </div>
 
         ) : <Redirect to="/provider"/>;

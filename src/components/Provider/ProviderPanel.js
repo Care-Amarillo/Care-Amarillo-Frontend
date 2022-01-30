@@ -2,16 +2,9 @@ import React, {Component} from 'react';
 import Providers from "../Providers/Providers";
 import axios from "axios";
 import Button from '@material-ui/core/Button';
-import TextField from "@material-ui/core/TextField";
 import './ProviderPanel.css';
 import {Link} from "react-router-dom";
 import {createMuiTheme} from '@material-ui/core/styles';
-import {ThemeProvider} from "@material-ui/styles";
-import CareAppNav from '../CareAppBar/CareAppNav';
-import Chart from './Chart';
-import {Box, Card, CardContent, isWidthDown, isWidthUp} from '@material-ui/core';
-import GridList from "@material-ui/core/GridList";
-import GridListTile from "@material-ui/core/GridListTile";
 
 const theme = createMuiTheme({
     palette: {

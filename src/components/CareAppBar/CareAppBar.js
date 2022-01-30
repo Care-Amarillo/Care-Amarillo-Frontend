@@ -2,14 +2,9 @@ import React, {Component, useEffect, useState} from 'react';
 import { makeStyles, fade } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Box from '@material-ui/core/Box';
-import SearchIcon from '@material-ui/icons/Search';
-import InputBase from '@material-ui/core/InputBase';
-import Copyright from '../Copyright/Copyright';
 import logo from './logo.png';
 import axios from "axios";
 import Select from 'react-select';
-// import './CareAppBar.css';
 import {Redirect} from "react-router-dom";
 
 
@@ -96,17 +91,12 @@ const CareAppBar = (props) => {
     const [selectedProvider, setSelectedProvider] = useState("");
   const [providers, setProviders] = useState([]);
 
-// useEffect(() => {
-//   loadData().then(r => console.log(""));
-// }, []);
 
 const searchChanged = (e) => {
-  console.log(`value is ${e}`);
   setSearchQuery(e);
 }
 
 const onChange = (e,a) => {
-    console.log(`selected provider id is ${JSON.stringify(e)} and ${JSON.stringify(a)}`);
     setSelectedProvider(e.value);
 }
 
@@ -127,13 +117,12 @@ const customStyles = {
 }
 
 useEffect(() => {
-  
+
   loadData().then(r => console.log(""));
 }, [searchQuery]);
 
 
 const loadData = async () => {
-  console.log(`loaddata val is ${searchQuery}`);
   let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/providersActive`;
 
         const response = await axios({
@@ -145,11 +134,9 @@ const loadData = async () => {
         });
 
         const data = await response.data;
-        console.log(`data is ${data}`);
-        
+
         let tempData = [];
         for(let obj in data){
-          console.log(`obj data is ${JSON.stringify(data[obj])}`);
           let actualObj = data[obj];
           let val = actualObj._id;
           let label = actualObj.name;
@@ -170,22 +157,6 @@ const loadData = async () => {
                             <Select onInputChange={searchChanged} onChange={onChange} value={selectedProvider}  placeholder='Search for Shelter...' autosize={false} options={providers} styles={customStyles} components={{ DropdownIndicator:() => null, IndicatorSeparator:() => null }} />
                       </div>
                   </div>
-                    {/* <div className={classes.searchBox}>
-                      <div className={classes.search}>
-                          <div className={classes.searchIcon}>
-                              <SearchIcon />
-                          </div>
-                          <InputBase
-                              placeholder="Search Shelter..."
-                              classes={{
-                                  root: classes.inputRoot,
-                                  input: classes.inputInput,
-                              }}
-                              // onChange={this.searchChanged}
-                              inputProps={{'area-label': 'search'}}
-                              />
-                      </div>
-                      </div> */}
                 </Toolbar>
             </AppBar>
             <div/>

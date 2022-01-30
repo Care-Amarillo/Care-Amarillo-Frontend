@@ -6,9 +6,6 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import {
-    Link
-} from "react-router-dom";
 
 
 
@@ -16,10 +13,8 @@ const useStyles = makeStyles({
     root: {
         display:"flex",
         flexDirection:"column",
-        // justifyContent:"center",
         margin:"10px",
         width: "90%",
-        // backgroundColor: "#132C3C",
     },
     bullet: {
         display: 'inline-block',
@@ -30,11 +25,9 @@ const useStyles = makeStyles({
         fontSize: 17,
         textAlign:"center",
         fontWeight: "bold",
-        // color:"white"
     },
     secondText: {
         textAlign:"center",
-        // color:"white"
 
     },
     sound: {

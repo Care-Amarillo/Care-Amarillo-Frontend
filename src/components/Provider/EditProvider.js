@@ -2,19 +2,16 @@ import React, {Component} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import './ProviderRegister.css';
 import AutoCompleteInput from "../GooglePlacesApi/AutoCompleteInput";
-import {Redirect} from "react-router-dom";
 import axios from "axios";
 import AlertDialogSlide from "../AlertDialogSlide";
 import {ToastContainer} from "react-toastr";
 import {Steps} from "intro.js-react";
 import StepButton from "@material-ui/core/StepButton";
-
 
 
 const useStyles = makeStyles((theme) => ({
@@ -85,18 +82,18 @@ const FormOne = (props) => {
             services: e.target.value,
         });
     };
-       return <form className={classes.form} noValidate autoComplete="off">
-            <TextField id="name" label="Name" onChange={onChangeName} value={registerComponent.state.name}
-                       variant="outlined"/>
-            <TextField id="title" label="Title" value={registerComponent.state.title} onChange={onChangeTitle}
-                       variant="outlined"/>
-           <TextField id="services" label="Services" value={registerComponent.state.services} onChange={onChangeServices}
-                      variant="outlined"/>
-            <TextField id="phone" label="Phone Number" onChange={onChangePhone} value={registerComponent.state.phone}
-                       type="number" variant="outlined"/>
-            <TextField id="email" label="Email" onChange={onChangeEmail} value={registerComponent.state.email}
-                       variant="outlined"/>
-        </form>;
+    return <form className={classes.form} noValidate autoComplete="off">
+        <TextField id="name" label="Name" onChange={onChangeName} value={registerComponent.state.name}
+                   variant="outlined"/>
+        <TextField id="title" label="Title" value={registerComponent.state.title} onChange={onChangeTitle}
+                   variant="outlined"/>
+        <TextField id="services" label="Services" value={registerComponent.state.services} onChange={onChangeServices}
+                   variant="outlined"/>
+        <TextField id="phone" label="Phone Number" onChange={onChangePhone} value={registerComponent.state.phone}
+                   type="number" variant="outlined"/>
+        <TextField id="email" label="Email" onChange={onChangeEmail} value={registerComponent.state.email}
+                   variant="outlined"/>
+    </form>;
 }
 
 const FormTwo = (props) => {
@@ -128,16 +125,12 @@ const FormTwo = (props) => {
             zip: e.target.value,
         });
     };
-      return  <form className={classes.form} noValidate autoComplete="off">
-            {/*<TextField id="latitude" label="Latitude" onChange={onChangeLatitude} value={registerComponent.state.lat}*/}
-            {/*           variant="outlined"/>*/}
-            {/*<TextField id="longitude" label="Longitude" onChange={onChangeLongitude} value={registerComponent.state.long}*/}
-            {/*           variant="outlined"/>*/}
-            <TextField id="address" label="Address" onChange={onChangeAddress} value={registerComponent.state.address}
-                       variant="outlined"/>
-            <TextField id="zip" label="Zip" onChange={onChangeZip} value={registerComponent.state.zip}
-                       variant="outlined"/>
-        </form>;
+    return <form className={classes.form} noValidate autoComplete="off">
+        <TextField id="address" label="Address" onChange={onChangeAddress} value={registerComponent.state.address}
+                   variant="outlined"/>
+        <TextField id="zip" label="Zip" onChange={onChangeZip} value={registerComponent.state.zip}
+                   variant="outlined"/>
+    </form>;
 }
 
 
@@ -157,13 +150,13 @@ const FormThree = (props) => {
             bedsUsed: e.target.value,
         });
     };
-      return  <form className={classes.form} noValidate autoComplete="off">
-            <TextField id="totalBeds" label="Total Beds" onChange={onChangeTotalBeds}
-                       value={registerComponent.state.totalBeds} variant="outlined"/>
-            <TextField id="bedsUsed" label="Used Beds" onChange={onChangeUsedBeds}
-                       value={registerComponent.state.bedsUsed}
-                       variant="outlined"/>
-        </form>;
+    return <form className={classes.form} noValidate autoComplete="off">
+        <TextField id="totalBeds" label="Total Beds" onChange={onChangeTotalBeds}
+                   value={registerComponent.state.totalBeds} variant="outlined"/>
+        <TextField id="bedsUsed" label="Used Beds" onChange={onChangeUsedBeds}
+                   value={registerComponent.state.bedsUsed}
+                   variant="outlined"/>
+    </form>;
 }
 
 const getStepContent = (step, registerComponent) => {
@@ -229,8 +222,6 @@ const HorizontalLinearStepper = (props) => {
     const slideAlertCallback = (isTrue) => {
         if (isTrue) {
             registerComponent.updateProvider();
-        } else {
-            console.log("is false");
         }
     }
 
@@ -270,26 +261,26 @@ const HorizontalLinearStepper = (props) => {
             <AlertDialogSlide open={open} setOpen={setOpen} alertSlideCallback={slideAlertCallback} title={alertTitle}
                               description={alertDescription} yesOptionTitle={yesOptionTitle}
                               noOptionTitle={noOptionTitle}/>
-                <Stepper activeStep={activeStep} nonLinear orientation={"horizontal"}>
-                    {steps.map((label, index) => {
-                        const stepProps = {};
-                        const labelProps = {};
-                        if (isStepOptional(index)) {
-                            labelProps.optional = <Typography variant="caption">Optional</Typography>;
-                        }
-                        if (isStepSkipped(index)) {
-                            stepProps.completed = false;
-                        }
-                        return (
-                            <Step key={label} {...stepProps}>
-                                {/*<StepLabel {...labelProps}>{label}</StepLabel>*/}
-                                <StepButton onClick={handleStep(index)} >
-                                    {label}
-                                </StepButton>
-                            </Step>
-                        );
-                    })}
-                </Stepper>
+            <Stepper activeStep={activeStep} nonLinear orientation={"horizontal"}>
+                {steps.map((label, index) => {
+                    const stepProps = {};
+                    const labelProps = {};
+                    if (isStepOptional(index)) {
+                        labelProps.optional = <Typography variant="caption">Optional</Typography>;
+                    }
+                    if (isStepSkipped(index)) {
+                        stepProps.completed = false;
+                    }
+                    return (
+                        <Step key={label} {...stepProps}>
+                            {/*<StepLabel {...labelProps}>{label}</StepLabel>*/}
+                            <StepButton onClick={handleStep(index)}>
+                                {label}
+                            </StepButton>
+                        </Step>
+                    );
+                })}
+            </Stepper>
             <div>
                 <div>
                     <Typography
@@ -453,7 +444,6 @@ class EditProvider extends Component {
         let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/providers/` + this.state.providerId;
 
 
-
         const config = {
             "Authorization": `Bearer ${this.props.token}`
         };
@@ -491,8 +481,6 @@ class EditProvider extends Component {
             });
             this.props.setProvider(provider);
 
-        } else {
-            console.log("unsuccessfully updated provider");
         }
 
     }
@@ -527,7 +515,6 @@ class EditProvider extends Component {
         });
 
         const data = await response.data;
-        console.log(`response data is ${JSON.stringify(data)}`);
         if (data.length > 0) {
             let provider = data[0].provider;
             this.setState({

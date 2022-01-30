@@ -163,20 +163,13 @@ const ProviderDtlFavoriteCard = (props) => {
                 .then(async function () {
                     const token = await messaging.getToken();
                     //todo: also handle token refresh, code in function below
-                    // console.log("token is " + token);
                     if (!props.pushSubscribed) {
                         props.handleNewPushToken(token);
                     }
-
-                    // props.container.success(`Your have subscribed to receive push notifications`, `Success`, {
-                    //     closeButton: true,
-                    // });
                 })
                 .catch(function (err) {
-                    console.log("Unable to get permission to notify.", err);
                 });
             messaging.onMessage(function (payload) {
-                console.log("Message received. ", payload);
                 //todo: use this with below code for swReg
                 navigator.serviceWorker.getRegistration('./firebase-messaging-sw.js').then(registration => {
                     registration.showNotification(
@@ -187,7 +180,7 @@ const ProviderDtlFavoriteCard = (props) => {
                 // ...
             });
 
-            navigator.serviceWorker.addEventListener("message", (message) => console.log(message));
+            navigator.serviceWorker.addEventListener("message", (message) => console.log(""));
         } else {
             props.container.warning(`Your browser doesn't support push notifications`, `Sorry`, {
                 closeButton: true,
@@ -199,7 +192,7 @@ const ProviderDtlFavoriteCard = (props) => {
         const messaging = firebase.messaging();
         // Add the public key generated from the console here.
         messaging.usePublicVapidKey(
-            "BAbQqzrfIWAgTvVnNJVrJvyEoUrh2uBtDYx2iT3cbW5JfKEHJFRn3Ruyjs4H9OsD1rjYDCQRR2UAO_46anL8Sgk"
+            process.env.REACT_APP_FIREBASE_PUBLIC_VAPID_KEY
         );
 
         // Get Instance ID token. Initially this makes a network call, once retrieved
@@ -207,28 +200,27 @@ const ProviderDtlFavoriteCard = (props) => {
         messaging
             .getToken()
             .then(currentToken => {
-                console.log("currentToken is " + currentToken);
                 if (currentToken) {
                     // sendTokenToServer(currentToken);
                     // updateUIForPushEnabled(currentToken);
                 } else {
                     // Show permission request.
-                    console.log(
-                        "No Instance ID token available. Request permission to generate one."
-                    );
+                    // console.log(
+                    //     "No Instance ID token available. Request permission to generate one."
+                    // );
                     // Show permission UI.
                     // updateUIForPushPermissionRequired();
                     // setTokenSentToServer(false);
                 }
             })
             .catch(err => {
-                console.log("An error occurred while retrieving token. ", err);
+                // console.log("An error occurred while retrieving token. ", err);
                 // showToken('Error retrieving Instance ID token. ', err);
                 // setTokenSentToServer(false);
             });
 
         messaging.onMessage(function (payload) {
-            console.log("Message received. ", payload);
+            // console.log("Message received. ", payload);
             // ...
         });
 
@@ -236,10 +228,10 @@ const ProviderDtlFavoriteCard = (props) => {
         let swRegistration = null;
 
         if ("serviceWorker" in navigator && "PushManager" in window) {
-            console.log("Service Worker and Push is supported");
+            // console.log("Service Worker and Push is supported");
 
             let applicationServerPublicKey =
-                "BAbQqzrfIWAgTvVnNJVrJvyEoUrh2uBtDYx2iT3cbW5JfKEHJFRn3Ruyjs4H9OsD1rjYDCQRR2UAO_46anL8Sgk";
+                process.env.REACT_APP_FIREBASE_PUBLIC_VAPID_KEY;
             //use code above to complete
             // swRegistration = props.swReg;
             swRegistration = null;
@@ -252,12 +244,12 @@ const ProviderDtlFavoriteCard = (props) => {
                     applicationServerKey: applicationServerKey
                 })
                 .then(function (subscription) {
-                    console.log("User is subscribed." + subscription);
+                    // console.log("User is subscribed." + subscription);
 
                     // updateSubscriptionOnServer(subscription);
                     Notification.requestPermission().then(permission => {
                         if (permission === "granted") {
-                            console.log("Notification permission granted.");
+                            // console.log("Notification permission granted.");
                             // TODO(developer): Retrieve an Instance ID token for use with FCM.
                             // [START_EXCLUDE]
                             // In many cases once an app has been granted notification permission,
@@ -265,22 +257,20 @@ const ProviderDtlFavoriteCard = (props) => {
                             //   resetUI();
                             // [END_EXCLUDE]
                         } else {
-                            console.log("Unable to get permission to notify.");
+                            // console.log("Unable to get permission to notify.");
                         }
                     });
 
                     // isSubscribed = true;
 
-                    // updateBtn();
                 })
                 .catch(function (err) {
-                    console.log("Failed to subscribe the user: ", err);
-                    // updateBtn();
+                    // console.log("Failed to subscribe the user: ", err);
                 });
 
 
         } else {
-            console.warn("Push messaging is not supported");
+            // console.warn("Push messaging is not supported");
             // pushButton.textContent = 'Push Not Supported';
         }
 
@@ -366,7 +356,7 @@ const ProviderDtlVacancyCard = (props) => {
     const bedsUsed = data.bedsUsed;
     const totalBeds = data.totalBeds;
     let services = "";
-    if(data["services"]){
+    if (data["services"]) {
         services = data.services;
     }
     const availableBeds = totalBeds - bedsUsed;
@@ -498,7 +488,6 @@ class ProviderDetail extends Component {
     }
 
 
-
     componentDidMount() {
         this.props.setIsHomePage(false);
 
@@ -551,7 +540,7 @@ class ProviderDetail extends Component {
 
             this.props.setUser(user);
         } else {
-            console.log("unsuccessfully updated user");
+            // console.log("unsuccessfully updated user");
         }
 
     }

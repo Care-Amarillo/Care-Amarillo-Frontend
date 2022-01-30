@@ -7,7 +7,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import axios from "axios";
-import {ToastContainer} from "react-toastr";
 
 export default function ForgotPasswordDialog(props) {
     const [open, setOpen] = React.useState(false);
@@ -28,14 +27,13 @@ export default function ForgotPasswordDialog(props) {
         const response = await axios({
             method: 'post',
             url: URL,
-            data:{
-                email:email,
+            data: {
+                email: email,
             }
 
         });
 
         const data = await response.data;
-        console.log(`data: ${JSON.stringify(data)}`);
 
         props.resetDone();
 
@@ -43,7 +41,6 @@ export default function ForgotPasswordDialog(props) {
     }
 
     const onChangeEmail = (e) => {
-        console.log(`onChange email is ${e.target.value}`)
         setEmail(e.target.value);
     }
 

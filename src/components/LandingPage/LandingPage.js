@@ -12,32 +12,23 @@ import Copyright from '../Copyright/Copyright';
 
 const useStyles = makeStyles((theme) => ({
     background: {
-        // paddingBottom: '100%',
         height: '100%',
-        backgroundColor:"lightgrey"
+        backgroundColor: "lightgrey"
     },
     root: {
-        // padding:"8px",
-        // height:"100vh",
-        display:"flex",
-        flexDirection:"row",
-        justifyContent:"center",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
         [theme.breakpoints.down('md')]: {
-            display:"flex",
-            flexDirection:"column",
+            display: "flex",
+            flexDirection: "column",
         },
-
-        // marginLeft: 150,
-        // marginRight: 150,
     },
     mainFeaturedPost: {
         position: 'relative',
         width: "100%",
-        // height:"100vh",
-        // backgroundColor: theme.palette.grey[800],
         color: theme.palette.common.white,
         marginBottom: theme.spacing(2),
-        // backgroundImage: 'url(https://source.unsplash.com/random)',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
@@ -55,8 +46,8 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'rgba(0,0,0,.3)',
     },
     mainFeaturedPostContent: {
-        display:"flex",
-        flexDirection:"column",
+        display: "flex",
+        flexDirection: "column",
         position: 'relative',
         padding: theme.spacing(3),
         [theme.breakpoints.up('md')]: {
@@ -73,18 +64,14 @@ const useStyles = makeStyles((theme) => ({
         position: 'static',
         padding: theme.spacing(2),
         textAlign: 'left',
-        // color: theme.palette.text.secondary,
     },
     button: {
-        // backgroundColor: "#132C3C",
         marginTop: 30,
         display: 'flex',
         justifyContent: 'center'
-        // marginLeft: 200
     },
     text: {
         fontSize: "1rem",
-        // color: 'black'
         [theme.breakpoints.down('md')]: {
             fontSize: "0.8rem",
         },
@@ -98,18 +85,18 @@ const useStyles = makeStyles((theme) => ({
         height: "250px",
         width: "100%"
     },
-    about:{
-        width:"40%",
-        padding:"12px",
+    about: {
+        width: "40%",
+        padding: "12px",
         [theme.breakpoints.down('md')]: {
-            width:"100%",
+            width: "100%",
         },
     },
-    login:{
-        width:"40%",
-        padding:"12px",
+    login: {
+        width: "40%",
+        padding: "12px",
         [theme.breakpoints.down('md')]: {
-            width:"100%",
+            width: "100%",
         },
     }
 }));

@@ -1,20 +1,13 @@
 import React, {Component} from 'react';
 import {
     Container,
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableRow
 } from '@material-ui/core';
 import format from "date-fns/format";
 import DateFnsUtils from '@date-io/date-fns';
 import {
     MuiPickersUtilsProvider,
-    KeyboardTimePicker,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
-import Button from '@material-ui/core/Button';
 import 'date-fns';
 import axios from "axios";
 import MaterialTable from "material-table";
@@ -272,7 +265,7 @@ class SuperAdminProviders extends Component {
         }
         this.setState({
                 selectedStartDate: e,
-                
+
             },
             () => {
                 this.loadData();
@@ -290,7 +283,6 @@ class SuperAdminProviders extends Component {
             // date is valid
             // e.setHours(23, 59,0, 0);
 
-            console.log(e);
         } else {
             // not a date
             return;
@@ -504,7 +496,7 @@ class SuperAdminProviders extends Component {
         });
     }
 
-    //create loadData function to update providers when start/end date is changed 
+    //create loadData function to update providers when start/end date is changed
     loadData = async () => {
         //set backend endpoint providersByDate and pass in the new dates being searched by the user
         let URL = `${process.env.REACT_APP_BACKEND_ENDPOINT}/providersByDate/` + "?startDate=" + this.state.selectedStartDate.toISOString() + "&endDate=" + this.state.selectedEndDate.toISOString();
@@ -515,10 +507,6 @@ class SuperAdminProviders extends Component {
             providers: []
         });
 
-        //test data to console for debugging
-        //console.log(`startdate = ${this.state.selectedStartDate}`);
-        //console.log(`enddate = ${this.state.selectedEndDate}`);
-        //console.log(`url is ${URL}`);
 
         //set verify authorization information
         const config = {
@@ -534,7 +522,6 @@ class SuperAdminProviders extends Component {
 
         //retrieve data back from backend
         const data = await response.data;
-        //console.log("data " + JSON.stringify(data));
 
         //set new provider data to be displayed to users
         this.setState({

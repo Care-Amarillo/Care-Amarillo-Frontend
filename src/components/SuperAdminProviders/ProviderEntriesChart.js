@@ -8,7 +8,6 @@ export default function ProviderEntriesChart(props) {
 
 
     const formatXAxis = tickItem => {
-        console.log(tickItem);
         if (tickItem != null) {
             return format(new Date(tickItem), "MM/d/yyyy").toString();
         } else {
@@ -24,7 +23,6 @@ export default function ProviderEntriesChart(props) {
         }
         // mutating props directly is against react's conventions
         // so we create a new payload with the name and value fields set to what we want
-        // console.log(`payload is ${JSON.stringify(props.payload[0].payload)}`)
         const newPayload = [
             {
                 name: 'Amount Changed',
@@ -40,7 +38,7 @@ export default function ProviderEntriesChart(props) {
     }
 
 
-    return(
+    return (
         <Paper>
             <ResponsiveContainer width={"100%"} height={300}>
                 <LineChart width={"100%"} height={300} data={props.entries}>
