@@ -157,22 +157,6 @@ const loadData = async () => {
                             <Select onInputChange={searchChanged} onChange={onChange} value={selectedProvider}  placeholder='Search for Shelter...' autosize={false} options={providers} styles={customStyles} components={{ DropdownIndicator:() => null, IndicatorSeparator:() => null }} />
                       </div>
                   </div>
-                    {/* <div className={classes.searchBox}>
-                      <div className={classes.search}>
-                          <div className={classes.searchIcon}>
-                              <SearchIcon />
-                          </div>
-                          <InputBase
-                              placeholder="Search Shelter..."
-                              classes={{
-                                  root: classes.inputRoot,
-                                  input: classes.inputInput,
-                              }}
-                              // onChange={this.searchChanged}
-                              inputProps={{'area-label': 'search'}}
-                              />
-                      </div>
-                      </div> */}
                 </Toolbar>
             </AppBar>
             <div/>
